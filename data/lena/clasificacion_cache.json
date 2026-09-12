@@ -970,5 +970,32 @@
 "humedad_pct": 0,
 "seca": false,
 "_metodo": "claude"
+},
+"7b61628d809e7679": {
+"es_lena": true,
+"especie": "pino",
+"kg": 0,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"67b755e92ad32008": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 300,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"636d2eb5207b7c1a": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 600,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
 }
 }
