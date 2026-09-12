@@ -13,6 +13,10 @@ class Collector:
     series: list[str] = []          # ids de las series que produce
     min_records: int = 1            # nº mínimo de puntos totales que debe devolver una descarga
     supports_backfill: bool = True  # si la fuente da histórico completo en cada descarga
+    # optional=True: la fuente no alimenta nada que esté publicado (p. ej. está pendiente de autorización), así que
+    # si falla se anota en el resumen semanal pero NO se manda un aviso de incidencia ni se marca la ejecución en
+    # rojo. Evita alarmas por algo que no rompe nada en la web.
+    optional: bool = False
 
     def fetch(self, *, backfill: bool = False) -> dict[str, list[tuple]]:
         raise NotImplementedError

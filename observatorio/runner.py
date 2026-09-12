@@ -20,23 +20,26 @@ def run(only: list[str] | None = None, *, backfill: bool = False, publish_after:
 
     names = only or collectors.names()
     failures: list[tuple[str, str]] = []
+    soft_failures: list[tuple[str, str]] = []
     added_total = 0
     quarantined: list[str] = []
     for name in names:
         print(f"== {name}")
         sstate = state["series"].setdefault(name, {})
         sstate["last_attempt"] = storage.now_iso()
+        opcional = False
         try:
             col = collectors.get(name)
+            opcional = getattr(col, "optional", False)
             result = col.fetch(backfill=backfill)
             col.check(result)
         except Exception as e:  # noqa: BLE001 — cualquier fallo de la fuente se registra y se sigue
             msg = f"{type(e).__name__}: {e}"
-            print("   FALLO:", msg)
+            print("   FALLO" + (" (fuente opcional)" if opcional else "") + ":", msg)
             traceback.print_exc(limit=2)
             sstate["consecutive_failures"] = sstate.get("consecutive_failures", 0) + 1
             sstate["last_error"] = msg[:500]
-            failures.append((name, msg))
+            (soft_failures if opcional else failures).append((name, msg))
             continue
         sstate["consecutive_failures"] = 0
         sstate["last_error"] = None
@@ -57,6 +60,7 @@ def run(only: list[str] | None = None, *, backfill: bool = False, publish_after:
     contrasts = contrast.check_all()
     state["runs"].append({"started": started, "finished": storage.now_iso(), "collectors": names,
                           "added": added_total, "failures": [f[0] for f in failures],
+                          "soft_failures": [f[0] for f in soft_failures],
                           "quarantined": quarantined, "stale": [s[0] for s in stale],
                           "contrast_alerts": contrasts})
     state["last_run"] = storage.now_iso()
@@ -67,15 +71,21 @@ def run(only: list[str] | None = None, *, backfill: bool = False, publish_after:
         quarantine.notify_batch(quarantined)
     if notify and (failures or stale or contrasts):
         alerts.send(format_problems(failures, stale, contrasts))
-    print(f"\nResumen: +{added_total} puntos · fallos {len(failures)} · cuarentena {len(quarantined)} · "
-          f"caducadas {len(stale)} · contrastes {len(contrasts)}")
+    print(f"\nResumen: +{added_total} puntos · fallos {len(failures)} · fallos de fuentes opcionales "
+          f"{len(soft_failures)} · cuarentena {len(quarantined)} · caducadas {len(stale)} · "
+          f"contrastes {len(contrasts)}")
     return 1 if failures else 0
 
 
 def stale_series() -> list[tuple[str, int, int]]:
-    """Series cuyo último dato es más viejo de lo tolerable: (id, días sin dato, días tolerados)."""
+    """Series cuyo último dato es más viejo de lo tolerable: (id, días sin dato, días tolerados).
+
+    Las series que no se publican (pendientes de autorización de la fuente) no cuentan: no hay nada roto en la web.
+    """
     out = []
     for s in catalog.all_series():
+        if not s.publishable:
+            continue
         last = storage.last_point(s.id)
         if not last:
             out.append((s.id, -1, s.stale_after_days))
@@ -121,11 +131,15 @@ def weekly_summary() -> str:
     pend = quarantine.pending()
     runs = state.get("runs", [])[-7:]
     fails = sum(len(r.get("failures", [])) for r in runs)
+    blandos = sorted({n for r in runs for n in r.get("soft_failures", [])})
     added = sum(r.get("added", 0) for r in runs)
     lines.append("🟢 <b>Observatorio CPC: resumen semanal</b>")
     lines.append(f"Series con datos: {ok}/{len(series)} · al día: {fresh} · caducadas: {len(stale)}")
     lines.append(f"Ejecuciones (7 últimas): {len(runs)} · puntos nuevos: {added} · fallos: {fails}")
     lines.append(f"En cuarentena pendientes: {len(pend)}" + (" ⚠️" if pend else ""))
+    if blandos:
+        lines.append("Fuentes opcionales que no responden (no se publican, no urge): "
+                     + ", ".join(alerts.esc(b) for b in blandos))
     if state.get("last_run"):
         lines.append(f"Última ejecución: {state['last_run'][:16].replace('T', ' ')} UTC")
     if not runs:

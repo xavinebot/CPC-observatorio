@@ -1,51 +1,100 @@
 """AVEBIOM, Índice de Precios de Biomasa: PDF trimestrales de pellet, hueso de aceituna y astilla.
 
-Cada PDF trae la tabla "Precio medio anual" con las medias de cada año desde el inicio y los trimestres del año
-en curso. Se localizan los PDF en la página del índice (las URL cambian cada trimestre) y se extrae el texto de la
-página 2 con pdfplumber.
+Cada PDF trae la tabla "Precio medio anual" con las medias de cada año desde el inicio y los trimestres del año en
+curso. Los PDF cambian de dirección cada trimestre, así que se localizan leyendo la página del índice; si la página
+no se puede leer (ha pasado: desde los servidores de GitHub la web responde distinto que desde casa), se prueban
+las direcciones previsibles del trimestre en curso y de los anteriores.
 
-IMPORTANTE: las series quedan marcadas `publishable=False` hasta que AVEBIOM autorice por escrito la
-reproducción (su aviso legal lo exige). Se recolectan para tener el histórico listo el día que llegue el permiso.
+IMPORTANTE: las series están marcadas `publishable=False` hasta que AVEBIOM autorice por escrito la reproducción
+(su aviso legal lo exige). Se recolectan para tener el histórico listo el día que llegue el permiso. Por eso este
+recolector es **opcional**: si falla, se anota en el resumen semanal pero no lanza un aviso de incidencia, porque su
+dato no está en la web y no hay nada que se rompa.
 """
 from __future__ import annotations
 
+import datetime as dt
 import io
 import re
 
 import pdfplumber
 
-from .. import catalog
-from ..util import http_get, save_raw
+from ..util import http_get, save_raw, today
 from .base import Collector as _Base
 
-PAGE = "https://www.avebiom.org/proyectos/indice-precios-biomasa-al-consumidor"
-UA = {"User-Agent": "Mozilla/5.0 (compatible; CPC-Observatorio/0.1; +https://cristalesparachimeneas.es/contacto/)"}
+# La primera dirección redirige a la segunda desde septiembre de 2026; se prueban las dos.
+PAGES = [
+    "https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
+    "https://www.avebiom.org/proyectos/indice-precios-biomasa-al-consumidor",
+]
+UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/128.0 Safari/537.36 CPC-Observatorio/0.1 (+https://cristalesparachimeneas.es/contacto/)"}
 QUARTER_MONTH = {"1": "01", "2": "04", "3": "07", "4": "10"}
+KINDS = ("PELLET", "ASTILLA", "HUESO")
 
 
 class Collector(_Base):
     name = "avebiom"
     min_records = 3 * 10
+    optional = True   # ver nota de la cabecera: su dato no se publica todavía
 
     def find_pdfs(self) -> dict[str, str]:
-        html = http_get(PAGE, headers=UA).text
-        out = {}
-        for kind in ("PELLET", "HUESO", "ASTILLA"):
-            m = re.search(rf'href="([^"]*IPB-indice-precios-{kind}[^"]*\.pdf)"', html, re.I)
-            if m:
-                out[kind] = m.group(1)
-        if len(out) < 3:
-            raise RuntimeError(f"AVEBIOM: solo encuentro PDF de {list(out)} en la página del índice")
+        """Busca los tres PDF en la página del índice; si no, prueba las direcciones previsibles."""
+        errores = []
+        for page in PAGES:
+            try:
+                html = http_get(page, headers=UA).text
+            except Exception as e:  # noqa: BLE001
+                errores.append(f"{page}: {type(e).__name__}")
+                continue
+            out = {}
+            for kind in KINDS:
+                # patrón normal y, por si cambian el nombre, cualquier PDF que mencione el combustible
+                m = (re.search(rf'href="([^"]*IPB[^"]*{kind}[^"]*\.pdf)"', html, re.I)
+                     or re.search(rf'href="([^"]*{kind}[^"]*\.pdf)"', html, re.I))
+                if m:
+                    out[kind] = m.group(1)
+            if len(out) == 3:
+                return out
+            errores.append(f"{page}: solo {sorted(out)} ({len(html)} bytes)")
+        # Plan B: la dirección sigue el patrón /wp-content/uploads/<año>/<mes>/IPB-indice-precios-<TIPO>-<n>T<año>.pdf
+        adivinadas = self.probar_patron()
+        if len(adivinadas) == 3:
+            print(f"   avebiom: la página no listaba los PDF ({'; '.join(errores)}); uso las direcciones previsibles")
+            return adivinadas
+        raise RuntimeError("AVEBIOM: no encuentro los tres PDF del índice. " + "; ".join(errores))
+
+    def probar_patron(self) -> dict[str, str]:
+        """Prueba el trimestre en curso y los tres anteriores con el patrón conocido de nombres."""
+        out: dict[str, str] = {}
+        hoy = today()
+        for atras in range(0, 4):
+            mes = hoy.month - 3 * atras
+            anyo = hoy.year
+            while mes <= 0:
+                mes += 12
+                anyo -= 1
+            trimestre = (mes - 1) // 3 + 1
+            # el PDF se sube en el primer mes del trimestre siguiente
+            subida = dt.date(anyo, mes, 1) + dt.timedelta(days=92)
+            for carpeta in ({f"{subida.year}/{subida.month:02d}", f"{anyo}/{mes:02d}"}):
+                for kind in KINDS:
+                    if kind in out:
+                        continue
+                    url = (f"https://avebiom.org/wp-content/uploads/{carpeta}/"
+                           f"IPB-indice-precios-{kind}-{trimestre}T{anyo}.pdf")
+                    try:
+                        r = http_get(url, headers=UA, retries=1)
+                    except Exception:  # noqa: BLE001 — el 404 es lo normal al tantear
+                        continue
+                    if r.content[:4] == b"%PDF":
+                        out[kind] = url
+            if len(out) == 3:
+                break
         return out
 
     def fetch(self, *, backfill: bool = False) -> dict[str, list[tuple]]:
-        out = {}
-        specs = {}
-        for s in catalog.by_collector(self.name):
-            if s.id.endswith("_anual"):
-                continue
-            specs[s.id] = s
         from ..catalog_series import AVB
+        out = {}
         for kind, url in self.find_pdfs().items():
             content = http_get(url, headers=UA).content
             save_raw(f"avebiom_{kind}.pdf", content)
