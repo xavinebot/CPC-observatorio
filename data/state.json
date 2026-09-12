@@ -1,5 +1,5 @@
 {
- "last_run": "2026-09-12T03:29:10+00:00",
+ "last_run": "2026-09-12T03:45:56+00:00",
  "runs": [
   {
    "added": 10467,
@@ -42,86 +42,111 @@
    "soft_failures": [],
    "stale": [],
    "started": "2026-09-12T03:29:08+00:00"
+  },
+  {
+   "added": 10969,
+   "collectors": [
+    "wob",
+    "cnmc_glp",
+    "eurostat_nrg",
+    "eurostat_hicp",
+    "eurostat_sts",
+    "ree",
+    "ine_ipc",
+    "ine_ipri",
+    "worldbank",
+    "avebiom",
+    "pellets_eu",
+    "fr_fioul",
+    "lena"
+   ],
+   "contrast_alerts": [],
+   "failures": [],
+   "finished": "2026-09-12T03:45:56+00:00",
+   "quarantined": [],
+   "soft_failures": [],
+   "stale": [],
+   "started": "2026-09-12T03:42:32+00:00"
   }
  ],
  "series": {
   "avebiom": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:29:08+00:00",
+   "last_attempt": "2026-09-12T03:42:49+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:29:10+00:00"
+   "last_success": "2026-09-12T03:42:51+00:00"
   },
   "cnmc_glp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:17+00:00",
+   "last_attempt": "2026-09-12T03:42:35+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:18+00:00"
+   "last_success": "2026-09-12T03:42:36+00:00"
   },
   "eurostat_hicp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:19+00:00",
+   "last_attempt": "2026-09-12T03:42:36+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:19+00:00"
+   "last_success": "2026-09-12T03:42:37+00:00"
   },
   "eurostat_nrg": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:18+00:00",
+   "last_attempt": "2026-09-12T03:42:36+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:19+00:00"
+   "last_success": "2026-09-12T03:42:36+00:00"
   },
   "eurostat_sts": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:19+00:00",
+   "last_attempt": "2026-09-12T03:42:37+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:20+00:00"
+   "last_success": "2026-09-12T03:42:37+00:00"
   },
   "fr_fioul": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:39+00:00",
+   "last_attempt": "2026-09-12T03:42:52+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:40+00:00"
+   "last_success": "2026-09-12T03:42:53+00:00"
   },
   "ine_ipc": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:24+00:00",
+   "last_attempt": "2026-09-12T03:42:41+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:27+00:00"
+   "last_success": "2026-09-12T03:42:44+00:00"
   },
   "ine_ipri": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:27+00:00",
+   "last_attempt": "2026-09-12T03:42:44+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:33+00:00"
+   "last_success": "2026-09-12T03:42:48+00:00"
   },
   "lena": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T02:32:27+00:00",
+   "last_attempt": "2026-09-12T03:42:53+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T02:35:34+00:00"
+   "last_success": "2026-09-12T03:45:56+00:00"
   },
   "pellets_eu": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:34+00:00",
+   "last_attempt": "2026-09-12T03:42:51+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:39+00:00"
+   "last_success": "2026-09-12T03:42:52+00:00"
   },
   "ree": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:20+00:00",
+   "last_attempt": "2026-09-12T03:42:37+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:24+00:00"
+   "last_success": "2026-09-12T03:42:41+00:00"
   },
   "wob": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:14+00:00",
+   "last_attempt": "2026-09-12T03:42:33+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:17+00:00"
+   "last_success": "2026-09-12T03:42:35+00:00"
   },
   "worldbank": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-12T03:25:33+00:00",
+   "last_attempt": "2026-09-12T03:42:48+00:00",
    "last_error": null,
-   "last_success": "2026-09-12T03:25:34+00:00"
+   "last_success": "2026-09-12T03:42:49+00:00"
   }
  },
  "telegram_offset": 0
