@@ -10,13 +10,17 @@ aquí el repositorio va a ser **público**.
 
 ## Paso 1. Subir la carpeta a GitHub con GitHub Desktop
 
+**Los ficheros ya están confirmados (hay dos commits hechos), así que aquí NO tienes que hacer ningún commit.**
+Cuando abras el repositorio verás **"0 changed files"** y el botón de commit apagado: es lo correcto, significa que
+no queda nada pendiente. Lo único que falta es publicarlo.
+
 1. Abre **GitHub Desktop**.
 2. Menú **File** → **Add local repository**.
 3. Pulsa **Choose...** y selecciona la carpeta `F:\Xavi\Projectes NO G-Drive\CPC-observatorio`. Pulsa
    **Add repository**.
-4. Verás una lista larga de ficheros a la izquierda. En el recuadro de abajo, donde dice *Summary*, escribe:
-   `Observatorio de precios: primera version` y pulsa el botón azul **Commit to main**.
-5. Arriba aparecerá **Publish repository**. Púlsalo. En la ventana que sale:
+4. Menú **Repository** → **Publish repository…** (atajo Ctrl+P). También hay un botón azul *Publish repository*
+   arriba a la derecha, pero si la ventana es estrecha queda cortado; por el menú funciona siempre.
+5. En la ventana que sale:
    - Nombre: `CPC-observatorio` (déjalo como está).
    - **Desmarca la casilla "Keep this code private".** Esto es importante: el repositorio tiene que ser público
      para que la web pueda leer los datos sin ninguna clave.
