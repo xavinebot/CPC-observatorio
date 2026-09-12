@@ -1,0 +1,6 @@
+requests>=2.32
+beautifulsoup4>=4.12
+openpyxl>=3.1
+pdfplumber>=0.11
+anthropic>=0.40
+pytest>=8

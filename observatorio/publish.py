@@ -1,0 +1,111 @@
+"""Publicación: convierte los CSV validados en los JSON que lee el plugin de WordPress.
+
+Salida en data/published/:
+  index.json          → lista de series con metadatos, último dato y estado (ok / caducada / pendiente)
+  <pais>.json         → todas las series de ese país (hogar e industria), con puntos nativos y medias mensuales
+  csv/<serie>.csv     → CSV descargable con cabecera de fuente y licencia (solo series redistribuibles)
+Nunca se rellenan huecos: si una serie no tiene datos, aparece con status 'pendiente' y sin puntos.
+"""
+from __future__ import annotations
+
+import json
+from collections import defaultdict
+
+from . import catalog, config, storage
+from .util import parse_date, today
+
+MAX_NATIVE_POINTS_DAILY = 800   # para series diarias publicamos ~2 años en detalle; el resto, mensual
+
+COUNTRIES = ["ES", "FR", "IT", "DE", "PT", "AT", "EU"]
+
+
+def monthly_average(points: list[storage.Point]) -> list[list]:
+    acc: dict[str, list[float]] = defaultdict(list)
+    for d, v in points:
+        acc[d[:7]].append(v)
+    return [[m, round(sum(vs) / len(vs), 4)] for m, vs in sorted(acc.items())]
+
+
+def serie_status(s: catalog.Serie, points: list[storage.Point]) -> str:
+    if not s.publishable:
+        return "pendiente_autorizacion"
+    if not points:
+        return "pendiente"
+    age = (today() - parse_date(points[-1][0])).days
+    return "caducada" if age > s.stale_after_days else "ok"
+
+
+def serie_payload(s: catalog.Serie, points: list[storage.Point]) -> dict:
+    if not s.publishable:
+        points = []   # recolectada, pero no se enseña hasta tener permiso de la fuente
+    native = points
+    if s.native_freq == "D" and len(points) > MAX_NATIVE_POINTS_DAILY:
+        native = points[-MAX_NATIVE_POINTS_DAILY:]
+    return {
+        "id": s.id, "name": s.name, "country": s.country, "group": s.group, "fuel": s.fuel,
+        "unit": s.unit, "kwh_per_unit": s.kwh_per_unit, "taxes_included": s.taxes_included,
+        "freq": s.native_freq, "decimals": s.decimals, "notes": s.notes,
+        "source": {"name": s.source.name, "url": s.source.url, "license": s.source.license,
+                   "license_url": s.source.license_url, "attribution": s.source.attribution},
+        "redistributable": s.redistributable,
+        "status": serie_status(s, points),
+        "first_date": points[0][0] if points else None,
+        "last_date": points[-1][0] if points else None,
+        "last_value": points[-1][1] if points else None,
+        "n": len(points),
+        "points": [[d, v] for d, v in native],
+        "monthly": monthly_average(points) if s.native_freq in ("D", "W") else [],
+    }
+
+
+def extras_lena() -> dict:
+    """Dispersion de la ultima lectura del indice de lena (numero de tiendas, referencias y horquilla)."""
+    f = config.DATA / "lena" / "ultimo_resumen.json"
+    if not f.is_file():
+        return {}
+    try:
+        d = json.loads(f.read_text(encoding="utf-8"))
+    except ValueError:
+        return {}
+    return d.get("series", {})
+
+
+def build_all() -> None:
+    config.ensure_dirs()
+    extras = extras_lena()
+    (config.PUBLISHED_DIR / "csv").mkdir(exist_ok=True)
+    generated = storage.now_iso()
+    index = {"generated": generated, "series": []}
+    per_country: dict[str, dict] = {c: {"generated": generated, "country": c, "series": []} for c in COUNTRIES}
+    for s in catalog.all_series():
+        if s.hidden:
+            continue
+        pts = storage.read_series(s.id)
+        payload = serie_payload(s, pts)
+        if s.id in extras:
+            payload["extra"] = extras[s.id]
+        index["series"].append({k: payload[k] for k in ("id", "name", "country", "group", "fuel", "unit",
+                                                        "status", "first_date", "last_date", "last_value", "n")})
+        per_country.setdefault(s.country, {"generated": generated, "country": s.country, "series": []})
+        per_country[s.country]["series"].append(payload)
+        if s.redistributable and s.publishable and pts:
+            write_csv(s, pts, generated)
+    (config.PUBLISHED_DIR / "index.json").write_text(json.dumps(index, ensure_ascii=False, separators=(",", ":")),
+                                                     encoding="utf-8")
+    for c, payload in per_country.items():
+        (config.PUBLISHED_DIR / f"{c.lower()}.json").write_text(
+            json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+
+def write_csv(s: catalog.Serie, pts: list[storage.Point], generated: str) -> None:
+    lines = [
+        f"# {s.name['es']} ({s.country})",
+        f"# Unidad: {s.unit}",
+        f"# Fuente: {s.source.name} - {s.source.url}",
+        f"# Licencia: {s.source.license} - {s.source.license_url}",
+        f"# Cita obligatoria: {s.source.attribution}",
+        f"# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado {generated}",
+        "date,value",
+    ]
+    lines += [f"{d},{v:g}" for d, v in pts]
+    (config.PUBLISHED_DIR / "csv" / f"{s.id}.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")

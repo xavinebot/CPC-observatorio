@@ -1,0 +1,62 @@
+name: "Observatorio: leña y resumen semanal"
+
+# Los lunes: pasada a las tiendas de lena (su precio no cambia a diario) y resumen "todo va bien" por Telegram.
+# Ese resumen tambien sirve de senal de vida: si un lunes no llega, el sistema ha dejado de ejecutarse.
+# Ademas, este workflow escribe en el repositorio cada semana, lo que evita que GitHub desactive las tareas
+# programadas por inactividad (lo hace tras 60 dias sin actividad).
+
+on:
+  schedule:
+    # 04:10 UTC del lunes = 06:10 peninsular en verano.
+    - cron: "10 4 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: observatorio
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  semanal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Leer las tiendas de leña
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m observatorio run --only lena
+        continue-on-error: true
+
+      - name: Enviar el resumen semanal
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m observatorio summary
+
+      - name: Guardar los datos nuevos en el repositorio
+        run: |
+          git config user.name "observatorio-bot"
+          git config user.email "observatorio@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Sin cambios en los datos."
+          else
+            git commit -m "Leña, semana del $(date -u +%Y-%m-%d)"
+            git push
+          fi

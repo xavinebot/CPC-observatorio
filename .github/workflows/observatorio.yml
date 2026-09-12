@@ -1,0 +1,61 @@
+name: "Observatorio: recogida diaria"
+
+# Descarga los datos nuevos, los valida, los publica en data/published y avisa por Telegram si hay problemas.
+# Se puede lanzar a mano desde la pestana Actions (boton "Run workflow").
+
+on:
+  schedule:
+    # 03:40 UTC = 05:40 en horario de verano peninsular, 04:40 en invierno.
+    # A esa hora ya estan publicados los datos del dia de Red Electrica.
+    - cron: "40 3 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: observatorio
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  recoger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Recoger, validar y publicar
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        # Las tiendas de lena solo se leen los lunes (workflow aparte): aqui se excluye ese recolector.
+        run: |
+          python -m observatorio run \
+            --only wob cnmc_glp eurostat_nrg eurostat_hicp eurostat_sts ree ine_ipc ine_ipri worldbank avebiom pellets_eu fr_fioul
+        continue-on-error: true
+
+      - name: Guardar los datos nuevos en el repositorio
+        run: |
+          git config user.name "observatorio-bot"
+          git config user.email "observatorio@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Sin cambios en los datos."
+          else
+            git commit -m "Datos del $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Marcar el job en rojo si la recogida fallo
+        run: python -m observatorio status

@@ -1,0 +1,947 @@
+{
+"1aa3dc8dc876a1ac": {
+"es_lena": true,
+"especie": "desconocida",
+"kg": 0,
+"formato": "otro",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"4d93ca2479452780": {
+"es_lena": true,
+"especie": "mezcla",
+"kg": 0,
+"formato": "otro",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"f569ad30176da931": {
+"es_lena": true,
+"especie": "haya",
+"kg": 12,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"bf3b3ca21e0ddc1e": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 12,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"1c1d7432eaae248f": {
+"es_lena": true,
+"especie": "mezcla",
+"kg": 14,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"5d548588b3257b48": {
+"es_lena": true,
+"especie": "naranjo",
+"kg": 15,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"d672bd5a94a710cb": {
+"es_lena": true,
+"especie": "algarrobo",
+"kg": 20,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"b8ce4cf68726a400": {
+"es_lena": true,
+"especie": "desconocida",
+"kg": 0,
+"formato": "otro",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"e73e240fe050df9f": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 0,
+"formato": "otro",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"5ed2a08e71bc0405": {
+"es_lena": true,
+"especie": "pino",
+"formato": "palet",
+"humedad_pct": 0,
+"kg": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"a64cd4f36e2a1aee": {
+"es_lena": true,
+"especie": "pino",
+"kg": 0,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"16056b57ec6cb5ea": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 150,
+"formato": "palet",
+"humedad_pct": 20,
+"seca": true,
+"_metodo": "claude"
+},
+"1fcf72caf8406996": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 300,
+"formato": "palet",
+"humedad_pct": 20,
+"seca": true,
+"_metodo": "claude"
+},
+"bdafac52f6c282e6": {
+"es_lena": true,
+"especie": "haya",
+"kg": 150,
+"formato": "palet",
+"humedad_pct": 20,
+"seca": true,
+"_metodo": "claude"
+},
+"92ccadb3bccf8d87": {
+"es_lena": true,
+"especie": "haya",
+"kg": 300,
+"formato": "palet",
+"humedad_pct": 20,
+"seca": true,
+"_metodo": "claude"
+},
+"00d925fa17dceba0": {
+"es_lena": true,
+"especie": "roble",
+"kg": 150,
+"formato": "palet",
+"humedad_pct": 20,
+"seca": true,
+"_metodo": "claude"
+},
+"1a2c48df8a3bf79e": {
+"es_lena": true,
+"especie": "roble",
+"kg": 300,
+"formato": "palet",
+"humedad_pct": 20,
+"seca": true,
+"_metodo": "claude"
+},
+"8f398a9fc26063ee": {
+"es_lena": true,
+"especie": "mezcla",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"48f75ecc4fc3efe7": {
+"es_lena": true,
+"especie": "mezcla",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"e07ae4d89d2ffd54": {
+"es_lena": true,
+"especie": "haya",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"dcfa738d33c89406": {
+"es_lena": true,
+"especie": "haya",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"1b879ec4931ddd01": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"3b90900ea620dfe8": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"6d7afafac8189036": {
+"es_lena": true,
+"especie": "mezcla",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"c9b9af10d2f1b871": {
+"es_lena": true,
+"especie": "mezcla",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"4d9c33746b6ab592": {
+"es_lena": true,
+"especie": "encina",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"ae487d5b6d80d3ef": {
+"es_lena": true,
+"especie": "encina",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"6e724d88be585f80": {
+"es_lena": true,
+"especie": "naranjo",
+"kg": 400,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"d3e2bdfac46a3d6a": {
+"es_lena": true,
+"especie": "naranjo",
+"kg": 900,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"ab0f2ff5b1ec1e7b": {
+"es_lena": true,
+"especie": "pino",
+"kg": 200,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"aca4f2e81fd0cea6": {
+"es_lena": true,
+"especie": "pino",
+"kg": 400,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"0b114658d6ce3775": {
+"es_lena": true,
+"especie": "encina",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"688700bbb7640f86": {
+"es_lena": true,
+"especie": "haya",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"602c88e40484e7da": {
+"es_lena": true,
+"especie": "roble",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"c94cd2a8c109b6d3": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"60a1e9823b4de239": {
+"es_lena": false,
+"especie": "haya",
+"kg": 6,
+"formato": "otro",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"bab55b2cceb2b4d7": {
+"es_lena": true,
+"especie": "haya",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"c802f7a73384c3d1": {
+"es_lena": true,
+"especie": "roble",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"b9b702c9422db792": {
+"es_lena": true,
+"especie": "encina",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"79351ec97621a902": {
+"es_lena": true,
+"especie": "haya",
+"kg": 500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"592e54f23fca5d97": {
+"es_lena": true,
+"especie": "roble",
+"kg": 1500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"78c70661911f28ff": {
+"es_lena": true,
+"especie": "roble",
+"kg": 1600,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"c56d12b6be9dc2c3": {
+"es_lena": true,
+"especie": "encina",
+"kg": 1600,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"7326d9a17d44fd78": {
+"es_lena": true,
+"especie": "roble",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"bbc787e4747bd99f": {
+"es_lena": true,
+"especie": "roble",
+"kg": 600,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"f49016eeedd301a4": {
+"es_lena": true,
+"especie": "roble",
+"kg": 1500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"944e41f11b690aac": {
+"es_lena": true,
+"especie": "haya",
+"kg": 1500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"1f3d48ebf03e857e": {
+"es_lena": true,
+"especie": "roble",
+"kg": 1500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"b4eedf01e49e2af7": {
+"es_lena": true,
+"especie": "encina",
+"kg": 1500,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"9279d684d6f96803": {
+"es_lena": true,
+"especie": "haya",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"d61875216dbb09b1": {
+"es_lena": true,
+"especie": "roble",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"a693afe765ec22e5": {
+"es_lena": true,
+"especie": "encina",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"ec9490f01ca83fb1": {
+"es_lena": true,
+"especie": "encina",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"cdb642a0d78e6b99": {
+"es_lena": true,
+"especie": "roble",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"f409a83a44bd87f2": {
+"es_lena": true,
+"especie": "roble",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"1e40d67876130cfa": {
+"es_lena": true,
+"especie": "roble",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"5a0767b01684f399": {
+"es_lena": true,
+"especie": "roble",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"ca20461b171e9bd9": {
+"es_lena": true,
+"especie": "haya",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"a865829d4ccd301b": {
+"es_lena": true,
+"especie": "haya",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"3092b0509ddd24df": {
+"es_lena": true,
+"especie": "haya",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"065eae4c3eb2e2c8": {
+"es_lena": true,
+"especie": "encina",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"7da0d505be7c5fb2": {
+"es_lena": true,
+"especie": "encina",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"28e9a24ce3352c66": {
+"es_lena": true,
+"especie": "encina",
+"kg": 500,
+"formato": "saca",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"8c251c1102aea3df": {
+"es_lena": true,
+"especie": "haya",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"7ed819c5c0669668": {
+"es_lena": true,
+"especie": "roble",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"a0633a02c8771197": {
+"es_lena": true,
+"especie": "encina",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"947a9b8e94444a8d": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 1000,
+"formato": "palet",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"f74fa2f1d9a217db": {
+"es_lena": true,
+"especie": "haya",
+"kg": 10,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"b2c499f88a2ea0f2": {
+"es_lena": true,
+"especie": "haya",
+"kg": 140,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"8fc04bcf560600eb": {
+"es_lena": true,
+"especie": "haya",
+"kg": 590,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"6c567b1ecb8bda73": {
+"es_lena": true,
+"especie": "haya",
+"kg": 740,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"6b2f8fd822002635": {
+"es_lena": true,
+"especie": "haya",
+"kg": 20,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"c73e9fed3fa5eefb": {
+"es_lena": true,
+"especie": "roble",
+"kg": 0,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"6433c4c04fb5ee04": {
+"es_lena": true,
+"especie": "roble",
+"kg": 0,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"b913d1b92408e05f": {
+"es_lena": true,
+"especie": "haya",
+"kg": 10,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"09bd751caa610376": {
+"es_lena": true,
+"especie": "haya",
+"kg": 100,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"b337999ec9e87003": {
+"es_lena": true,
+"especie": "encina",
+"kg": 0,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"204ec228beaf1a00": {
+"es_lena": true,
+"especie": "encina",
+"kg": 0,
+"formato": "saco",
+"humedad_pct": 18,
+"seca": true,
+"_metodo": "claude"
+},
+"54ba2748d7529dbe": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 600,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"4f831da9c6b72940": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 300,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"6b48a5b0e969ee36": {
+"es_lena": true,
+"especie": "mezcla",
+"kg": 600,
+"formato": "otro",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"c06c54cc262805d7": {
+"es_lena": true,
+"especie": "mezcla",
+"kg": 300,
+"formato": "otro",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"3a5c452d3f1069d7": {
+"es_lena": false,
+"especie": "pino",
+"kg": 200,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"a45a871d9378db7a": {
+"es_lena": true,
+"especie": "pino",
+"formato": "palet",
+"kg": 0,
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"3b90783e049f033f": {
+"es_lena": true,
+"especie": "pino",
+"kg": 0,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"265dc998e9d62e58": {
+"es_lena": false,
+"especie": "pino",
+"kg": 1134,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"9f5ef2defc97c83b": {
+"es_lena": false,
+"especie": "pino",
+"kg": 567,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"62e42e6a2f6aa29d": {
+"es_lena": false,
+"especie": "pino",
+"kg": 245,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"3dd9ad445dbc715c": {
+"es_lena": false,
+"especie": "pino",
+"kg": 105,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"4424f85f0fc865f2": {
+"es_lena": true,
+"especie": "pino",
+"kg": 0,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"2804a85668a0a139": {
+"es_lena": true,
+"especie": "encina",
+"kg": 150,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"f050b1238fe8d4b5": {
+"es_lena": true,
+"especie": "encina",
+"kg": 10,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"9a1c0c11fe852ae0": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 300,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"e2b3add7ebe5d62d": {
+"es_lena": true,
+"especie": "encina",
+"kg": 350,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"52349a03d9882151": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 600,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"0a25f408696fde0a": {
+"es_lena": true,
+"especie": "pino",
+"kg": 0,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"f70ae502288592eb": {
+"es_lena": true,
+"especie": "encina",
+"kg": 10,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"bd2598f64b5ff21f": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 300,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"5c5dba30af5e05aa": {
+"es_lena": true,
+"especie": "encina",
+"kg": 350,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"68af2e4e7974f05b": {
+"es_lena": true,
+"especie": "pino",
+"kg": 0,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"eda22953f45b6552": {
+"es_lena": true,
+"especie": "encina",
+"kg": 150,
+"formato": "palet",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"7c86a4333042fd07": {
+"es_lena": true,
+"especie": "encina",
+"kg": 10,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"53c8b9142f389b4a": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 300,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"707290b0976e815e": {
+"es_lena": true,
+"especie": "encina",
+"kg": 350,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"a81b8bc945f4feab": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 600,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+}
+}

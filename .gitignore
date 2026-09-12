@@ -1,0 +1,23 @@
+# Secretos: NUNCA en el repositorio
+.env
+*.env
+secrets*
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+# Descargas brutas y logs (se regeneran)
+data/raw/
+*.log
+# Playwright
+tests/e2e/node_modules/
+tests/e2e/test-results/
+tests/e2e/playwright-report/
+node_modules/
+# SO / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
