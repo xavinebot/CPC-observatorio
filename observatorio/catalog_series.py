@@ -260,7 +260,7 @@ register(Serie(
            "Lenha dura seca em palete (≥300 kg), entregue na península, com IVA"),
     country="ES", group="hogar", fuel="lena", unit="EUR/kg", source=SRC_LENA, collector="lena",
     native_freq="W", expected_every_days=7, stale_after_days=21, min_value=0.10, max_value=1.20,
-    max_change_pct=20, kwh_per_unit=4.1, decimals=4, taxes_included=True,
+    max_change_pct=20, kwh_per_unit=4.1, decimals=4, taxes_included=True, min_points=8,
     notes="Mediana entre tiendas online españolas (una referencia representativa por tienda: encina, roble, olivo, haya). Transporte a domicilio incluido. Índice de elaboración propia; ver metodología."))
 register(Serie(
     id="lena_saco_es",
@@ -271,7 +271,7 @@ register(Serie(
            "Lenha em saco pequeno (8-25 kg), preço sem portes, com IVA"),
     country="ES", group="hogar", fuel="lena", unit="EUR/kg", source=SRC_LENA, collector="lena",
     native_freq="W", expected_every_days=7, stale_after_days=21, min_value=0.15, max_value=2.5,
-    max_change_pct=25, kwh_per_unit=4.1, decimals=4, taxes_included=True,
+    max_change_pct=25, kwh_per_unit=4.1, decimals=4, taxes_included=True, min_points=8,
     notes="Mediana entre tiendas del precio por kg del saco pequeño. Formato de conveniencia, mucho más caro por kg que el palet."))
 
 

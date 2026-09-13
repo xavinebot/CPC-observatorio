@@ -174,16 +174,16 @@ a servidores externos.
 
 ## 8. Lo que tienes que hacer tú
 
-**1. ~~Publicar el repositorio en GitHub~~ HECHO el 12 de septiembre de 2026.** Está en
-`github.com/xavinebot/CPC-observatorio`, público, con los tres secretos guardados y las dos tareas programadas
-en verde (la diaria y la semanal). El resumen de "todo va bien" ya llegó por Telegram.
+**1. Publicar el repositorio en GitHub (15 minutos).** Los pasos exactos, escritos para no programadores, están en
+`GITHUB_SETUP.md`. Resumen: añadir la carpeta con GitHub Desktop, publicarla **como pública**, guardar tres
+secretos (los dos tokens y el identificador del chat de Telegram) y dar permiso de escritura a las tareas
+programadas.
 
-**2. ~~Cambiar la URL de los datos en el plugin~~ HECHO.** Staging lee los datos directamente del repositorio
-público de GitHub, que es como funcionará producción. La carpeta temporal de datos que había en el servidor se ha
-borrado. Comprobado después del cambio: la página sigue completa (9 gráficos, 21 tablas, 16 bloques Dataset) y los
-24 smoke tests siguen en verde.
+**2. Cambiar una URL en los ajustes del plugin.** Mientras el repositorio no esté publicado, el plugin lee los datos
+de una carpeta de staging. Cuando lo publiques, entra en **Ajustes → Observatorio CPC** y pon la dirección de tu
+repositorio (el propio campo lleva ya el formato de ejemplo). Es un solo campo.
 
-**3. Escribir a AVEBIOM.** Es lo único que queda pendiente por tu parte. Te dejo el correo listo:
+**3. Escribir a AVEBIOM.** Te dejo el correo listo:
 
 > Asunto: Autorización para citar el Índice de Precios de Biomasa
 >
@@ -250,7 +250,7 @@ Tal como pediste, esto se queda en staging. Cuando lo retomes, en este orden:
      un distribuidor.
 5. **Publicar en producción cuando toque** (recuerda: nada estructural hasta febrero de 2027). El paso es: subir el
    plugin con el botón de despliegue que ya tienes, crear las siete páginas y activar el plugin. Cuando llegue el
-   momento te dejo el guion, porque las páginas hay que crearlas en producción con sus propios identificadores.
+   momento te dejo el guion, porque las páginas hay que crearlas en producción con p propios identificadores.
 6. **Cuando esté en producción, enviar el dato a quien lo usa.** Un observatorio de precios con series desde 2005 y
    descarga en CSV es exactamente lo que citan los medios del sector y los blogs de energía. Ahí está el retorno en
    enlaces, que era el objetivo principal.

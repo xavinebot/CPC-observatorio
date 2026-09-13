@@ -47,6 +47,10 @@ class Serie:
     notes: str = ""
     redistributable: bool = True   # si la licencia permite ofrecer el CSV descargable
     publishable: bool = True       # False = recolectada pero NO se publica (p. ej. falta autorización escrita)
+    # Mínimo de datos para que la serie se publique. Una serie con un punto no es una serie histórica: mientras
+    # no llegue a este mínimo se recoge, pero en la web aparece como "en construcción" (sin gráfico, sin CSV y
+    # sin marcado Dataset). Cuando lo alcanza se publica sola, sin tocar nada.
+    min_points: int = 0
     hidden: bool = False           # True = solo para contraste interno; no aparece en la web
 
 

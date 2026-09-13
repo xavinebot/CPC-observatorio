@@ -29,6 +29,8 @@ def monthly_average(points: list[storage.Point]) -> list[list]:
 def serie_status(s: catalog.Serie, points: list[storage.Point]) -> str:
     if not s.publishable:
         return "pendiente_autorizacion"
+    if s.min_points and len(points) < s.min_points:
+        return "en_construccion"
     if not points:
         return "pendiente"
     age = (today() - parse_date(points[-1][0])).days
@@ -36,8 +38,10 @@ def serie_status(s: catalog.Serie, points: list[storage.Point]) -> str:
 
 
 def serie_payload(s: catalog.Serie, points: list[storage.Point]) -> dict:
-    if not s.publishable:
-        points = []   # recolectada, pero no se enseña hasta tener permiso de la fuente
+    estado = serie_status(s, points)
+    faltan = max(0, s.min_points - len(points)) if s.min_points else 0
+    if estado in ("pendiente_autorizacion", "en_construccion"):
+        points = []   # recolectada, pero todavía no se enseña (falta permiso o falta historia)
     native = points
     if s.native_freq == "D" and len(points) > MAX_NATIVE_POINTS_DAILY:
         native = points[-MAX_NATIVE_POINTS_DAILY:]
@@ -48,7 +52,9 @@ def serie_payload(s: catalog.Serie, points: list[storage.Point]) -> dict:
         "source": {"name": s.source.name, "url": s.source.url, "license": s.source.license,
                    "license_url": s.source.license_url, "attribution": s.source.attribution},
         "redistributable": s.redistributable,
-        "status": serie_status(s, points),
+        "status": estado,
+        "faltan": faltan,
+        "min_points": s.min_points,
         "first_date": points[0][0] if points else None,
         "last_date": points[-1][0] if points else None,
         "last_value": points[-1][1] if points else None,
@@ -85,11 +91,18 @@ def build_all() -> None:
         if s.id in extras:
             payload["extra"] = extras[s.id]
         index["series"].append({k: payload[k] for k in ("id", "name", "country", "group", "fuel", "unit",
-                                                        "status", "first_date", "last_date", "last_value", "n")})
+                                                        "status", "first_date", "last_date", "last_value", "n",
+                                                        "faltan")})
         per_country.setdefault(s.country, {"generated": generated, "country": s.country, "series": []})
         per_country[s.country]["series"].append(payload)
-        if s.redistributable and s.publishable and pts:
+        if s.redistributable and payload["status"] == "ok" and pts:
             write_csv(s, pts, generated)
+        else:
+            # Si una serie deja de publicarse (p. ej. pasa a "en construcción"), su CSV no puede quedarse
+            # colgado: seguiría descargándose y el marcado lo anunciaría.
+            viejo = config.PUBLISHED_DIR / "csv" / f"{s.id}.csv"
+            if viejo.is_file():
+                viejo.unlink()
     (config.PUBLISHED_DIR / "index.json").write_text(json.dumps(index, ensure_ascii=False, separators=(",", ":")),
                                                      encoding="utf-8")
     for c, payload in per_country.items():
