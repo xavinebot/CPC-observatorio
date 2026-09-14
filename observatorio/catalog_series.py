@@ -13,7 +13,10 @@ def N(es, fr, it, de, pt):
 
 # ----------------------------------------------------------------------------- fuentes
 SRC_WOB = Source(
-    name="Comisión Europea, Weekly Oil Bulletin (datos comunicados por los Estados miembros; España: MITECO)",
+    # El nombre es el oficial y nada más: aparece en las cinco páginas y el paréntesis que llevaba antes
+    # ("datos comunicados por los Estados miembros; España: MITECO") era una explicación en español que se colaba
+    # sin traducir en la francesa, la italiana, la alemana y la portuguesa. Eso se cuenta en FUENTES.md.
+    name="Comisión Europea, Weekly Oil Bulletin",
     url="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en",
     license="CC BY 4.0 (Decisión 2011/833/UE)", license_url="https://commission.europa.eu/legal-notice_en",
     attribution="Fuente: Comisión Europea, Weekly Oil Bulletin")

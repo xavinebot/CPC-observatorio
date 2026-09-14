@@ -82,7 +82,8 @@ Un periodista no abre una nota de prensa adjunta. Abre un correo de cinco línea
    cita bien.
 3. **Periodistas de consumo y energía**, en la ventana de octubre-noviembre. Este correo.
 4. **Blogs de calefacción, estufas y biomasa** — a estos no les interesa el número, les interesa el gráfico
-   incrustable (pendiente de montar, ver abajo).
+   incrustable: debajo de cada gráfico hay un recuadro, "Pon este gráfico en tu web", con el código listo para
+   copiar. Se lo mandas hecho y no tienen que pedir permiso a nadie.
 5. **Foros** — no dan enlaces que cuenten para Google, pero traen visitas y son donde te descubre quien luego sí
    enlaza. Contestando preguntas con el dato, no soltando el enlace.
 
@@ -91,12 +92,30 @@ referencia, ya lo enlazará alguien.
 
 ---
 
-## 4. Lo que falta por montar antes del punto 4 de esa lista
+## 4. El gráfico incrustable (hecho el 14 sep 2026)
 
-El **gráfico incrustable**: un recuadro debajo de cada gráfico con el código listo para copiar, de forma que un blog
-pueda pegarlo y le salga la imagen actualizada con un enlace de vuelta. Hace falta servir cada gráfico como imagen
-SVG con sus estilos dentro (hoy el color y el grosor de las líneas vienen de la hoja de estilos de la página, y una
-imagen suelta no la lee). Es trabajo de plugin, media tarde, y no corre prisa hasta que la sección esté publicada.
+Debajo de cada gráfico hay un recuadro plegable, **"Pon este gráfico en tu web"**, con el código para copiar. Quien
+lo pegue en su artículo se lleva una imagen que **se actualiza sola** cada vez que llega un dato nuevo, con un
+**enlace de vuelta de verdad** —no un iframe, que para Google no cuenta como enlace— y con la cita de la fuente
+dibujada **dentro de la imagen**, de modo que si alguien se lleva solo el fichero, la procedencia se va con él.
+
+El código que se copia es este, con la serie que toque:
+
+```html
+<figure><a href="…/observatorio-precios-calefaccion/#gasoleo_es"><img
+  src="…/wp-json/cpc-observatorio/v1/grafico/gasoleo_es.svg?lang=es"
+  alt="Gasóleo de calefacción, con impuestos — España" width="800" height="444" loading="lazy"
+  style="max-width:100%;height:auto"></a><figcaption><a href="…/observatorio-precios-calefaccion/">Observatorio de
+  precios de la calefacción</a> · Fuente: Comisión Europea, Weekly Oil Bulletin</figcaption></figure>
+```
+
+**El recuadro NO sale en todas las series**, y esto importa: solo en aquellas cuya fuente **autoriza redistribuir**
+(Comisión Europea, Eurostat, CNMC, INE). Las de AVEBIOM, las de proPellets y las de Red Eléctrica no lo llevan, y su
+dirección de imagen devuelve un 404. Con esas fuentes tenemos permiso para publicar nosotros, no para que cualquiera
+se lleve el dato. Es la misma regla que ya se aplica al CSV, y hay un test que la comprueba en cada despliegue.
+
+**Cuando se escriba a un blog, se le manda el código ya montado**, no el enlace al recuadro: se trata de que solo
+tenga que pegar.
 
 ---
 
