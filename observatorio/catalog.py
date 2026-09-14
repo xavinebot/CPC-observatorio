@@ -51,6 +51,10 @@ class Serie:
     # no llegue a este mínimo se recoge, pero en la web aparece como "en construcción" (sin gráfico, sin CSV y
     # sin marcado Dataset). Cuando lo alcanza se publica sola, sin tocar nada.
     min_points: int = 0
+    # ¿entra en la tabla comparativa de la portada? Se deja fuera lo que no sea una forma realista de calentar
+    # una casa con estufa o caldera doméstica (el pellet a granel o la astilla piden silo), y los formatos
+    # repetidos del mismo combustible. Siguen publicándose como serie, con su gráfico y su fuente.
+    en_comparativa: bool = True
     hidden: bool = False           # True = solo para contraste interno; no aparece en la web
 
 

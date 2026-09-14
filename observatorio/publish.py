@@ -52,6 +52,7 @@ def serie_payload(s: catalog.Serie, points: list[storage.Point]) -> dict:
         "source": {"name": s.source.name, "url": s.source.url, "license": s.source.license,
                    "license_url": s.source.license_url, "attribution": s.source.attribution},
         "redistributable": s.redistributable,
+        "en_comparativa": s.en_comparativa,
         "status": estado,
         "faltan": faltan,
         "min_points": s.min_points,
