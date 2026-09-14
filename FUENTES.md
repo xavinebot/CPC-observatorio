@@ -25,13 +25,26 @@ se puede recoger pero no republicar se queda recogido y sin publicar, esperando 
 | Materias primas: gas europeo (TTF), mineral de hierro, Brent, cobre | mundial | Banco Mundial (Pink Sheet) | mensual | 1960 | CC BY 4.0 | sí |
 | Índice del precio del pellet a granel | AT | proPellets Austria | mensual | enero 2006 | uso con cita, revocable | **no** |
 | Índice propio del precio de la leña (palet entregado y saco) | ES | elaboración propia | semanal | septiembre 2026 | CC BY 4.0 | sí |
+| Pellet, hueso de aceituna y astilla (saco, palet, granel; trimestral y media anual) | ES | AVEBIOM, Índice de Precios de Biocombustibles Sólidos | trimestral | 2012 (pellet), 2014 (hueso y astilla) | autorización escrita de AVEBIOM, 14 sep 2026 | **no** |
 
 ## 2. Lo que se recoge pero NO se publica todavía
 
 | Dato | Fuente | Por qué no se publica |
 |---|---|---|
-| Pellet, hueso de aceituna y astilla en España (saco, palet, granel) | AVEBIOM, Índice de Precios de Biomasa | Su aviso legal exige **autorización escrita previa** para reproducir. Los datos ya se extraen de sus PDF y el histórico está cargado desde 2012 (pellet) y 2014 (hueso y astilla), pero la serie aparece como "pendiente" en la web hasta que AVEBIOM conteste. Hay que escribirles. |
 | Pellet a granel en Alemania | C.A.R.M.E.N. e.V. | Sus condiciones piden "consulta previa" para uso comercial. Serie cargada desde 2005; publicar tras el correo. |
+
+### Condiciones que impone AVEBIOM (autorización del 14 sep 2026)
+
+Contestaron que sí a las tres condiciones que se les propusieron, con una precisión sobre la tercera:
+
+1. **Citar AVEBIOM en cada gráfico y en cada tabla**, con enlace al portal que agrupa sus índices:
+   `https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/` (piden ese, no el PDF suelto).
+2. **Fecha de la última actualización** y aviso de que los precios llevan el **21 % de IVA**.
+3. **Sin modificar los datos.** Sobre la descarga preguntaron a qué se refería: entendían "formato no editable".
+   Autorizan ofrecer **su PDF o una gráfica suya** siempre que lleven la cita del punto 1. No hay permiso explícito
+   para republicar los datos en CSV, así que estas series se quedan con `redistributable=False` (sin CSV).
+
+El correo de respuesta **es la autorización escrita** que exige su aviso legal: hay que conservarlo.
 
 ## 3. Lo que se descartó y por qué
 

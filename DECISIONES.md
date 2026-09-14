@@ -99,6 +99,11 @@ por escrito, se activa cambiando una palabra en la configuración.
 **Por qué:** que otros lo hagan no es una autorización, y el proyecto va a pedir enlaces y credibilidad a gente del
 sector. Empezar incumpliendo el aviso legal de la asociación de la biomasa española sería un mal negocio.
 
+**Desenlace (14 de septiembre de 2026): AVEBIOM dijo que sí.** Contestaron al correo aceptando las tres condiciones
+que se les proponían, y las diez series ya están publicadas. Piden que el enlace vaya a su portal de índices y no al
+PDF, y no se ofrece CSV de sus datos. Detalle en FUENTES.md. La apuesta de pedir permiso en vez de copiar salió
+bien y además deja una relación abierta con la asociación del sector, que era la mitad del motivo.
+
 El mismo criterio se aplica al pellet alemán de C.A.R.M.E.N. (piden "consulta previa" para uso comercial). El índice
 austriaco de proPellets sí se publica, porque su aviso permite el uso citando la fuente, pero sin CSV descargable.
 

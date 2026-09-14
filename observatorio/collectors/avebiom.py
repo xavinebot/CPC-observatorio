@@ -5,10 +5,14 @@ curso. Los PDF cambian de dirección cada trimestre, así que se localizan leyen
 no se puede leer (ha pasado: desde los servidores de GitHub la web responde distinto que desde casa), se prueban
 las direcciones previsibles del trimestre en curso y de los anteriores.
 
-IMPORTANTE: las series están marcadas `publishable=False` hasta que AVEBIOM autorice por escrito la reproducción
-(su aviso legal lo exige). Se recolectan para tener el histórico listo el día que llegue el permiso. Por eso este
-recolector es **opcional**: si falla, se anota en el resumen semanal pero no lanza un aviso de incidencia, porque su
-dato no está en la web y no hay nada que se rompa.
+AUTORIZACIÓN: AVEBIOM autorizó la reproducción por correo el 14 de septiembre de 2026 (respuesta a la petición de
+`CORREO-AVEBIOM.md`; el correo es el permiso escrito que exige su aviso legal). Condiciones que impone y que hay que
+respetar al tocar esto:
+  1. Citar AVEBIOM como fuente en cada gráfico y en cada tabla, con enlace al portal del índice
+     (https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/), no al PDF suelto.
+  2. Indicar la fecha de la última actualización y que los precios llevan el 21 % de IVA.
+  3. No modificar los datos. Por eso las series siguen con `redistributable=False`: no se ofrece CSV. AVEBIOM
+     permite además enlazar su propio PDF o una gráfica suya, siempre con la cita del punto 1.
 """
 from __future__ import annotations
 
@@ -35,7 +39,7 @@ KINDS = ("PELLET", "ASTILLA", "HUESO")
 class Collector(_Base):
     name = "avebiom"
     min_records = 3 * 10
-    optional = True   # ver nota de la cabecera: su dato no se publica todavía
+    optional = False  # desde el 14 sep 2026 su dato está publicado: si falla, es una incidencia de verdad
 
     def find_pdfs(self) -> dict[str, str]:
         """Busca los tres PDF en la página del índice; si no, prueba las direcciones previsibles."""

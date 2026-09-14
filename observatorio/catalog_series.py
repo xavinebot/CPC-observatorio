@@ -42,9 +42,10 @@ SRC_WB = Source(
     attribution="Fuente: World Bank Commodity Price Data (The Pink Sheet)")
 SRC_AVEBIOM = Source(
     name="AVEBIOM, Índice de Precios de Biomasa (IPB)",
-    url="https://www.avebiom.org/proyectos/indice-precios-biomasa-al-consumidor",
-    license="Reproducción sujeta a autorización escrita de AVEBIOM (pendiente)",
-    license_url="https://avebiom.org/aviso-legal/", attribution="Fuente: AVEBIOM, Índice de Precios de Biomasa")
+    url="https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
+    license="Autorizado por AVEBIOM (correo del 14 sep 2026): citando la fuente con enlace y sin modificar los datos",
+    license_url="https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
+    attribution="Fuente: AVEBIOM, Índice de Precios de Biocombustibles Sólidos")
 SRC_LENA = Source(
     name="Observatorio de precios de cristalesparachimeneas.es (elaboración propia a partir de precios públicos de tiendas online)",
     url="https://cristalesparachimeneas.es/",
@@ -226,7 +227,7 @@ for sid, (col, unit, name) in WB.items():
         min_value=lo, max_value=hi, max_change_pct=60, decimals=2,
         notes=f"Media mensual en dólares nominales (columna '{col}' del Pink Sheet). Mostrar la variación interanual evita el efecto del tipo de cambio."))
 
-# ----------------------------------------------------------------------------- biomasa (AVEBIOM) — pendiente de autorización
+# ----------------------------------------------------------------------------- biomasa (AVEBIOM) — autorizado el 14 sep 2026
 AVB = {
     "pellet_saco_es": ("PELLET", "SACO de 15 kg", 1 / 15, N("Pellet en saco de 15 kg, con IVA", "Granulés en sac de 15 kg, TTC", "Pellet in sacco da 15 kg, IVA inclusa", "Pellets im 15-kg-Sack, inkl. MwSt.", "Pellets em saco de 15 kg, com IVA"), 4.76),
     "pellet_palet_es": ("PELLET", "PALET de sacos", 1 / 1000, N("Pellet en palet de sacos, con IVA", "Granulés en palette de sacs, TTC", "Pellet in pallet di sacchi, IVA inclusa", "Pellets auf Palette, inkl. MwSt.", "Pellets em palete de sacos, com IVA"), 4.76),
@@ -241,14 +242,14 @@ for sid, (pdf, block, factor, name, kwh) in AVB.items():
         id=sid, name=name, country="ES", group="hogar", fuel=fuel, unit="EUR/kg", source=SRC_AVEBIOM,
         collector="avebiom", native_freq="Q", expected_every_days=92, stale_after_days=230,
         min_value=0.03, max_value=2.0, max_change_pct=60, kwh_per_unit=kwh, decimals=4, taxes_included=True,
-        publishable=False, redistributable=False,
+        publishable=True, redistributable=False,
         notes="Precio medio a consumidor final en España, con 21 % de IVA; trimestral. PCI usado por AVEBIOM: 4,76 kWh/kg (pellet)."))
     register(Serie(
         id=sid + "_anual", name={k: v + " · " + ANUAL[k] for k, v in name.items()},
         country="ES", group="hogar", fuel=fuel, unit="EUR/kg", source=SRC_AVEBIOM,
         collector="avebiom", native_freq="A", expected_every_days=366, stale_after_days=760,
         min_value=0.03, max_value=2.0, max_change_pct=80, kwh_per_unit=kwh, decimals=4, taxes_included=True,
-        publishable=False, redistributable=False, notes="Media anual publicada por AVEBIOM."))
+        publishable=True, redistributable=False, notes="Media anual publicada por AVEBIOM."))
 
 # ----------------------------------------------------------------------------- leña (índice propio)
 register(Serie(
