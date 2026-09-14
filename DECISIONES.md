@@ -235,3 +235,35 @@ por escrito pero no aplicados.
 tienes chimenea y el cristal está roto o ahumado, aquí se corta a medida. Los enlaces **desde** páginas existentes
 están propuestos en INFORME.md y **no se han aplicado**, porque tocar las páginas que se están midiendo rompería la
 medición de octubre.
+
+## 16. Una serie de otro país dentro de una página (Austria en la alemana)
+
+**El problema:** Alemania no tiene ninguna serie de precio del pellet que se pueda reutilizar. La de C.A.R.M.E.N.
+e.V. pide consulta previa para uso comercial y sigue **recogida pero sin publicar**. Y el pellet es, después de la
+leña, lo que más busca un lector alemán.
+
+**Decisión (14 sep 2026): sí se publica una serie de otro país, pero diciéndolo.** En la página alemana aparece el
+índice de proPellets Austria, con tres condiciones que no se negocian:
+
+1. **Dicho en el propio texto** que es austriaco y que **no es un precio alemán**, con el motivo (los dos países
+   compran en buena medida en el mismo mercado) y la metodología (más de 50 distribuidores, pellet ENplus A1 a
+   granel, pedidos de 6 t, base enero de 2006).
+2. **Sin descarga.** proPellets autoriza el uso citando la fuente, no la redistribución: la serie va con
+   `redistributable=False`, así que no genera CSV ni declara descarga en el marcado de datos. Hay un test que lo
+   comprueba en cada despliegue.
+3. **En el marcado de datos, su país es Austria**, no Alemania. Quien lea el conjunto de datos ve lo mismo que
+   quien lee la página.
+
+**Lo que NO se hace:** dar el número austriaco como alemán, ni mezclarlo en la misma línea del gráfico con datos
+alemanes, ni meterlo en la comparativa de euros por kWh útil de Alemania. Un dato de otro país sirve de referencia;
+no sirve para responder "cuánto cuesta calentar mi casa aquí".
+
+**Regla general que queda:** una serie de un país puede aparecer en la página de otro **solo** si se dice de dónde
+es, por qué está ahí y qué no se puede concluir de ella.
+
+## 17. España no aparece en la comparación europea de la leña, y se dice por qué
+
+Eurostat no publica para España la subclase de leña y pellet del índice armonizado; el INE no la desglosa. La
+tentación es no mencionar a España y que nadie se pregunte nada. **Decisión: nombrarlo.** La nota de la tabla dice
+que España falta y por qué, y aprovecha para decir que para España hay algo mejor, precios en euros por kilo del
+índice de AVEBIOM. Un hueco explicado da más confianza que una tabla que disimula.
