@@ -90,3 +90,94 @@ date,store,name,price,es_lena,especie,kg,formato,humedad_pct,seca,transporte_inc
 2026-09-12,S6,Leña de Olivo – Selección Troncos gruesos | Saca de 300 Kg (aprox.),121.0,True,olivo,300,saca,0,False,False,claude
 2026-09-12,S6,Leña de Encina | Saca de 350 Kg (aprox.),101.19,True,encina,350,saca,0,True,False,claude
 2026-09-12,S6,Leña de Olivo | Saca de 600 Kg (aprox.),181.5,True,olivo,600,saca,0,False,False,claude
+2026-09-14,S1,Leña de Olivo en palet con caja de cartón (300L / 600L) · Tipo de Palet: 300 litros,159.901501,True,olivo,150,palet,20,True,True,claude
+2026-09-14,S1,Leña de Olivo en palet con caja de cartón (300L / 600L) · Tipo de Palet: 600 litros,219.905401,True,olivo,300,palet,20,True,True,claude
+2026-09-14,S1,Leña de Haya en palet con caja de cartón (300L / 600L) · Tipo de Palet: 300 litros,164.898801,True,haya,150,palet,20,True,True,claude
+2026-09-14,S1,Leña de Haya en palet con caja de cartón (300L / 600L) · Tipo de Palet: 600 litros,219.905401,True,haya,300,palet,20,True,True,claude
+2026-09-14,S1,Leña de Roble en palet con caja de cartón (300L / 600L) · Tipo de Palet: 300 litros,164.898801,True,roble,150,palet,20,True,True,claude
+2026-09-14,S1,Leña de Roble en palet con caja de cartón (300L / 600L) · Tipo de Palet: 600 litros,219.905401,True,roble,300,palet,20,True,True,claude
+2026-09-14,S1,Leña para estufas en palet (1m3 / 2m3 ) · Tipo de Palet: 1 m3,268.002901,True,mezcla,500,palet,0,True,True,claude
+2026-09-14,S1,Leña para estufas en palet (1m3 / 2m3 ) · Tipo de Palet: 2 m3,397.993201,True,mezcla,1000,palet,0,True,True,claude
+2026-09-14,S1,Leña de haya en palet (1m3 / 2m3) · Tipo de Palet: 1 m3,274.004501,True,haya,500,palet,0,True,True,claude
+2026-09-14,S1,Leña de haya en palet (1m3 / 2m3) · Tipo de Palet: 2 m3,415.998001,True,haya,1000,palet,0,True,True,claude
+2026-09-14,S1,Leña para chimeneas de olivo en palet (1m3 / 2m3) · Tipo de Palet: 1 m3,251.994601,True,olivo,500,palet,0,True,True,claude
+2026-09-14,S1,Leña para chimeneas de olivo en palet (1m3 / 2m3) · Tipo de Palet: 2 m3,366.000801,True,olivo,1000,palet,0,True,True,claude
+2026-09-14,S1,Leña para estufas pequeñas en palet (1m3 / 2m3) · Tipo de Palet: 1 m3,277.997501,True,mezcla,500,palet,0,True,True,claude
+2026-09-14,S1,Leña para estufas pequeñas en palet (1m3 / 2m3) · Tipo de Palet: 2 m3,417.994501,True,mezcla,1000,palet,0,True,True,claude
+2026-09-14,S1,Leña de encina en palet (1m3 / 2m3) · Tipo de Palet: 1 m3,287.980001,True,encina,500,palet,0,True,True,claude
+2026-09-14,S1,Leña de encina en palet (1m3 / 2m3) · Tipo de Palet: 2 m3,439.000101,True,encina,1000,palet,0,True,True,claude
+2026-09-14,S1,Leña de naranjo para hacer paellas en palet (1m3 / 2m3) · Tipo de Palet: 1 m3,274.004501,True,naranjo,400,palet,0,True,True,claude
+2026-09-14,S1,Leña de naranjo para hacer paellas en palet (1m3 / 2m3) · Tipo de Palet: 2 m3,415.998001,True,naranjo,900,palet,0,True,True,claude
+2026-09-14,S1,Leña para encender el fuego en palet (1m3 / 2m3) · Tipo de Palet: 1 m3,262.001301,True,pino,200,palet,0,True,True,claude
+2026-09-14,S1,Leña para encender el fuego en palet (1m3 / 2m3) · Tipo de Palet: 2 m3,372.994601,True,pino,400,palet,0,True,True,claude
+2026-09-14,S1,Paquete de leña de fácil encendido,5.190901,True,desconocida,0,otro,0,False,True,claude
+2026-09-14,S1,Paquete de leña de encina y roble,5.795901,True,mezcla,0,otro,0,False,True,claude
+2026-09-14,S1,Leña de haya en saco 12 kg,10.067201,True,haya,12,saco,0,False,True,claude
+2026-09-14,S1,Leña de olivo en saco 12Kg,7.816601,True,olivo,12,saco,0,False,True,claude
+2026-09-14,S1,Leña de encina y roble en saco 14 Kg,9.014501,True,mezcla,14,saco,0,False,True,claude
+2026-09-14,S1,Leña de naranjo para paellas en saco 15 Kg,16.504401,True,naranjo,15,saco,0,False,True,claude
+2026-09-14,S1,Leña de Algarrobo rojo en saco de 20 kg,14.725701,True,algarrobo,20,saco,0,False,True,claude
+2026-09-14,S2,Palet Leña de Encina 1000 KG (30 cm),296.49,True,encina,1000,palet,18,True,True,claude
+2026-09-14,S2,Palet de Leña de Haya 1000 Kg (30 cm),278.51,True,haya,1000,palet,18,True,True,claude
+2026-09-14,S2,Palet de Leña de Roble 1000 Kg (30 cm),278.51,True,roble,1000,palet,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Olivo,130.0,True,olivo,500,saca,18,True,True,claude
+2026-09-14,S2,Fajos de Astillas de Haya,6.61,False,haya,6,otro,18,True,True,claude
+2026-09-14,S2,Palet de Leña de Haya,142.18,True,haya,500,palet,18,True,True,claude
+2026-09-14,S2,Palet de Leña de Roble,147.62,True,roble,500,palet,18,True,True,claude
+2026-09-14,S2,Palet de Leña de Encina,159.72,True,encina,500,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Haya (35cm),180.0,True,haya,500,palet,18,True,True,claude
+2026-09-14,S2,Palet de Leña de Roble 1500 Kg (50cm),370.01,True,roble,1500,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Roble (32 cm),399.0,True,roble,1600,palet,18,True,True,claude
+2026-09-14,S2,Palet de Leña de Encina 1600 Kg (32 cm),420.0,True,encina,1600,palet,18,True,True,claude
+2026-09-14,S2,Palet de Leña de Roble 1000 Kg (50 cm),262.0,True,roble,1000,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Roble 600 Kg (35 cm),170.01,True,roble,600,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Roble (35 cm),386.99,True,roble,1500,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Haya (40 cm),363.0,True,haya,1500,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Roble (40 cm),363.0,True,roble,1500,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Encina (40 cm),399.0,True,encina,1500,palet,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Haya Astillada Pequeña (35 cm),136.0,True,haya,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Roble Astillado Pequeño (35 cm),136.0,True,roble,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Encina Astillado Pequeño (40cm),145.01,True,encina,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Encina Astillado Pequeño (35 cm),145.01,True,encina,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Roble Astillado Pequeño (40 cm),136.0,True,roble,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Roble · 30 cm,121.0,True,roble,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Roble · 35 cm,121.0,True,roble,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Roble · 40 cm,121.0,True,roble,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Haya · 40 cm,121.0,True,haya,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Haya · 35 cm,121.0,True,haya,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Haya · 30 cm,121.0,True,haya,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Encina · 30 cm,130.0,True,encina,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Encina · 35 cm,130.0,True,encina,500,saca,18,True,True,claude
+2026-09-14,S2,Big Bags Leña de Encina · 40 cm,130.0,True,encina,500,saca,18,True,True,claude
+2026-09-14,S2,Palet Leña de Haya,262.0,True,haya,1000,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Roble,262.0,True,roble,1000,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Encina,279.99,True,encina,1000,palet,18,True,True,claude
+2026-09-14,S2,Palet Leña de Olivo,292.0,True,olivo,1000,palet,18,True,True,claude
+2026-09-14,S2,Saco Leña de Haya Paella 10 KG · 1 Saco,6.66,True,haya,10,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Haya Paella 10 KG · 14 Sacos,93.17,True,haya,140,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Haya Paella 10 KG · 59 Sacos,392.65,True,haya,590,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Haya Paella 10 KG · 74 Sacos,492.47,True,haya,740,saco,18,True,True,claude
+2026-09-14,S2,Saco Rojo Leña de Haya Encendido 20 KG,13.2,True,haya,20,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Roble · 1 Saco,6.66,True,roble,0,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Roble · 10 Sacos,53.97,True,roble,0,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Haya · 1 Saco,6.66,True,haya,10,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Haya · 10 Sacos,53.97,True,haya,100,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Encina · 1 Saco,7.97,True,encina,0,saco,18,True,True,claude
+2026-09-14,S2,Saco Leña de Encina · 10 Sacos,68.85,True,encina,0,saco,18,True,True,claude
+2026-09-14,S3,Leña de olivo · 600-kg,398.0,True,olivo,600,palet,0,True,True,claude
+2026-09-14,S3,Leña de olivo · 300-kg,230.0,True,olivo,300,palet,0,True,True,claude
+2026-09-14,S3,Leña de Maderas duras · 600-kg,346.0,True,mezcla,600,otro,0,False,True,claude
+2026-09-14,S3,Leña de Maderas duras · 300-kg,247.0,True,mezcla,300,otro,0,False,True,claude
+2026-09-14,S4,Corteza de Pino · Default Title,180.0,False,pino,200,saca,0,False,True,claude
+2026-09-14,S4,Leña de Pino · Palet (35 sacos),167.83,True,pino,0,palet,0,False,True,claude
+2026-09-14,S4,Leña de Pino · Medio palet (15 sacos),85.26,True,pino,0,palet,0,False,True,claude
+2026-09-14,S4,Briquetas de Madera · Palet (126 packs de 12 briquetas),527.94,False,pino,1134,palet,0,True,True,claude
+2026-09-14,S4,Briquetas de Madera · Medio palet (63 packs de 12 briquetas),301.14,False,pino,567,palet,0,True,True,claude
+2026-09-14,S4,Astillas de Pino para Encendido · Palet (35 sacos),158.9,False,pino,245,palet,0,False,True,claude
+2026-09-14,S4,Astillas de Pino para Encendido · Medio palet (15 sacos),81.45,False,pino,105,palet,0,False,True,claude
+2026-09-14,S6,Leña de Pino recortes | Madera Económica – Saca de 1m3,54.45,True,pino,0,saca,0,False,False,claude
+2026-09-14,S6,Leña de Encina | 15 Sacos de 10 Kg (150Kg),65.55,True,encina,150,saco,0,True,False,claude
+2026-09-14,S6,Leña de Encina | Saco de 10 Kg,5.95,True,encina,10,saco,0,True,False,claude
+2026-09-14,S6,Leña de Olivo – Selección Troncos gruesos | Saca de 300 Kg (aprox.),121.0,True,olivo,300,saca,0,False,False,claude
+2026-09-14,S6,Leña de Encina | Saca de 350 Kg (aprox.),101.19,True,encina,350,saca,0,True,False,claude
+2026-09-14,S6,Leña de Olivo | Saca de 600 Kg (aprox.),181.5,True,olivo,600,saca,0,False,False,claude
