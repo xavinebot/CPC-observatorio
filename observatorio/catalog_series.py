@@ -18,7 +18,7 @@ SRC_WOB = Source(
     # sin traducir en la francesa, la italiana, la alemana y la portuguesa. Eso se cuenta en FUENTES.md.
     name="Comisión Europea, Weekly Oil Bulletin",
     url="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en",
-    license="CC BY 4.0 (Decisión 2011/833/UE)", license_url="https://commission.europa.eu/legal-notice_en",
+    license=N("CC BY 4.0 (Decisión 2011/833/UE)", "CC BY 4.0 (décision 2011/833/UE)", "CC BY 4.0 (decisione 2011/833/UE)", "CC BY 4.0 (Beschluss 2011/833/EU)", "CC BY 4.0 (Decisão 2011/833/UE)"), license_url="https://commission.europa.eu/legal-notice_en",
     attribution="Fuente: Comisión Europea, Weekly Oil Bulletin")
 SRC_CNMC = Source(
     name="CNMC Data (Comisión Nacional de los Mercados y la Competencia)",
@@ -31,11 +31,11 @@ SRC_EUROSTAT = Source(
     attribution="Fuente: Eurostat")
 SRC_REE = Source(
     name="Red Eléctrica (REData)", url="https://www.ree.es/es/datos/apidatos",
-    license="Uso informativo citando fuente y fecha; sin redistribución del dato en bruto",
+    license=N("Uso informativo citando fuente y fecha; sin redistribución del dato en bruto", "Usage informatif en citant la source et la date ; sans redistribution des données brutes", "Uso informativo citando fonte e data; senza ridistribuzione del dato grezzo", "Informative Nutzung mit Angabe von Quelle und Datum; keine Weitergabe der Rohdaten", "Uso informativo citando fonte e data; sem redistribuição dos dados em bruto"),
     license_url="https://www.ree.es/es/aviso-legal", attribution="Fuente: Red Eléctrica (REData)")
 SRC_INE = Source(
     name="INE (Instituto Nacional de Estadística)", url="https://www.ine.es",
-    license="Reutilización libre citando la fuente (aviso legal INE)",
+    license=N("Reutilización libre citando la fuente (aviso legal INE)", "Réutilisation libre en citant la source (mentions légales de l'INE)", "Riutilizzo libero citando la fonte (note legali dell'INE)", "Freie Weiterverwendung mit Quellenangabe (Impressum des INE)", "Reutilização livre citando a fonte (aviso legal do INE)"),
     license_url="https://www.ine.es/ss/Satellite?L=es_ES&c=Page&cid=1254735849170&p=1254735849170&pagename=Ayuda%2FINELayout",
     attribution="Elaboración propia con datos extraídos del sitio web del INE: www.ine.es")
 SRC_WB = Source(
@@ -46,13 +46,13 @@ SRC_WB = Source(
 SRC_AVEBIOM = Source(
     name="AVEBIOM, Índice de Precios de Biocombustibles Sólidos (IPB)",
     url="https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
-    license="Autorizado por AVEBIOM (correo del 14 sep 2026): citando la fuente con enlace y sin modificar los datos",
+    license=N("Autorizado por AVEBIOM (correo del 14 sep 2026): citando la fuente con enlace y sin modificar los datos", "Autorisé par AVEBIOM (courriel du 14 sept. 2026) : en citant la source avec un lien et sans modifier les données", "Autorizzato da AVEBIOM (email del 14 set. 2026): citando la fonte con collegamento e senza modificare i dati", "Genehmigt von AVEBIOM (E-Mail vom 14.09.2026): mit Quellenangabe und Link, ohne die Daten zu verändern", "Autorizado pela AVEBIOM (e-mail de 14 set. 2026): citando a fonte com ligação e sem modificar os dados"),
     license_url="https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
     attribution="Fuente: AVEBIOM, Índice de Precios de Biocombustibles Sólidos")
 SRC_LENA = Source(
     name="Observatorio de precios de cristalesparachimeneas.es (elaboración propia a partir de precios públicos de tiendas online)",
     url="https://cristalesparachimeneas.es/",
-    license="CC BY 4.0 (índice agregado de elaboración propia)", license_url="https://creativecommons.org/licenses/by/4.0/",
+    license=N("CC BY 4.0 (índice agregado de elaboración propia)", "CC BY 4.0 (indice agrégé de production propre)", "CC BY 4.0 (indice aggregato di elaborazione propria)", "CC BY 4.0 (eigener aggregierter Index)", "CC BY 4.0 (índice agregado de elaboração própria)"), license_url="https://creativecommons.org/licenses/by/4.0/",
     attribution="Fuente: Observatorio de precios de calefacción, cristalesparachimeneas.es")
 
 
@@ -289,12 +289,12 @@ register(Serie(
 # ----------------------------------------------------------------------------- pellet en otros paises
 SRC_PROPELLETS = Source(
     name="proPellets Austria, Pelletpreisindex PPI06", url="https://www.propellets.at/aktuelle-pelletpreise",
-    license="Uso con cita de la fuente (permiso revocable, Impressum de proPellets)",
+    license=N("Uso con cita de la fuente (permiso revocable, Impressum de proPellets)", "Usage avec citation de la source (autorisation révocable, mentions légales de proPellets)", "Uso con citazione della fonte (permesso revocabile, note legali di proPellets)", "Nutzung mit Quellenangabe (widerrufliche Erlaubnis, Impressum von proPellets)", "Uso com citação da fonte (permissão revogável, Impressum da proPellets)"),
     license_url="https://www.propellets.at/impressum", attribution="Quelle: proPellets Austria")
 SRC_CARMEN = Source(
     name="C.A.R.M.E.N. e.V., Marktpreise Pellets",
     url="https://www.carmen-ev.de/service/marktueberblick/marktpreise-energieholz/marktpreise-pellets/",
-    license="Uso comercial previa consulta con C.A.R.M.E.N. (pendiente)",
+    license=N("Uso comercial previa consulta con C.A.R.M.E.N. (pendiente)", "Usage commercial sur demande préalable auprès de C.A.R.M.E.N. (en attente)", "Uso commerciale previa richiesta a C.A.R.M.E.N. (in attesa)", "Kommerzielle Nutzung nach vorheriger Rücksprache mit C.A.R.M.E.N. (ausstehend)", "Uso comercial mediante consulta prévia à C.A.R.M.E.N. (pendente)"),
     license_url="https://www.carmen-ev.de/service/marktueberblick/marktpreise-energieholz/",
     attribution="Quelle: C.A.R.M.E.N. e.V.")
 register(Serie(

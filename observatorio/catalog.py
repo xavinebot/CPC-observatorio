@@ -19,9 +19,20 @@ from dataclasses import dataclass, field
 class Source:
     name: str
     url: str            # página de la fuente (para el enlace visible)
-    license: str        # nombre de la licencia / condición de reutilización
+    license: object     # condición de reutilización: texto suelto, o N(es, fr, it, de, pt) si es prosa
     license_url: str
     attribution: str    # texto de cita que exige la fuente
+
+
+def licencia_es(source: "Source") -> str:
+    """La licencia en español: es la que va en la cabecera del CSV y la que sirve de repuesto.
+
+    Los nombres de licencia estándar ("CC BY 4.0") son iguales en todos los idiomas y se dejan como
+    texto suelto. Las condiciones escritas con palabras sí se traducen, porque si no aparecen en
+    español al pie de la página alemana.
+    """
+    lic = source.license
+    return lic["es"] if isinstance(lic, dict) else str(lic)
 
 
 @dataclass(frozen=True)

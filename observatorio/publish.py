@@ -49,8 +49,7 @@ def serie_payload(s: catalog.Serie, points: list[storage.Point]) -> dict:
         "id": s.id, "name": s.name, "country": s.country, "group": s.group, "fuel": s.fuel,
         "unit": s.unit, "kwh_per_unit": s.kwh_per_unit, "taxes_included": s.taxes_included,
         "freq": s.native_freq, "decimals": s.decimals, "notes": s.notes,
-        "source": {"name": s.source.name, "url": s.source.url, "license": s.source.license,
-                   "license_url": s.source.license_url, "attribution": s.source.attribution},
+        "source": fuente_publicada(s.source),
         "redistributable": s.redistributable,
         "en_comparativa": s.en_comparativa,
         "status": estado,
@@ -111,12 +110,26 @@ def build_all() -> None:
             json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
 
+def fuente_publicada(src: catalog.Source) -> dict:
+    """La fuente tal como la lee el plugin.
+
+    `license` va siempre en español (repuesto y compatibilidad con la versión anterior del plugin) y,
+    cuando la condición está escrita en los cinco idiomas, se añade `license_i18n` para que cada página
+    la enseñe en el suyo.
+    """
+    out = {"name": src.name, "url": src.url, "license": catalog.licencia_es(src),
+           "license_url": src.license_url, "attribution": src.attribution}
+    if isinstance(src.license, dict):
+        out["license_i18n"] = dict(src.license)
+    return out
+
+
 def write_csv(s: catalog.Serie, pts: list[storage.Point], generated: str) -> None:
     lines = [
         f"# {s.name['es']} ({s.country})",
         f"# Unidad: {s.unit}",
         f"# Fuente: {s.source.name} - {s.source.url}",
-        f"# Licencia: {s.source.license} - {s.source.license_url}",
+        f"# Licencia: {catalog.licencia_es(s.source)} - {s.source.license_url}",
         f"# Cita obligatoria: {s.source.attribution}",
         f"# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado {generated}",
         "date,value",
