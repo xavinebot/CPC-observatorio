@@ -1,3 +1,11 @@
 * text=auto eol=lf
 *.cmd text eol=crlf
 *.csv text eol=lf
+
+# Ficheros que se REGENERAN solos en cada ejecución (los publica `observatorio publish`).
+# Cuando la tarea de GitHub y el ordenador los cambian a la vez, git marca conflicto en los 87 ficheros
+# a la vez, y resolverlos a mano no tiene ningún sentido: basta con quedarse con una versión y volver a
+# generarlos. Con esto git se queda con la copia local y no pregunta.
+# El "driver" se activa en cada ordenador con:  git config merge.ours.driver true
+# (en los servidores de GitHub no está activado, y da igual: allí el clon siempre es limpio).
+data/published/** merge=ours
