@@ -6,13 +6,14 @@
   python -m observatorio summary        (envía el resumen semanal)
   python -m observatorio test-alert     (aviso de prueba por Telegram)
   python -m observatorio publish        (regenera los JSON sin descargar nada)
+  python -m observatorio prensa         (los números de la nota de prensa)
 """
 from __future__ import annotations
 
 import argparse
 import sys
 
-from . import alerts, catalog, collectors, publish, quarantine, runner, storage
+from . import alerts, catalog, collectors, prensa, publish, quarantine, runner, storage
 
 
 def main(argv=None) -> int:
@@ -32,6 +33,7 @@ def main(argv=None) -> int:
     sub.add_parser("test-alert")
     sub.add_parser("publish")
     sub.add_parser("list", help="lista recolectores y series")
+    sub.add_parser("prensa", help="los números de la nota de prensa (NOTA-PRENSA.md)")
     args = p.parse_args(argv)
 
     if args.cmd == "run":
@@ -67,6 +69,9 @@ def main(argv=None) -> int:
     if args.cmd == "discard":
         n = quarantine.discard(args.serie_id)
         print(f"Descartados {n} puntos")
+        return 0
+    if args.cmd == "prensa":
+        print(prensa.informe())
         return 0
     if args.cmd == "summary":
         txt = runner.weekly_summary()
