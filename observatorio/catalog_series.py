@@ -41,7 +41,7 @@ SRC_WB = Source(
     license="CC BY 4.0", license_url="https://datacatalog.worldbank.org/search/dataset/0038238",
     attribution="Fuente: World Bank Commodity Price Data (The Pink Sheet)")
 SRC_AVEBIOM = Source(
-    name="AVEBIOM, Índice de Precios de Biomasa (IPB)",
+    name="AVEBIOM, Índice de Precios de Biocombustibles Sólidos (IPB)",
     url="https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
     license="Autorizado por AVEBIOM (correo del 14 sep 2026): citando la fuente con enlace y sin modificar los datos",
     license_url="https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
