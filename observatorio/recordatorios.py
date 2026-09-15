@@ -1,0 +1,43 @@
+"""Recordatorios con fecha, que se cuelan en el resumen de los lunes.
+
+Un apunte en un documento no avisa a nadie; el resumen semanal ya llega al móvil por Telegram, así que es el sitio
+natural para las cosas que hay que hacer en una fecha y que si no se olvidan.
+
+Cada recordatorio tiene una ventana: aparece en todos los resúmenes entre `desde` y `hasta`, y después desaparece
+solo. No hay que acordarse de borrarlo. Para añadir uno, una línea más en la lista.
+"""
+from __future__ import annotations
+
+import datetime as _dt
+
+# (desde, hasta, texto). Las fechas son inclusivas, en formato AAAA-MM-DD.
+RECORDATORIOS: list[tuple[str, str, str]] = [
+    (
+        "2026-10-12", "2026-11-15",
+        "📣 <b>Toca la ronda de prensa.</b> Es la ventana buena: la segunda quincena de octubre y la primera de "
+        "noviembre, cuando se escriben los artículos de cuánto cuesta la calefacción. Antes de enviar nada, "
+        "actualiza los números con <code>python -m observatorio prensa</code>: si la historia ha cambiado, cambia "
+        "la nota. El correo y el orden de destinatarios están en NOTA-PRENSA.md.",
+    ),
+    (
+        "2026-10-22", "2026-11-30",
+        "🔗 <b>Toca el siguiente enlace interno al observatorio.</b> De uno en uno y con días de por medio, para "
+        "poder atribuir el efecto: la guía de limpieza del cristal, las guías de leña y /b2b/ hacia los índices "
+        "industriales. Desde la ficha del cristal a medida, nada. El detalle está en OBSERVATORIO.md §6.",
+    ),
+    (
+        "2026-10-19", "2026-11-09",
+        "🌳 <b>Mira el índice de la leña.</b> Debería haberse publicado solo al llegar a las ocho semanas de "
+        "lecturas. Si sigue en «series en construcción», algo falla en la recogida de las tiendas.",
+    ),
+]
+
+
+def pendientes(hoy: _dt.date | None = None) -> list[str]:
+    """Los recordatorios cuya ventana incluye hoy."""
+    hoy = hoy or _dt.date.today()
+    fuera = []
+    for desde, hasta, texto in RECORDATORIOS:
+        if _dt.date.fromisoformat(desde) <= hoy <= _dt.date.fromisoformat(hasta):
+            fuera.append(texto)
+    return fuera

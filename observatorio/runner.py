@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import traceback
 
-from . import alerts, catalog, collectors, config, contrast, publish, quarantine, storage
+from . import alerts, catalog, collectors, config, contrast, publish, quarantine, recordatorios, storage
 from .util import parse_date, today
 from .validate import validate_points
 
@@ -144,4 +144,9 @@ def weekly_summary() -> str:
         lines.append(f"Última ejecución: {state['last_run'][:16].replace('T', ' ')} UTC")
     if not runs:
         lines.append("⚠️ No hay ejecuciones registradas esta semana: comprueba GitHub Actions.")
+    # Cosas que hay que hacer en una fecha concreta. Un apunte en un documento no avisa a nadie y este resumen
+    # ya llega al móvil; cada recordatorio tiene su ventana y desaparece solo cuando pasa.
+    for texto in recordatorios.pendientes():
+        lines.append("")
+        lines.append(texto)
     return "\n".join(lines)
