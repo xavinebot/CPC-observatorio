@@ -30,6 +30,13 @@ RECORDATORIOS: list[tuple[str, str, str]] = [
         "🌳 <b>Mira el índice de la leña.</b> Debería haberse publicado solo al llegar a las ocho semanas de "
         "lecturas. Si sigue en «series en construcción», algo falla en la recogida de las tiendas.",
     ),
+    (
+        "2026-10-13", "2026-11-23",
+        "🔎 <b>Comprueba Google Dataset Search.</b> Entra en <code>datasetsearch.research.google.com</code> y busca "
+        "«precio gasóleo calefacción España». Deberían salir las series del observatorio: el marcado está puesto y "
+        "completo desde el 15 de septiembre, y Google tarda unas semanas. Si a finales de noviembre no aparecen, "
+        "hay que mirar el marcado con la prueba de resultados enriquecidos de Google.",
+    ),
 ]
 
 
