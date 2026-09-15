@@ -133,7 +133,7 @@ for cc in COUNTRIES:
         register(Serie(
             id=f"hicp_{key}_{cc.lower()}", name=name, country=cc, group="hogar_indice", fuel=fuel,
             unit="índice 2015=100", source=SRC_EUROSTAT, collector="eurostat_hicp",
-            native_freq="M", expected_every_days=31, stale_after_days=75, min_value=10, max_value=1000,
+            native_freq="M", expected_every_days=31, stale_after_days=100, min_value=10, max_value=1000,
             max_change_pct=40, kwh_per_unit=None, decimals=2, taxes_included=True,
             notes="Índice armonizado de precios de consumo (HICP), 2015=100. Mide cuánto ha subido, no cuánto cuesta. Eurostat prc_hicp_minr."))
 
@@ -166,7 +166,7 @@ INE_IPC = {
 for sid, (code, name, fuel) in INE_IPC.items():
     register(Serie(
         id=sid, name=name, country="ES", group="hogar_indice", fuel=fuel, unit="índice 2021=100",
-        source=SRC_INE, collector="ine_ipc", native_freq="M", expected_every_days=31, stale_after_days=75,
+        source=SRC_INE, collector="ine_ipc", native_freq="M", expected_every_days=31, stale_after_days=100,
         min_value=10, max_value=1000, max_change_pct=40, decimals=3, taxes_included=True,
         notes=f"Índice de precios de consumo del INE, subclase ECOICOP, base 2021=100 (serie {code})."))
 
@@ -183,7 +183,7 @@ INE_IPRI = {
 for sid, (code, name) in INE_IPRI.items():
     register(Serie(
         id=sid, name=name, country="ES", group="industria", fuel="indice", unit="índice 2021=100",
-        source=SRC_INE, collector="ine_ipri", native_freq="M", expected_every_days=31, stale_after_days=75,
+        source=SRC_INE, collector="ine_ipri", native_freq="M", expected_every_days=31, stale_after_days=100,
         min_value=5, max_value=1000, max_change_pct=25, decimals=3,
         notes=f"Índice de precios industriales del INE, mercado interior, base 2021=100 (serie {code})."))
 
@@ -210,7 +210,7 @@ for sid, cc, nace, nk, hidden in STS:
     register(Serie(
         id=sid, name=STS_NAMES[nk], country=cc, group="industria", fuel="indice",
         unit="índice 2021=100", source=SRC_EUROSTAT, collector="eurostat_sts", native_freq="M",
-        expected_every_days=31, stale_after_days=90, min_value=5, max_value=1000, max_change_pct=25,
+        expected_every_days=31, stale_after_days=100, min_value=5, max_value=1000, max_change_pct=25,
         decimals=1, hidden=hidden,
         notes=f"Índice de precios de producción industrial, mercado interior, 2021=100 (Eurostat sts_inppd_m, NACE {nace})."))
 
@@ -252,7 +252,10 @@ for sid, (pdf, block, factor, name, kwh) in AVB.items():
         collector="avebiom", native_freq="Q", expected_every_days=92, stale_after_days=230,
         min_value=0.03, max_value=2.0, max_change_pct=60, kwh_per_unit=kwh, decimals=4, taxes_included=True,
         publishable=True, redistributable=False, en_comparativa=sid not in SIN_COMPARATIVA,
-        notes="Precio medio a consumidor final en España, con 21 % de IVA; trimestral. PCI usado por AVEBIOM: 4,76 kWh/kg (pellet)."))
+        # El poder calorifico es el de CADA combustible, no el del pellet para los cinco: la astilla entra en
+        # la comparativa con 4,42 y la nota decia 4,76. Se decia un numero y se calculaba con otro.
+        notes=("Precio medio a consumidor final en España, con 21 % de IVA; trimestral. "
+               "Poder calorífico usado para pasarlo a €/kWh: " + ("%.2f" % kwh).replace(".", ",") + " kWh/kg.")))
     register(Serie(
         id=sid + "_anual", name={k: v + " · " + ANUAL[k] for k, v in name.items()},
         country="ES", group="hogar", fuel=fuel, unit="EUR/kg", source=SRC_AVEBIOM,
