@@ -37,6 +37,13 @@ RECORDATORIOS: list[tuple[str, str, str]] = [
         "completo desde el 15 de septiembre, y Google tarda unas semanas. Si a finales de noviembre no aparecen, "
         "hay que mirar el marcado con la prueba de resultados enriquecidos de Google.",
     ),
+    (
+        "2026-09-29", "2026-12-15",
+        "🏛️ <b>Mira si ya está publicada la ficha de datos.gob.es.</b> Busca «Cristales para Chimeneas» en "
+        "<code>datos.gob.es/es/empresas</code>: la revisan a mano antes de publicarla, así que tarda semanas. "
+        "Cuando aparezca, apúntala en la pestaña <code>GSC_enlaces</code> de la hoja «Datos CPC» como dominio que "
+        "enlaza, tipo administración. Si a mediados de diciembre no está, escribe al contacto del portal.",
+    ),
 ]
 
 
