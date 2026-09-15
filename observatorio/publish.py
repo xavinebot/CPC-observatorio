@@ -51,7 +51,7 @@ def serie_payload(s: catalog.Serie, points: list[storage.Point]) -> dict:
         "freq": s.native_freq, "decimals": s.decimals, "notes": s.notes,
         "source": fuente_publicada(s.source),
         "redistributable": s.redistributable,
-        "en_comparativa": s.en_comparativa,
+        "en_comparativa": s.en_comparativa, "subgrupo": s.subgrupo,
         "status": estado,
         "faltan": faltan,
         "min_points": s.min_points,

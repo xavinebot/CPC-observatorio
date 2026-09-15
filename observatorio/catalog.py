@@ -66,6 +66,9 @@ class Serie:
     # una casa con estufa o caldera doméstica (el pellet a granel o la astilla piden silo), y los formatos
     # repetidos del mismo combustible. Siguen publicándose como serie, con su gráfico y su fuente.
     en_comparativa: bool = True
+    # Para la página de profesionales: "vidrio" (hacer el cristal), "chimenea" (fabricar una estufa),
+    # "energia" (lo que mueve las dos) y "paises" (el mismo índice fuera de España). Vacío = sin agrupar.
+    subgrupo: str = ""
     hidden: bool = False           # True = solo para contraste interno; no aparece en la web
 
 

@@ -76,6 +76,25 @@ class Nrg(_Base):
         return out
 
 
+class NrgInd(_Base):
+    """Lo que paga una fábrica por la luz y el gas, no un hogar: bandas industriales y sin impuestos
+    recuperables. Es el mayor coste de fundir vidrio y uno de los grandes de cualquier taller."""
+    name = "eurostat_nrg_ind"
+    min_records = 2 * 20
+
+    def fetch(self, *, backfill: bool = False) -> dict[str, list[tuple]]:
+        out = {}
+        el = query("nrg_pc_205", [("geo", "ES"), ("nrg_cons", "MWH500-1999"), ("unit", "KWH"),
+                                  ("tax", "X_TAX"), ("currency", "EUR")])
+        for g, pts in jsonstat_points(el, "geo").items():
+            out[f"electricidad_industria_{g.lower()}"] = pts
+        gas = query("nrg_pc_203", [("geo", "ES"), ("nrg_cons", "GJ1000-9999"), ("unit", "KWH"),
+                                   ("tax", "X_TAX"), ("currency", "EUR")])
+        for g, pts in jsonstat_points(gas, "geo").items():
+            out[f"gas_industria_{g.lower()}"] = pts
+        return out
+
+
 class Hicp(_Base):
     """HICP ECOICOP v2 (prc_hicp_minr, dimension coicop18). El dataset antiguo prc_hicp_midx quedo congelado en
     2025-12. Una consulta por COICOP: la consulta conjunta devuelve 413 "asincrono". Espana no publica CP0454 ni
@@ -103,6 +122,12 @@ class Sts(_Base):
         ("C2752", {"DE": "ipri_aparatos_domesticos_de", "IT": "ipri_aparatos_domesticos_it"}),
         ("C275", {"FR": "ipri_aparatos_domesticos_fr"}),
         ("C241", {"DE": "ipri_siderurgia_de", "IT": "ipri_siderurgia_it", "FR": "ipri_siderurgia_fr"}),
+        # Lo que compra un fabricante de chimeneas y estufas ademas del acero y el vidrio.
+        ("C26", {"ES": "ipri_electronica_es"}),
+        ("C2811", {"ES": "ipri_motores_es"}),
+        ("C2594", {"ES": "ipri_tornilleria_es"}),
+        ("C1721", {"ES": "ipri_carton_es"}),
+        ("C2012", {"ES": "ipri_pigmentos_es"}),
     ]
 
     def fetch(self, *, backfill: bool = False) -> dict[str, list[tuple]]:
@@ -116,5 +141,5 @@ class Sts(_Base):
         return out
 
 
-COLLECTORS = {"eurostat_nrg": Nrg, "eurostat_hicp": Hicp, "eurostat_sts": Sts}
+COLLECTORS = {"eurostat_nrg": Nrg, "eurostat_nrg_ind": NrgInd, "eurostat_hicp": Hicp, "eurostat_sts": Sts}
 Collector = Nrg

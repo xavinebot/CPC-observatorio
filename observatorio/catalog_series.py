@@ -180,11 +180,14 @@ INE_IPRI = {
     "ipri_radiadores_calderas_es": ("IPR37796", N("Precios industriales: radiadores y calderas de calefacción (CNAE 25.21)", "Prix à la production : radiateurs et chaudières (NACE 25.21)", "Prezzi alla produzione: radiatori e caldaie (NACE 25.21)", "Erzeugerpreise: Heizkörper und Heizkessel (NACE 25.21)", "Preços industriais: radiadores e caldeiras (CAE 25.21)")),
     "ipri_aislantes_refractarios_es": ("IPR37811", N("Precios industriales: otros minerales no metálicos, aislantes y refractarios (CNAE 23.99)", "Prix à la production : autres minéraux non métalliques, isolants (NACE 23.99)", "Prezzi alla produzione: altri minerali non metallici, isolanti (NACE 23.99)", "Erzeugerpreise: sonstige Mineralerzeugnisse, Dämmstoffe (NACE 23.99)", "Preços industriais: outros minerais não metálicos, isolantes (CAE 23.99)")),
 }
+# Los tres del vidrio cuentan lo que cuesta hacer el cristal; los otros cuatro, lo que cuesta fabricar el aparato.
+IPRI_GRUPO = {"ipri_vidrio_plano_es": "vidrio", "ipri_vidrio_tecnico_es": "vidrio", "ipri_vidrio_es": "vidrio"}
 for sid, (code, name) in INE_IPRI.items():
     register(Serie(
         id=sid, name=name, country="ES", group="industria", fuel="indice", unit="índice 2021=100",
         source=SRC_INE, collector="ine_ipri", native_freq="M", expected_every_days=31, stale_after_days=100,
         min_value=5, max_value=1000, max_change_pct=25, decimals=3,
+        subgrupo=IPRI_GRUPO.get(sid, "chimenea"),
         notes=f"Índice de precios industriales del INE, mercado interior, base 2021=100 (serie {code})."))
 
 # Eurostat STS (mismo concepto en otros países; y ES de Eurostat solo para contraste)
@@ -211,7 +214,7 @@ for sid, cc, nace, nk, hidden in STS:
         id=sid, name=STS_NAMES[nk], country=cc, group="industria", fuel="indice",
         unit="índice 2021=100", source=SRC_EUROSTAT, collector="eurostat_sts", native_freq="M",
         expected_every_days=31, stale_after_days=100, min_value=5, max_value=1000, max_change_pct=25,
-        decimals=1, hidden=hidden,
+        decimals=1, hidden=hidden, subgrupo="paises",
         notes=f"Índice de precios de producción industrial, mercado interior, 2021=100 (Eurostat sts_inppd_m, NACE {nace})."))
 
 # ----------------------------------------------------------------------------- materias primas (Banco Mundial)
@@ -228,6 +231,7 @@ for sid, (col, unit, name) in WB.items():
         id=sid, name=name, country="EU", group="industria", fuel="indice", unit=unit, source=SRC_WB,
         collector="worldbank", native_freq="M", expected_every_days=31, stale_after_days=70,
         min_value=lo, max_value=hi, max_change_pct=60, decimals=2,
+        subgrupo="energia" if sid in ("gas_ttf_eu", "brent") else "chimenea",
         notes=f"Media mensual en dólares nominales (columna '{col}' del Pink Sheet). Mostrar la variación interanual evita el efecto del tipo de cambio."))
 
 # ----------------------------------------------------------------------------- biomasa (AVEBIOM) — autorizado el 14 sep 2026
@@ -319,6 +323,148 @@ register(Serie(
     native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.05, max_value=2.0, max_change_pct=40,
     kwh_per_unit=4.76, decimals=4, taxes_included=True, publishable=False, redistributable=False,
     notes="Media alemana del precio de 5 t de pellet a granel, IVA incluido (C.A.R.M.E.N. e.V., encuesta mensual a unos 50 proveedores). Pendiente de confirmar el uso comercial."))
+
+
+# ----------------------------------------------------------------------------- materias primas del vitroceramico
+# Lo que hay dentro del cristal de una chimenea. El vitroceramico es un vidrio de ALUMINOSILICATO DE LITIO: por eso
+# el litio no es un extra, es lo que le da la dilatacion casi nula y, con ella, el aguante al choque termico.
+# Todos salen del comercio exterior de la UE (Comext): valor declarado dividido por kilos. Es un VALOR UNITARIO DE
+# IMPORTACION, no una cotizacion, y en los materiales baratos y de mucho volumen el flete pesa mas que el material.
+SRC_COMEXT = Source(
+    name="Eurostat, Comercio exterior de la UE (Comext)",
+    url="https://ec.europa.eu/eurostat/web/international-trade-in-goods/database",
+    license=N("CC BY 4.0", "CC BY 4.0", "CC BY 4.0", "CC BY 4.0", "CC BY 4.0"),
+    license_url="https://ec.europa.eu/eurostat/about-us/policies/copyright",
+    attribution="Fuente: Eurostat, Comext")
+
+AVISO_UNITARIO = ("Precio medio de importación en la UE: el valor declarado en aduana dividido por los kilos. "
+                  "No es una cotización de mercado: mezcla grados, orígenes y contratos, así que lo que tiene "
+                  "sentido mirar es la tendencia y no el escalón de un mes.")
+
+COMEXT = {
+    "litio_eu": ("28369100", 1.0, 200.0, 4,
+                 N("Carbonato de litio, precio de importación en la UE",
+                   "Carbonate de lithium, prix à l’import dans l’UE",
+                   "Carbonato di litio, prezzo all’import nell’UE",
+                   "Lithiumcarbonat, Importpreis in der EU",
+                   "Carbonato de lítio, preço de importação na UE"),
+                 "Es el ingrediente que define el vitrocerámico: un vidrio de aluminosilicato de litio dilata casi "
+                 "nada al calentarse, y por eso el cristal de una chimenea aguanta el choque térmico."),
+    "sosa_eu": ("28362000", 0.05, 3.0, 4,
+                N("Carbonato de sodio (sosa), precio de importación en la UE",
+                  "Carbonate de sodium (soude), prix à l’import dans l’UE",
+                  "Carbonato di sodio (soda), prezzo all’import nell’UE",
+                  "Natriumcarbonat (Soda), Importpreis in der EU",
+                  "Carbonato de sódio (soda), preço de importação na UE"),
+                "Es el fundente clásico del vidrio: baja la temperatura a la que funde la arena y, con ella, el gas "
+                "que se gasta en el horno."),
+    "silice_eu": ("25051000", 0.01, 2.0, 4,
+                  N("Arena de sílice, precio de importación en la UE",
+                    "Sable siliceux, prix à l’import dans l’UE",
+                    "Sabbia silicea, prezzo all’import nell’UE",
+                    "Quarzsand, Importpreis in der EU",
+                    "Areia de sílica, preço de importação na UE"),
+                  "Es el grueso de cualquier vidrio. Ojo con esta serie en particular: la arena vale poco y pesa "
+                  "mucho, así que el precio medio lo mueve sobre todo el transporte y de dónde venga cada "
+                  "cargamento. Sirve la tendencia de años, no el mes."),
+    "alumina_eu": ("28182000", 0.05, 5.0, 4,
+                   N("Óxido de aluminio (alúmina), precio de importación en la UE",
+                     "Oxyde d’aluminium (alumine), prix à l’import dans l’UE",
+                     "Ossido di alluminio (allumina), prezzo all’import nell’UE",
+                     "Aluminiumoxid (Tonerde), Importpreis in der EU",
+                     "Óxido de alumínio (alumina), preço de importação na UE"),
+                   "La otra mitad del aluminosilicato: es lo que da al vitrocerámico su resistencia mecánica y "
+                   "química."),
+    "titanio_eu": ("28230000", 0.3, 20.0, 4,
+                   N("Óxido de titanio, precio de importación en la UE",
+                     "Oxyde de titane, prix à l’import dans l’UE",
+                     "Ossido di titanio, prezzo all’import nell’UE",
+                     "Titanoxid, Importpreis in der EU",
+                     "Óxido de titânio, preço de importação na UE"),
+                   "Nucleante: es lo que hace que el vidrio cristalice de forma controlada al recocerlo y se "
+                   "convierta en vitrocerámica. También es el pigmento blanco de las pinturas."),
+    "circonio_eu": ("28256000", 0.5, 60.0, 4,
+                    N("Óxido de circonio, precio de importación en la UE",
+                      "Oxyde de zirconium, prix à l’import dans l’UE",
+                      "Ossido di zirconio, prezzo all’import nell’UE",
+                      "Zirconiumoxid, Importpreis in der EU",
+                      "Óxido de zircónio, preço de importação na UE"),
+                    "El otro nucleante, y lo que aguanta el desgaste del horno: los refractarios que tocan el "
+                    "vidrio fundido llevan circonio."),
+}
+for sid, (codigo, lo, hi, dec, name, para_que) in COMEXT.items():
+    register(Serie(
+        id=sid, name=name, country="EU", group="industria", fuel="indice", unit="EUR/kg", source=SRC_COMEXT,
+        collector="comext", native_freq="M", expected_every_days=31, stale_after_days=110,
+        min_value=lo, max_value=hi, max_change_pct=80, decimals=dec, subgrupo="vidrio",
+        notes=para_que + " " + AVISO_UNITARIO))
+
+# ----------------------------------------------------------------------------- la energia que paga una fabrica
+register(Serie(
+    id="electricidad_industria_es",
+    name=N("Electricidad para la industria (500-2.000 MWh/año), sin impuestos recuperables",
+           "Électricité pour l’industrie (500-2 000 MWh/an), hors taxes récupérables",
+           "Elettricità per l’industria (500-2.000 MWh/anno), senza imposte recuperabili",
+           "Industriestrom (500-2.000 MWh/Jahr), ohne erstattungsfähige Steuern",
+           "Eletricidade para a indústria (500-2.000 MWh/ano), sem impostos recuperáveis"),
+    country="ES", group="industria", fuel="electricidad", unit="EUR/kWh", source=SRC_EUROSTAT,
+    collector="eurostat_nrg_ind", native_freq="S", expected_every_days=183, stale_after_days=520,
+    min_value=0.02, max_value=1.0, max_change_pct=60, decimals=4, taxes_included=False, subgrupo="energia",
+    notes="Lo que paga de verdad un taller mediano, no un hogar: banda de consumo industrial y sin el IVA ni los "
+          "impuestos que la empresa recupera. Eurostat nrg_pc_205."))
+register(Serie(
+    id="gas_industria_es",
+    name=N("Gas natural para la industria (1.000-10.000 GJ/año), sin impuestos recuperables",
+           "Gaz naturel pour l’industrie (1 000-10 000 GJ/an), hors taxes récupérables",
+           "Gas naturale per l’industria (1.000-10.000 GJ/anno), senza imposte recuperabili",
+           "Erdgas für die Industrie (1.000-10.000 GJ/Jahr), ohne erstattungsfähige Steuern",
+           "Gás natural para a indústria (1.000-10.000 GJ/ano), sem impostos recuperáveis"),
+    country="ES", group="industria", fuel="gas", unit="EUR/kWh", source=SRC_EUROSTAT,
+    collector="eurostat_nrg_ind", native_freq="S", expected_every_days=183, stale_after_days=520,
+    min_value=0.005, max_value=0.5, max_change_pct=60, decimals=4, taxes_included=False, subgrupo="energia",
+    notes="El horno de vidrio funde a unos 1.600 °C con gas: en una vidriera es la mayor partida de coste después "
+          "de la materia prima. Eurostat nrg_pc_203."))
+
+# ----------------------------------------------------------------------------- lo que compra un fabricante de estufas
+STS_ES = {
+    "ipri_electronica_es": (N("Precios industriales: productos electrónicos (NACE C26)",
+                              "Prix à la production : produits électroniques (NACE C26)",
+                              "Prezzi alla produzione: prodotti elettronici (NACE C26)",
+                              "Erzeugerpreise: elektronische Erzeugnisse (NACE C26)",
+                              "Preços industriais: produtos eletrónicos (NACE C26)"),
+                            "Placas de control, sondas de temperatura y programadores de las estufas de pellet."),
+    "ipri_motores_es": (N("Precios industriales: motores y turbinas (NACE C28.11)",
+                          "Prix à la production : moteurs et turbines (NACE C28.11)",
+                          "Prezzi alla produzione: motori e turbine (NACE C28.11)",
+                          "Erzeugerpreise: Motoren und Turbinen (NACE C28.11)",
+                          "Preços industriais: motores e turbinas (NACE C28.11)"),
+                        "Los ventiladores de convección y de extracción de humos."),
+    "ipri_tornilleria_es": (N("Precios industriales: pernos y tornillería (NACE C25.94)",
+                              "Prix à la production : boulonnerie et visserie (NACE C25.94)",
+                              "Prezzi alla produzione: bulloni e viteria (NACE C25.94)",
+                              "Erzeugerpreise: Schrauben und Verbindungselemente (NACE C25.94)",
+                              "Preços industriais: parafusos e ferragens (NACE C25.94)"),
+                            "Herrajes, bisagras y tornillería del cuerpo y de la puerta."),
+    "ipri_carton_es": (N("Precios industriales: envases de cartón (NACE C17.21)",
+                         "Prix à la production : emballages en carton (NACE C17.21)",
+                         "Prezzi alla produzione: imballaggi di cartone (NACE C17.21)",
+                         "Erzeugerpreise: Verpackungen aus Karton (NACE C17.21)",
+                         "Preços industriais: embalagens de cartão (NACE C17.21)"),
+                       "El embalaje de un aparato pesado y frágil no es un coste menor, y casi nadie lo mira."),
+    "ipri_pigmentos_es": (N("Precios industriales: colorantes y pigmentos (NACE C20.12)",
+                            "Prix à la production : colorants et pigments (NACE C20.12)",
+                            "Prezzi alla produzione: coloranti e pigmenti (NACE C20.12)",
+                            "Erzeugerpreise: Farbmittel und Pigmente (NACE C20.12)",
+                            "Preços industriais: corantes e pigmentos (NACE C20.12)"),
+                          "Lo más cercano que hay con licencia abierta al coste de la pintura de alta temperatura: "
+                          "Eurostat no publica el índice de pinturas y barnices en ningún país."),
+}
+for sid, (name, para_que) in STS_ES.items():
+    register(Serie(
+        id=sid, name=name, country="ES", group="industria", fuel="indice", unit="índice 2021=100",
+        source=SRC_EUROSTAT, collector="eurostat_sts", native_freq="M", expected_every_days=31,
+        stale_after_days=100, min_value=5, max_value=1000, max_change_pct=25, decimals=1, subgrupo="chimenea",
+        notes=para_que + " Índice de precios de producción, mercado interior, 2021=100 (Eurostat sts_inppd_m)."))
 
 # ----------------------------------------------------------------------------- contraste: fioul de Francia
 SRC_FR_ECOLOGIE = Source(
