@@ -317,7 +317,7 @@ register(Serie(
            "Pellets lose (5 t), inkl. MwSt.", "Pellets a granel (5 t), com IVA"),
     country="DE", group="hogar", fuel="pellet", unit="EUR/kg", source=SRC_CARMEN, collector="pellets_eu",
     native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.05, max_value=2.0, max_change_pct=40,
-    kwh_per_unit=4.8, decimals=4, taxes_included=True, publishable=False, redistributable=False,
+    kwh_per_unit=4.76, decimals=4, taxes_included=True, publishable=False, redistributable=False,
     notes="Media alemana del precio de 5 t de pellet a granel, IVA incluido (C.A.R.M.E.N. e.V., encuesta mensual a unos 50 proveedores). Pendiente de confirmar el uso comercial."))
 
 # ----------------------------------------------------------------------------- contraste: fioul de Francia
