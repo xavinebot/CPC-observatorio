@@ -84,12 +84,13 @@ class NrgInd(_Base):
 
     def fetch(self, *, backfill: bool = False) -> dict[str, list[tuple]]:
         out = {}
-        el = query("nrg_pc_205", [("geo", "ES"), ("nrg_cons", "MWH500-1999"), ("unit", "KWH"),
-                                  ("tax", "X_TAX"), ("currency", "EUR")])
+        paises = [("geo", g) for g in GEOS if g != "AT"]
+        el = query("nrg_pc_205", paises + [("nrg_cons", "MWH500-1999"), ("unit", "KWH"),
+                                           ("tax", "X_TAX"), ("currency", "EUR")])
         for g, pts in jsonstat_points(el, "geo").items():
             out[f"electricidad_industria_{g.lower()}"] = pts
-        gas = query("nrg_pc_203", [("geo", "ES"), ("nrg_cons", "GJ1000-9999"), ("unit", "KWH"),
-                                   ("tax", "X_TAX"), ("currency", "EUR")])
+        gas = query("nrg_pc_203", paises + [("nrg_cons", "GJ1000-9999"), ("unit", "KWH"),
+                                            ("tax", "X_TAX"), ("currency", "EUR")])
         for g, pts in jsonstat_points(gas, "geo").items():
             out[f"gas_industria_{g.lower()}"] = pts
         return out
@@ -123,16 +124,29 @@ class Sts(_Base):
         ("C275", {"FR": "ipri_aparatos_domesticos_fr"}),
         ("C241", {"DE": "ipri_siderurgia_de", "IT": "ipri_siderurgia_it", "FR": "ipri_siderurgia_fr"}),
         # Lo que compra un fabricante de chimeneas y estufas ademas del acero y el vidrio.
-        ("C26", {"ES": "ipri_electronica_es"}),
-        ("C2811", {"ES": "ipri_motores_es"}),
-        ("C2594", {"ES": "ipri_tornilleria_es"}),
-        ("C1721", {"ES": "ipri_carton_es"}),
-        ("C2012", {"ES": "ipri_pigmentos_es"}),
+        # Lo que compra un fabricante de chimeneas, pais por pais. Portugal solo publica vidrio y electronica:
+        # comprobado en Eurostat el 15 sep 2026, las demas ramas no las da para PT.
+        # Radiadores y aislantes NO se piden para España: esas dos ya vienen del INE y una serie solo puede
+        # tener un recolector. Pedirlas aquí sería escribir el mismo id desde dos fuentes distintas.
+        ("C2521", {"FR": None, "IT": None, "DE": None}),
+        ("C2399", {"FR": None, "IT": None, "DE": None}),
+        # Portugal publica C26 congelado en 100,6 desde 2024 y sin dato desde junio de 2026: una linea plana
+        # que no informa de nada. Comprobado el 15 sep 2026 y retirada; el vidrio portugues si es real.
+        ("C26", {"ES": "ipri_electronica_es", "FR": None, "IT": None, "DE": None}),
+        ("C2811", {"ES": "ipri_motores_es", "FR": None, "IT": None, "DE": None}),
+        ("C2594", {"ES": "ipri_tornilleria_es", "FR": None, "IT": None, "DE": None}),
+        ("C1721", {"ES": "ipri_carton_es", "FR": None, "IT": None, "DE": None}),
+        ("C2012", {"ES": "ipri_pigmentos_es", "FR": None, "IT": None, "DE": None}),
+        ("C231", {"PT": None}),                                         # vidrio en Portugal
     ]
+    # Los None se rellenan con el id que toca: ipri_<rama>_<pais>. Se escribe una vez y no se repite en cada linea.
+    RAMAS = {"C2521": "radiadores_calderas", "C2399": "aislantes_refractarios", "C26": "electronica",
+             "C2811": "motores", "C2594": "tornilleria", "C1721": "carton", "C2012": "pigmentos", "C231": "vidrio"}
 
     def fetch(self, *, backfill: bool = False) -> dict[str, list[tuple]]:
         out = {}
-        for nace, mapping in self.QUERIES:
+        for nace, mapa in self.QUERIES:
+            mapping = {g: (sid or f"ipri_{self.RAMAS[nace]}_{g.lower()}") for g, sid in mapa.items()}
             d = query("sts_inppd_m", [("geo", g) for g in mapping] + [("nace_r2", nace), ("s_adj", "NSA"),
                                                                        ("unit", "I21"), ("indic_bt", "PRC_PRR_DOM")])
             for g, pts in jsonstat_points(d, "geo").items():

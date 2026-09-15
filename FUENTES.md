@@ -21,7 +21,8 @@ se puede recoger pero no republicar se queda recogido y sin publicar, esperando 
 | Tarifa regulada de la luz (PVPC) y mercado mayorista, media diaria | ES | Red Eléctrica (REData) | diaria | PVPC 2021, mayorista 2014 | uso informativo con cita | **no** |
 | Índice de precios de consumo de la energía | ES | INE | mensual | 2002 | libre con cita | sí |
 | Precios industriales: vidrio plano, vidrio técnico, vidrio, siderurgia, estufas y cocinas, radiadores y calderas, aislantes y refractarios | ES | INE (IPRI) | mensual | 1975 / 2002 | libre con cita | sí |
-| Precios industriales de vidrio, siderurgia y estufas en otros países | FR IT DE | Eurostat (sts_inppd_m) | mensual | 2005 | CC BY 4.0 | sí |
+| Precios industriales: vidrio, siderurgia, estufas, radiadores, aislantes, electrónica, motores, tornillería, cartón y pigmentos | FR IT DE (los diez) · PT (solo vidrio) | Eurostat (sts_inppd_m) | mensual | 1975-2005 según rama | CC BY 4.0 | sí |
+| Electricidad y gas natural para la industria, sin impuestos recuperables | ES FR IT DE PT | Eurostat (nrg_pc_205, nrg_pc_203) | semestral | 2007 | CC BY 4.0 | sí |
 | Materias primas: gas europeo (TTF), mineral de hierro, Brent, cobre | mundial | Banco Mundial (Pink Sheet) | mensual | 1960 | CC BY 4.0 | sí |
 | Índice del precio del pellet a granel | AT | proPellets Austria | mensual | enero 2006 | uso con cita, revocable | **no** |
 | Índice propio del precio de la leña (palet entregado y saco) | ES | elaboración propia | semanal | septiembre 2026 | CC BY 4.0 | sí |
@@ -251,15 +252,23 @@ Todas en Eurostat, gratis y con la misma maquinaria que ya funciona. Comprobadas
 
 | Serie | Dataset | Estado |
 |---|---|---|
-| Electricidad para la industria (banda 500-2.000 MWh) | `nrg_pc_205` | 2007-S1 → 2025-S2 |
-| Gas para la industria (banda 1.000-10.000 GJ) | `nrg_pc_203` | 2007-S1 → 2025-S2 |
-| Productos electrónicos (NACE C26) | `sts_inppd_m` | 1975 → ago 2026 |
-| Pernos y tornillería (C25.94) | `sts_inppd_m` | 1975 → ago 2026 |
-| Motores y turbinas (C28.11) | `sts_inppd_m` | 1975 → ago 2026 |
-| Envases de cartón (C17.21) | `sts_inppd_m` | 1975 → ago 2026 |
-| Colorantes y pigmentos (C20.12) | `sts_inppd_m` | 1975 → ago 2026 |
 | Otros productos metálicos (C25.99) | `sts_inppd_m` | 1975 → ago 2026 |
 | Estructuras metálicas (C25.11) | `sts_inppd_m` | 1975 → ago 2026 |
+
+Las demás de esa lista ya están publicadas: la electricidad y el gas industriales de los cinco países, y las diez
+ramas de precios industriales de España, Francia, Italia y Alemania.
+
+### Qué publica cada país, comprobado el 15 de septiembre de 2026
+
+España, Francia, Italia y Alemania publican las diez ramas. **Portugal solo publica el vidrio (C23.1)**; de las
+demás no da nada. Su índice de electrónica (C26) sí existe, pero lleva **congelado en 100,6 desde 2024 y sin dato
+nuevo desde junio de 2026**: una línea plana no informa de nada, así que se retiró en vez de publicarla por tener
+una serie más. La electricidad y el gas industriales sí están en los cinco.
+
+Dos matices de las ramas ya publicadas antes: los **aparatos domésticos** de Francia son la clase C27.5 y los de
+Italia y Alemania la subclase C27.52, que es la que interesa (estufas y cocinas no eléctricas); Francia no publica
+la subclase. Y **España no se pide a Eurostat** en radiadores (C25.21) ni en aislantes (C23.99): esas dos ya vienen
+del INE, y una serie solo puede tener un recolector.
 
 **Pinturas y barnices (C20.30) no existe** en ese dataset, ni para España ni para Alemania ni para Francia. Lo más
 cercano es colorantes y pigmentos (C20.12), que es el ingrediente, o la química básica (C20.1).

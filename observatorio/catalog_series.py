@@ -209,12 +209,17 @@ STS_NAMES = {
     "aparatos275": N("Precios industriales: aparatos domésticos (NACE C27.5)", "Prix à la production : appareils ménagers (NACE C27.5)", "Prezzi alla produzione: apparecchi domestici (NACE C27.5)", "Erzeugerpreise: Haushaltsgeräte (NACE C27.5)", "Preços industriais: aparelhos domésticos (NACE C27.5)"),
     "siderurgia": N("Precios industriales: siderurgia, hierro y acero (NACE C24.1)", "Prix à la production : sidérurgie (NACE C24.1)", "Prezzi alla produzione: siderurgia (NACE C24.1)", "Erzeugerpreise: Eisen und Stahl (NACE C24.1)", "Preços industriais: siderurgia (NACE C24.1)"),
 }
+# Cada serie va a su familia natural (el vidrio con el vidrio, el acero y las estufas con lo que compra un
+# fabricante). Que sea "de otro pais" ya no lo dice el catalogo: lo decide la pagina, porque la misma serie es
+# propia en la pagina francesa y vecina en la española. La unica que nace siendo comparacion es la de España de
+# Eurostat, que solo existe para poner a España en la misma escala que los demas.
+STS_FAMILIA = {"vidrio": "vidrio", "aparatos": "chimenea", "aparatos275": "chimenea", "siderurgia": "chimenea"}
 for sid, cc, nace, nk, hidden in STS:
     register(Serie(
         id=sid, name=STS_NAMES[nk], country=cc, group="industria", fuel="indice",
         unit="índice 2021=100", source=SRC_EUROSTAT, collector="eurostat_sts", native_freq="M",
         expected_every_days=31, stale_after_days=100, min_value=5, max_value=1000, max_change_pct=25,
-        decimals=1, hidden=hidden, subgrupo="paises",
+        decimals=1, hidden=hidden, subgrupo=("paises" if hidden else STS_FAMILIA[nk]),
         notes=f"Índice de precios de producción industrial, mercado interior, 2021=100 (Eurostat sts_inppd_m, NACE {nace})."))
 
 # ----------------------------------------------------------------------------- materias primas (Banco Mundial)
@@ -400,30 +405,32 @@ for sid, (codigo, lo, hi, dec, name, para_que) in COMEXT.items():
         notes=para_que + " " + AVISO_UNITARIO))
 
 # ----------------------------------------------------------------------------- la energia que paga una fabrica
-register(Serie(
-    id="electricidad_industria_es",
-    name=N("Electricidad para la industria (500-2.000 MWh/año), sin impuestos recuperables",
-           "Électricité pour l’industrie (500-2 000 MWh/an), hors taxes récupérables",
-           "Elettricità per l’industria (500-2.000 MWh/anno), senza imposte recuperabili",
-           "Industriestrom (500-2.000 MWh/Jahr), ohne erstattungsfähige Steuern",
-           "Eletricidade para a indústria (500-2.000 MWh/ano), sem impostos recuperáveis"),
-    country="ES", group="industria", fuel="electricidad", unit="EUR/kWh", source=SRC_EUROSTAT,
-    collector="eurostat_nrg_ind", native_freq="S", expected_every_days=183, stale_after_days=520,
-    min_value=0.02, max_value=1.0, max_change_pct=60, decimals=4, taxes_included=False, subgrupo="energia",
-    notes="Lo que paga de verdad un taller mediano, no un hogar: banda de consumo industrial y sin el IVA ni los "
-          "impuestos que la empresa recupera. Eurostat nrg_pc_205."))
-register(Serie(
-    id="gas_industria_es",
-    name=N("Gas natural para la industria (1.000-10.000 GJ/año), sin impuestos recuperables",
-           "Gaz naturel pour l’industrie (1 000-10 000 GJ/an), hors taxes récupérables",
-           "Gas naturale per l’industria (1.000-10.000 GJ/anno), senza imposte recuperabili",
-           "Erdgas für die Industrie (1.000-10.000 GJ/Jahr), ohne erstattungsfähige Steuern",
-           "Gás natural para a indústria (1.000-10.000 GJ/ano), sem impostos recuperáveis"),
-    country="ES", group="industria", fuel="gas", unit="EUR/kWh", source=SRC_EUROSTAT,
-    collector="eurostat_nrg_ind", native_freq="S", expected_every_days=183, stale_after_days=520,
-    min_value=0.005, max_value=0.5, max_change_pct=60, decimals=4, taxes_included=False, subgrupo="energia",
-    notes="El horno de vidrio funde a unos 1.600 °C con gas: en una vidriera es la mayor partida de coste después "
-          "de la materia prima. Eurostat nrg_pc_203."))
+ENERGIA_IND = {
+    "electricidad": ("nrg_pc_205", "EUR/kWh", 0.02, 1.0,
+                     N("Electricidad para la industria (500-2.000 MWh/año), sin impuestos recuperables",
+                       "Électricité pour l’industrie (500-2 000 MWh/an), hors taxes récupérables",
+                       "Elettricità per l’industria (500-2.000 MWh/anno), senza imposte recuperabili",
+                       "Industriestrom (500-2.000 MWh/Jahr), ohne erstattungsfähige Steuern",
+                       "Eletricidade para a indústria (500-2.000 MWh/ano), sem impostos recuperáveis"),
+                     "Lo que paga de verdad un taller mediano, no un hogar: banda de consumo industrial y sin el "
+                     "IVA ni los impuestos que la empresa recupera. Eurostat nrg_pc_205."),
+    "gas": ("nrg_pc_203", "EUR/kWh", 0.005, 0.5,
+            N("Gas natural para la industria (1.000-10.000 GJ/año), sin impuestos recuperables",
+              "Gaz naturel pour l’industrie (1 000-10 000 GJ/an), hors taxes récupérables",
+              "Gas naturale per l’industria (1.000-10.000 GJ/anno), senza imposte recuperabili",
+              "Erdgas für die Industrie (1.000-10.000 GJ/Jahr), ohne erstattungsfähige Steuern",
+              "Gás natural para a indústria (1.000-10.000 GJ/ano), sem impostos recuperáveis"),
+            "El horno de vidrio funde a unos 1.600 °C con gas: en una vidriera es la mayor partida de coste "
+            "después de la materia prima. Eurostat nrg_pc_203."),
+}
+for clave, (ds, unidad, lo, hi, nombre, nota) in ENERGIA_IND.items():
+    for cc in ("ES", "FR", "IT", "DE", "PT"):
+        register(Serie(
+            id=f"{clave}_industria_{cc.lower()}", name=nombre, country=cc, group="industria",
+            fuel="electricidad" if clave == "electricidad" else "gas", unit=unidad, source=SRC_EUROSTAT,
+            collector="eurostat_nrg_ind", native_freq="S", expected_every_days=183, stale_after_days=520,
+            min_value=lo, max_value=hi, max_change_pct=60, decimals=4, taxes_included=False, subgrupo="energia",
+            notes=nota))
 
 # ----------------------------------------------------------------------------- lo que compra un fabricante de estufas
 STS_ES = {
@@ -459,12 +466,59 @@ STS_ES = {
                           "Lo más cercano que hay con licencia abierta al coste de la pintura de alta temperatura: "
                           "Eurostat no publica el índice de pinturas y barnices en ningún país."),
 }
+# Las mismas ramas, pais por pais. Comprobado en Eurostat el 15 sep 2026: España, Francia, Italia y Alemania
+# publican las diez; Portugal solo el vidrio y la electronica. Lo que no publica un pais, sencillamente no sale.
+RAMAS_PAIS = {
+    "electronica":            ("chimenea", ("ES", "FR", "IT", "DE")),
+    "motores":                ("chimenea", ("ES", "FR", "IT", "DE")),
+    "tornilleria":            ("chimenea", ("ES", "FR", "IT", "DE")),
+    "carton":                 ("chimenea", ("ES", "FR", "IT", "DE")),
+    "pigmentos":              ("chimenea", ("ES", "FR", "IT", "DE")),
+    "radiadores_calderas":    ("chimenea", ("FR", "IT", "DE")),
+    "aislantes_refractarios": ("chimenea", ("FR", "IT", "DE")),
+    "vidrio":                 ("vidrio",   ("PT",)),
+}
+RAMAS_NOMBRE = {
+    "radiadores_calderas": (N("Precios industriales: radiadores y calderas (NACE C25.21)",
+                              "Prix à la production : radiateurs et chaudières (NACE C25.21)",
+                              "Prezzi alla produzione: radiatori e caldaie (NACE C25.21)",
+                              "Erzeugerpreise: Heizkörper und Heizkessel (NACE C25.21)",
+                              "Preços industriais: radiadores e caldeiras (NACE C25.21)"),
+                            "Lo que cobran las fábricas de radiadores y calderas de calefacción."),
+    "aislantes_refractarios": (N("Precios industriales: otros minerales no metálicos, aislantes (NACE C23.99)",
+                                 "Prix à la production : autres minéraux non métalliques, isolants (NACE C23.99)",
+                                 "Prezzi alla produzione: altri minerali non metallici, isolanti (NACE C23.99)",
+                                 "Erzeugerpreise: sonstige Mineralerzeugnisse, Dämmstoffe (NACE C23.99)",
+                                 "Preços industriais: outros minerais não metálicos, isolantes (NACE C23.99)"),
+                               "La vermiculita y las placas refractarias del interior del hogar."),
+}
 for sid, (name, para_que) in STS_ES.items():
     register(Serie(
         id=sid, name=name, country="ES", group="industria", fuel="indice", unit="índice 2021=100",
         source=SRC_EUROSTAT, collector="eurostat_sts", native_freq="M", expected_every_days=31,
         stale_after_days=100, min_value=5, max_value=1000, max_change_pct=25, decimals=1, subgrupo="chimenea",
         notes=para_que + " Índice de precios de producción, mercado interior, 2021=100 (Eurostat sts_inppd_m)."))
+
+for rama, (familia, paises) in RAMAS_PAIS.items():
+    if rama in RAMAS_NOMBRE:
+        nombre, para_que = RAMAS_NOMBRE[rama]
+    else:
+        nombre, para_que = STS_ES[f"ipri_{rama}_es"] if f"ipri_{rama}_es" in STS_ES else (
+            N("Precios industriales: vidrio y productos de vidrio (NACE C23.1)",
+              "Prix à la production : verre et articles en verre (NACE C23.1)",
+              "Prezzi alla produzione: vetro e prodotti in vetro (NACE C23.1)",
+              "Erzeugerpreise: Glas und Glaswaren (NACE C23.1)",
+              "Preços industriais: vidro e produtos de vidro (NACE C23.1)"),
+            "Lo que cobran las fábricas de vidrio.")
+    for cc in paises:
+        sid = f"ipri_{rama}_{cc.lower()}"
+        if sid in STS_ES:
+            continue                    # ya registrada arriba con el bucle de España
+        register(Serie(
+            id=sid, name=nombre, country=cc, group="industria", fuel="indice", unit="índice 2021=100",
+            source=SRC_EUROSTAT, collector="eurostat_sts", native_freq="M", expected_every_days=31,
+            stale_after_days=100, min_value=5, max_value=1000, max_change_pct=25, decimals=1, subgrupo=familia,
+            notes=para_que + " Índice de precios de producción, mercado interior, 2021=100 (Eurostat sts_inppd_m)."))
 
 # ----------------------------------------------------------------------------- contraste: fioul de Francia
 SRC_FR_ECOLOGIE = Source(

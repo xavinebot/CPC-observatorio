@@ -267,3 +267,27 @@ Eurostat no publica para España la subclase de leña y pellet del índice armon
 tentación es no mencionar a España y que nadie se pregunte nada. **Decisión: nombrarlo.** La nota de la tabla dice
 que España falta y por qué, y aprovecha para decir que para España hay algo mejor, precios en euros por kilo del
 índice de AVEBIOM. Un hueco explicado da más confianza que una tabla que disimula.
+
+## 18. Quién es "el vecino" lo decide la página, no el catálogo
+
+La página de profesionales existía solo para España y, dentro de ella, había una familia llamada "los mismos
+índices en Francia, Italia y Alemania". Esa etiqueta estaba escrita en el catálogo, serie por serie: el índice del
+vidrio francés era, para siempre, una serie de comparación.
+
+Al montar la página para los cinco países eso deja de funcionar: **el índice del vidrio francés es el dato propio
+de la página francesa y la comparación en la española**. Es la misma serie y tiene que salir en dos sitios
+distintos según quién la mire.
+
+**Decisión (15 sep 2026): cada serie lleva en el catálogo su familia natural** —el vidrio con el vidrio, el acero y
+las estufas con lo que compra un fabricante, la energía con la energía— y **es la página la que marca como "vecina"
+todo lo que no es de su país** al cargar los datos. Las materias primas del vitrocerámico son de comercio exterior
+de la Unión Europea, así que cuentan como propias en los cinco.
+
+**El bloque de comparación pasa a ser un gráfico por rama**, no uno con cuarenta líneas: el vidrio con el vidrio de
+los otros cuatro países, el acero con el acero. Mezclar ramas en un eje no compara nada. Una rama con una sola
+serie no sale: una línea suelta no es una comparación. Y esos gráficos van sin tabla y con seis años en vez de
+diez, porque son una docena en la misma página y los números de cada serie están en la página de su país y en su
+CSV.
+
+**Lo que NO se hace:** inventar el dato que un país no publica. Portugal solo da el vidrio, así que la página
+portuguesa tiene una sección propia corta y un bloque de comparación largo. Se ve el hueco, que es la verdad.
