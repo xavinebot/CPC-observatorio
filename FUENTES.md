@@ -216,3 +216,53 @@ reglas, reconociendo menos productos.
    PDF).
 6. La serie mensual de pellet del CEEB francés dentro del portal de datos del ministerio: la búsqueda por interfaz
    automática no devolvió resultados. Merece un segundo intento navegando a mano.
+
+## Litio: sí hay fuente, y es europea (15 sep 2026)
+
+Se daba por perdido. **No lo está.** Eurostat publica el comercio exterior mensual por código de producto
+(Comext, `DS-045409`, CC BY 4.0), y de ahí sale el **precio medio al que entra el carbonato de litio en la UE**:
+valor en euros dividido por cantidad. Comprobado con datos reales:
+
+| Mes | €/kg | Importado |
+|---|---|---|
+| abr 2022 | 14,55 | 581 t |
+| ene 2023 | 37,97 | 683 t |
+| oct 2025 | 8,04 | 391 t |
+| jun 2026 | 16,00 | 705 t |
+
+El pico de enero de 2023 es el del litio, así que el dato se comporta como debe.
+
+**Detalles que hay que respetar si se publica:**
+
+- Es un **valor unitario de importación**, no una cotización. Mezcla grados y contratos, y un cargamento grande
+  mueve el mes. Hay que decirlo y conviene enseñarlo con media móvil o vista anual, no el mes suelto.
+- Producto `28369100` (carbonatos de litio), declarante `EU27_2020`, socio `EXT_EU27_2020`, flujo importación.
+- La API de Comext usa **otra dirección** (`/api/comext/dissemination/...`) y el periodo va como `2026-01`, no
+  como `2026M01`. Es el motivo por el que a la primera devuelve 400.
+
+**Trading Economics no vale**, aunque lo tenga: su licencia es *"limited, personal, nontransferable, revocable"*,
+no dice de qué bolsa saca el dato —así que no se podría citar la procedencia— y lo que publica es carbonato de
+litio **grado batería al contado en China, en yuanes**, que lo mueve el coche eléctrico. No es el litio que compra
+un fabricante de vitrocerámica en Europa.
+
+## Otras series comprobadas y disponibles, sin publicar (15 sep 2026)
+
+Todas en Eurostat, gratis y con la misma maquinaria que ya funciona. Comprobadas una a una:
+
+| Serie | Dataset | Estado |
+|---|---|---|
+| Electricidad para la industria (banda 500-2.000 MWh) | `nrg_pc_205` | 2007-S1 → 2025-S2 |
+| Gas para la industria (banda 1.000-10.000 GJ) | `nrg_pc_203` | 2007-S1 → 2025-S2 |
+| Productos electrónicos (NACE C26) | `sts_inppd_m` | 1975 → ago 2026 |
+| Pernos y tornillería (C25.94) | `sts_inppd_m` | 1975 → ago 2026 |
+| Motores y turbinas (C28.11) | `sts_inppd_m` | 1975 → ago 2026 |
+| Envases de cartón (C17.21) | `sts_inppd_m` | 1975 → ago 2026 |
+| Colorantes y pigmentos (C20.12) | `sts_inppd_m` | 1975 → ago 2026 |
+| Otros productos metálicos (C25.99) | `sts_inppd_m` | 1975 → ago 2026 |
+| Estructuras metálicas (C25.11) | `sts_inppd_m` | 1975 → ago 2026 |
+
+**Pinturas y barnices (C20.30) no existe** en ese dataset, ni para España ni para Alemania ni para Francia. Lo más
+cercano es colorantes y pigmentos (C20.12), que es el ingrediente, o la química básica (C20.1).
+
+Y en el Pink Sheet del Banco Mundial, que ya se descarga entero, están sin usar: **aluminio, níquel, plomo,
+estaño, zinc y platino**.
