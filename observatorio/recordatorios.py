@@ -44,6 +44,14 @@ RECORDATORIOS: list[tuple[str, str, str]] = [
         "Cuando aparezca, apúntala en la pestaña <code>GSC_enlaces</code> de la hoja «Datos CPC» como dominio que "
         "enlaza, tipo administración. Si a mediados de diciembre no está, escribe al contacto del portal.",
     ),
+    (
+        "2026-09-16", "2026-10-19",
+        "🔍 <b>Las ocho páginas nuevas del observatorio, en Search Console.</b> El 15 de septiembre se pidió "
+        "indexación de unas cuantas y se agotó la cuota diaria; termina las que falten (Inspección de URLs → "
+        "Solicitar indexación) y mira si ya salen como indexadas. Son las de profesionales y metodología en "
+        "francés, italiano, alemán y portugués; la lista está en SEO.md §31. Si a mediados de octubre alguna "
+        "sigue sin indexar, mírale la cobertura: estar en el mapa del sitio ya basta para que Google llegue.",
+    ),
 ]
 
 
