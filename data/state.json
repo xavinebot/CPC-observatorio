@@ -1,5 +1,5 @@
 {
- "last_run": "2026-09-15T08:58:12+00:00",
+ "last_run": "2026-09-16T08:51:00+00:00",
  "runs": [
   {
    "added": 10467,
@@ -264,19 +264,47 @@
    "soft_failures": [],
    "stale": [],
    "started": "2026-09-15T08:57:40+00:00"
+  },
+  {
+   "added": 10373,
+   "collectors": [
+    "wob",
+    "cnmc_glp",
+    "eurostat_nrg",
+    "eurostat_hicp",
+    "eurostat_sts",
+    "ree",
+    "ine_ipc",
+    "ine_ipri",
+    "worldbank",
+    "avebiom",
+    "pellets_eu",
+    "fr_fioul"
+   ],
+   "contrast_alerts": [
+    "IPC combustibles líquidos ES: INE frente a Eurostat (variación 12 m): +46.4% (2026-08-01) frente a +31.5% (2026-07-01), 14.9 puntos de diferencia (tolerancia 4.0)"
+   ],
+   "failures": [
+    "cnmc_glp"
+   ],
+   "finished": "2026-09-16T08:51:00+00:00",
+   "quarantined": [],
+   "soft_failures": [],
+   "stale": [],
+   "started": "2026-09-16T08:50:09+00:00"
   }
  ],
  "series": {
   "avebiom": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:58:04+00:00",
+   "last_attempt": "2026-09-16T08:50:52+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:58:07+00:00"
+   "last_success": "2026-09-16T08:50:56+00:00"
   },
   "cnmc_glp": {
-   "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:57:43+00:00",
-   "last_error": null,
+   "consecutive_failures": 1,
+   "last_attempt": "2026-09-16T08:50:12+00:00",
+   "last_error": "RuntimeError: No se pudo descargar https://catalogodatos.cnmc.es/dataset/4ba7704a-32fa-409b-b69b-cc0a9003b33a/resource/8aa5fbac-2375-49c5-bcbc-6a6675bead20/download/ds_24367_1.csv: 404 Client Error: NOT FOUND for url: https://catalogodatos.cnmc.es/dataset/4ba7704a-32fa-409b-b69b-cc0a9003b33a/resource/8aa5fbac-2375-49c5-bcbc-6a6675bead20/download/ds_24367_1.csv",
    "last_success": "2026-09-15T08:57:45+00:00"
   },
   "comext": {
@@ -287,15 +315,15 @@
   },
   "eurostat_hicp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:57:45+00:00",
+   "last_attempt": "2026-09-16T08:50:23+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:57:46+00:00"
+   "last_success": "2026-09-16T08:50:24+00:00"
   },
   "eurostat_nrg": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:57:45+00:00",
+   "last_attempt": "2026-09-16T08:50:22+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:57:45+00:00"
+   "last_success": "2026-09-16T08:50:23+00:00"
   },
   "eurostat_nrg_ind": {
    "consecutive_failures": 0,
@@ -305,27 +333,27 @@
   },
   "eurostat_sts": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:57:46+00:00",
+   "last_attempt": "2026-09-16T08:50:24+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:57:48+00:00"
+   "last_success": "2026-09-16T08:50:35+00:00"
   },
   "fr_fioul": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:58:10+00:00",
+   "last_attempt": "2026-09-16T08:50:59+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:58:11+00:00"
+   "last_success": "2026-09-16T08:51:00+00:00"
   },
   "ine_ipc": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:57:56+00:00",
+   "last_attempt": "2026-09-16T08:50:43+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:57:59+00:00"
+   "last_success": "2026-09-16T08:50:46+00:00"
   },
   "ine_ipri": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:57:59+00:00",
+   "last_attempt": "2026-09-16T08:50:46+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:58:04+00:00"
+   "last_success": "2026-09-16T08:50:52+00:00"
   },
   "lena": {
    "consecutive_failures": 0,
@@ -335,27 +363,27 @@
   },
   "pellets_eu": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:58:07+00:00",
+   "last_attempt": "2026-09-16T08:50:56+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:58:10+00:00"
+   "last_success": "2026-09-16T08:50:59+00:00"
   },
   "ree": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:57:49+00:00",
+   "last_attempt": "2026-09-16T08:50:35+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:57:56+00:00"
+   "last_success": "2026-09-16T08:50:43+00:00"
   },
   "wob": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:57:40+00:00",
+   "last_attempt": "2026-09-16T08:50:09+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:57:43+00:00"
+   "last_success": "2026-09-16T08:50:12+00:00"
   },
   "worldbank": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-15T08:58:04+00:00",
+   "last_attempt": "2026-09-16T08:50:52+00:00",
    "last_error": null,
-   "last_success": "2026-09-15T08:58:04+00:00"
+   "last_success": "2026-09-16T08:50:52+00:00"
   }
  },
  "telegram_offset": 0
