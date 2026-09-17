@@ -45,12 +45,12 @@ RECORDATORIOS: list[tuple[str, str, str]] = [
         "enlaza, tipo administración. Si a mediados de diciembre no está, escribe al contacto del portal.",
     ),
     (
-        "2026-09-16", "2026-10-19",
-        "🔍 <b>Las ocho páginas nuevas del observatorio, en Search Console.</b> El 15 de septiembre se pidió "
-        "indexación de unas cuantas y se agotó la cuota diaria; termina las que falten (Inspección de URLs → "
-        "Solicitar indexación) y mira si ya salen como indexadas. Son las de profesionales y metodología en "
-        "francés, italiano, alemán y portugués; la lista está en SEO.md §31. Si a mediados de octubre alguna "
-        "sigue sin indexar, mírale la cobertura: estar en el mapa del sitio ya basta para que Google llegue.",
+        "2026-09-28", "2026-10-26",
+        "🔍 <b>¿Están indexadas las ocho páginas nuevas?</b> La indexación se pidió el 15 y el 17 de septiembre. "
+        "En Search Console, Inspección de URLs, mira si ya salen como indexadas: son las de profesionales y "
+        "metodología en francés, italiano, alemán y portugués (lista en SEO.md §31). Si alguna sigue fuera a "
+        "finales de octubre, mírale la cobertura; estar en el mapa del sitio ya basta para que Google llegue, "
+        "así que una que no entre suele señalar otra cosa.",
     ),
 ]
 
