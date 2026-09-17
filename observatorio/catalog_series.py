@@ -85,7 +85,7 @@ register(Serie(
     country="ES", group="hogar", fuel="butano", unit="EUR/kg", source=SRC_CNMC, collector="cnmc_glp",
     native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.2, max_value=5.0,
     max_change_pct=25, kwh_per_unit=12.7, decimals=4, taxes_included=True,
-    notes="Precio máximo de venta al público en €/kg; la bombona de 12,5 kg = valor × 12,5. Se revisa cada dos meses."))
+    notes="Precio máximo de venta al público en €/kg; la bombona de 12,5 kg = valor × 12,5. Se revisa cada dos meses, y algunos meses cambia también a mitad de mes: cada mes lleva aquí el último precio que entró en vigor."))
 register(Serie(
     id="propano_canalizado_es",
     name=N("Propano canalizado, término variable (antes de impuestos)", "Propane en réseau, terme variable (hors taxes)",

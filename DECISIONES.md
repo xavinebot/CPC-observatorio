@@ -291,3 +291,32 @@ CSV.
 
 **Lo que NO se hace:** inventar el dato que un país no publica. Portugal solo da el vidrio, así que la página
 portuguesa tiene una sección propia corta y un bloque de comparación largo. Se ve el hueco, que es la verdad.
+
+## 19. Cuando un mes tiene dos precios, vale el que está en vigor
+
+El precio regulado del butano se revisa cada dos meses, pero algunos meses cambia **dos veces**: el fichero de la
+CNMC trae entonces dos filas con la misma fecha y distinta "Entrada en vigor". Se guardaban las dos y se quedaba
+una u otra según el orden del fichero, así que unos meses llevaban el precio de principios de mes y otros el de
+mediados. En septiembre de 2026 eso hizo que la web enseñara **1,4362 €/kg cuando desde el día 15 el precio era
+1,5073**: un 5 % de diferencia en el dato más consultado de la página española.
+
+**Decisión (17 sep 2026): de cada mes se guarda la última revisión que entró en vigor.** Es la que responde a la
+pregunta que trae al lector, que es cuánto cuesta ahora, no cuánto costaba el día 1. Corrige también marzo de
+2026, que llevaba el precio del día 17 cuando el del día 22 lo había sustituido.
+
+**Lo que NO se hace:** quedarse con el primero por comodidad, ni promediar los dos. Un promedio no es un precio
+que nadie haya pagado nunca, y el histórico dejaría de ser comparable con el de la CNMC.
+
+## 20. Un aviso falso repetido enseña a ignorar los avisos
+
+El contraste entre el IPC del INE y el índice armonizado de Eurostat comparaba **el último punto de cada serie**.
+El INE publica antes que Eurostat, así que se estaba comparando la variación interanual de agosto con la de julio.
+En una serie movida como los combustibles líquidos, dos meses seguidos se llevan quince puntos sin que pase nada,
+y el aviso saltó tres días seguidos diciendo que había una discrepancia de 14,9 puntos.
+
+**No la había.** Comparando el mismo mes, el INE y Eurostat coinciden al decimal: 0,0 puntos de diferencia en
+combustibles líquidos y en electricidad, y menos de 3,1 en gas.
+
+**Decisión (17 sep 2026): el contraste compara siempre el último mes que está en las dos series.** El daño de un
+aviso falso que se repite no es el rato que se pierde mirándolo: es que enseña a no mirar los avisos, y entonces
+el día que salta uno de verdad tampoco se mira.
