@@ -138,3 +138,36 @@ def test_contraste_compara_el_mismo_mes_en_las_dos_series():
     assert contrast.yoy_de(euro, "2026-07") == pytest.approx(31.5)
     # y el mes que solo tiene una de las dos no se usa para comparar
     assert contrast.yoy_de(euro, "2026-08") is None
+
+
+# ----------------------------------------------------------------- misma fecha, dos valores
+def _serie_de_prueba():
+    from observatorio.catalog import Serie, Source
+    return Serie(id="x", name={"es": "x"}, country="ES", group="hogar", fuel="gasoleo", unit="EUR/l",
+                 source=Source(name="t", url="https://t", license="CC BY 4.0", license_url="https://t",
+                               attribution="t"),
+                 collector="t", native_freq="M", expected_every_days=31, stale_after_days=60,
+                 min_value=0.1, max_value=5.0, max_change_pct=50, decimals=4)
+
+
+def test_dos_valores_distintos_para_la_misma_fecha_van_a_cuarentena():
+    """Ante la duda no se publica: ni se elige uno ni se promedia.
+
+    Es lo que fallo con el butano en septiembre de 2026 (DECISIONES 19) y con el fichero del ministerio frances,
+    que apila la tabla semanal y la de medias mensuales en la misma hoja. Guardar "el que venga primero" hace que
+    el dato dependa del orden del fichero, que es lo mismo que decidirlo a cara o cruz.
+    """
+    s = _serie_de_prueba()
+    r = validate_points(s, [("2026-09-01", 1.4362), ("2026-09-01", 1.5073)], [],
+                                 reference=dt.date(2026, 9, 30))
+    assert r.accepted == [], "no se guarda ninguno de los dos"
+    assert len(r.rejected) == 2
+    assert all(x.reason == "fecha_duplicada_en_el_lote" for x in r.rejected)
+
+
+def test_la_misma_fecha_con_el_mismo_valor_no_molesta():
+    s = _serie_de_prueba()
+    r = validate_points(s, [("2026-09-01", 1.5073), ("2026-09-01", 1.5073)], [],
+                                 reference=dt.date(2026, 9, 30))
+    assert r.accepted == [("2026-09-01", 1.5073)]
+    assert r.rejected == []

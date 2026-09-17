@@ -47,8 +47,13 @@ def parse(content: bytes) -> list[tuple]:
             break
     if col is None:
         raise RuntimeError("fioul FR: cabecera no reconocida")
+    # La hoja lleva TRES tablas apiladas: las lecturas semanales, debajo "MOYENNES MENSUELLES" y al final las
+    # anuales. Leyendolas todas se mezclaban lecturas semanales con medias mensuales en la misma serie, y en las
+    # once semanas que cayeron en dia 1 salian dos valores distintos para la misma fecha. Se corta en el rotulo.
     pts = []
     for r in rows:
+        if r and isinstance(r[0], str) and "MOYENNE" in r[0].upper():
+            break
         d = r[0]
         if hasattr(d, "date") and isinstance(r[col], (int, float)):
             pts.append((d.date().isoformat(), float(r[col])))

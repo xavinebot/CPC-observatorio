@@ -320,3 +320,20 @@ combustibles líquidos y en electricidad, y menos de 3,1 en gas.
 **Decisión (17 sep 2026): el contraste compara siempre el último mes que está en las dos series.** El daño de un
 aviso falso que se repite no es el rato que se pierde mirándolo: es que enseña a no mirar los avisos, y entonces
 el día que salta uno de verdad tampoco se mira.
+
+## 21. Dos valores para la misma fecha: ante la duda, no se publica
+
+Después de lo del butano (§19) se auditaron **los catorce recolectores** preguntándoles los datos y mirando el
+lote antes de validarlo. Apareció un segundo caso: el fichero del ministerio francés apila **tres tablas en la
+misma hoja** —las lecturas semanales, debajo "MOYENNES MENSUELLES" y al final las anuales— y se leían todas, así
+que la serie mezclaba lecturas semanales con medias mensuales. En las once semanas que cayeron en día 1 salían
+dos valores distintos para la misma fecha. Esa serie no se publica (solo sirve para contrastar el Boletín
+Petrolero), pero el contraste estaba comparando peras con manzanas.
+
+**Decisión (17 sep 2026): la validación rechaza las fechas que llegan dos veces con valores distintos.** No se
+elige una, no se promedian: **las dos van a cuarentena y salta el aviso**, y se arregla el recolector para que
+diga cuál vale. Elegir por el orden del fichero es decidir el dato a cara o cruz.
+
+Es la misma regla que ya regía para todo lo demás —un hueco explicado vale más que un número inventado—, solo que
+ahora también cubre el caso de la fuente que dice dos cosas a la vez. Dos pruebas lo fijan, y la auditoría de los
+catorce recolectores sale limpia.

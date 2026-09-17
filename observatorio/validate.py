@@ -64,6 +64,26 @@ def validate_points(serie: Serie, new_points: list[tuple], existing: list[Point]
         clean.append((d, float(raw_v)))
     clean.sort()
 
+    # 1 bis. La misma fecha dos veces con valores distintos DENTRO del mismo lote.
+    #
+    # Significa que la fuente es ambigua y el recolector no ha decidido: puede ser un mes con dos revisiones de
+    # precio, o dos tablas distintas mezcladas en el mismo fichero. Antes se guardaba una u otra según el orden
+    # en que vinieran, y eso publicó durante días un precio del butano que ya no estaba en vigor (DECISIONES §19).
+    #
+    # La regla es la misma que para todo lo demás: **ante la duda, no se publica**. Las dos van a cuarentena, con
+    # su aviso, y se arregla el recolector para que diga cuál vale. Elegir al azar es inventarse el dato.
+    vistos: dict[str, float] = {}
+    conflictivas: set[str] = set()
+    for d, v in clean:
+        if d in vistos and abs(vistos[d] - v) > 1e-9:
+            conflictivas.add(d)
+        vistos.setdefault(d, v)
+    if conflictivas:
+        for d, v in clean:
+            if d in conflictivas:
+                res.rejected.append(Rejected(d, v, "fecha_duplicada_en_el_lote"))
+        clean = [(d, v) for d, v in clean if d not in conflictivas]
+
     # el "punto anterior" para medir la variación: empieza en el último guardado antes de cada fecha
     prev_by_order = sorted(existing_map.items())
 
