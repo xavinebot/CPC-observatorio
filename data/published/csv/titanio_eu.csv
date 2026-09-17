@@ -3,7 +3,7 @@
 # Fuente: Eurostat, Comercio exterior de la UE (Comext) - https://ec.europa.eu/eurostat/web/international-trade-in-goods/database
 # Licencia: CC BY 4.0 - https://ec.europa.eu/eurostat/about-us/policies/copyright
 # Cita obligatoria: Fuente: Eurostat, Comext
-# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-09-17T08:54:53+00:00
+# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-09-17T09:08:52+00:00
 date,value
 2004-01-01,1.5638
 2004-02-01,1.8419
@@ -270,8 +270,9 @@ date,value
 2025-11-01,2.9988
 2025-12-01,2.6941
 2026-01-01,2.6472
-2026-02-01,2.4028
+2026-02-01,2.4031
 2026-03-01,2.4832
-2026-04-01,2.7254
-2026-05-01,2.2759
-2026-06-01,3.1577
+2026-04-01,2.7301
+2026-05-01,2.2763
+2026-06-01,3.1165
+2026-07-01,2.989

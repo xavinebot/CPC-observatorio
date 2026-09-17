@@ -57,11 +57,40 @@ def test_cnmc_lee_el_precio_de_venta_al_publico():
         "2026-09;Orden IET/389/2015;Resolución de 09/07/2026;2026-09-01;0,5174;0,6081;0,0308;;117,5664;1,1;21;24,9252;143,6166\n"
         "1994-01;Orden de 05/11/1993;Resolución de 13/01/1994;;;;;;40,977;;16;6,5563;47,5333\n"
     )
-    pts = cnmc_glp.parse_csv(texto, "Venta al P", 0.01)
-    assert pts[0] == ("2026-09", 1.436166)
-    assert pts[1] == ("1994-01", 0.475333)
+    pts = dict(cnmc_glp.parse_csv(texto, "Venta al P", 0.01))
+    assert pts["2026-09"] == 1.436166
+    assert pts["1994-01"] == 0.475333
     # la bombona de 12,5 kg sale del valor por kilo
-    assert round(pts[0][1] * 12.5, 2) == 17.95
+    assert round(pts["2026-09"] * 12.5, 2) == 17.95
+
+
+def test_cnmc_mes_con_dos_revisiones_se_queda_con_la_vigente():
+    """El butano cambia a veces dos veces en el mismo mes: vale la ultima que entro en vigor.
+
+    Paso de verdad en septiembre de 2026: el fichero traia el precio del dia 1 (1,4362 EUR/kg) y el del dia 15
+    (1,5073), se guardaba uno u otro segun el orden del fichero, y la web enseño durante dias un precio que ya
+    no estaba en vigor.
+    """
+    texto = """Fecha;Entrada en vigor;Precio de Venta al Público (c€/kg)
+2026-09;2026-09-15;150,7293
+2026-09;2026-09-01;143,6166
+2026-03;2026-03-17;130,8448
+2026-03;2026-03-22;117,2998
+"""
+    pts = dict(cnmc_glp.parse_csv(texto, "Venta al P", 0.01))
+    assert len(pts) == 2, "un solo valor por mes"
+    assert pts["2026-09"] == 1.507293
+    assert pts["2026-03"] == 1.172998, "el orden del fichero no decide: decide la fecha de entrada en vigor"
+
+
+def test_cnmc_sin_columna_de_vigor_se_queda_con_la_primera_fila_del_mes():
+    # El fichero del GLP canalizado no trae "Entrada en vigor" y viene ordenado del reves (lo mas nuevo arriba).
+    texto = """Fecha;A CONSUMIDOR FINAL Término variable (c€/kg)
+2026-09;90,6022
+2026-09;80,0000
+"""
+    pts = dict(cnmc_glp.parse_csv(texto, "rmino variable", 0.01))
+    assert pts["2026-09"] == 0.906022
 
 
 def test_cnmc_avisa_si_desaparece_la_columna():

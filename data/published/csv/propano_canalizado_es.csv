@@ -3,7 +3,7 @@
 # Fuente: CNMC Data (Comisión Nacional de los Mercados y la Competencia) - https://data.cnmc.es/energia/mercado-minorista-de-glp
 # Licencia: CC BY-SA 4.0 - https://data.cnmc.es/condiciones-de-uso
 # Cita obligatoria: Fuente: CNMC Data, licencia CC BY-SA 4.0
-# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-09-17T08:54:53+00:00
+# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-09-17T09:08:52+00:00
 date,value
 2006-01-01,0.8162
 2006-02-01,0.8303
@@ -253,3 +253,4 @@ date,value
 2026-06-01,0.911
 2026-07-01,0.8079
 2026-08-01,0.9
+2026-09-01,0.906

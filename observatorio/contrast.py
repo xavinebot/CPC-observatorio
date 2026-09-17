@@ -2,8 +2,10 @@
 
 Cada regla compara dos series y avisa si difieren más de `tolerance`:
   - mode='level': compara el último valor de cada una (convertido a la unidad común con los factores).
-  - mode='yoy':   compara la variación interanual (%) del último punto de cada una (sirve para índices con
-                  bases distintas, p. ej. INE 2021=100 frente a Eurostat 2015=100).
+  - mode='yoy':   compara la variación interanual (%) del último mes que está en LAS DOS series (sirve
+                  para índices con bases distintas, p. ej. INE 2021=100 frente a Eurostat 2015=100). Tiene que
+                  ser el mismo mes: el INE publica antes que Eurostat y comparar agosto con julio da falsas
+                  alarmas.
 Las reglas concretas están en RULES (abajo).
 """
 from __future__ import annotations
@@ -41,17 +43,19 @@ RULES: list[Rule] = [
 ]
 
 
-def yoy(points: list[storage.Point]) -> tuple[str, float] | None:
-    """Variación interanual (%) del último punto: busca el punto 12 meses antes (mismo mes)."""
-    if len(points) < 13:
-        return None
-    d_last, v_last = points[-1]
-    target = d_last[:4]
-    prev_key = f"{int(target) - 1}{d_last[4:7]}"
-    for d, v in reversed(points):
-        if d[:7] == prev_key and v:
-            return d_last, (v_last - v) / v * 100.0
+def yoy_de(points: list[storage.Point], mes: str) -> float | None:
+    """Variación interanual (%) de un mes concreto ('AAAA-MM'), contra el mismo mes del año anterior."""
+    d = {p[0][:7]: p[1] for p in points}
+    previo = f"{int(mes[:4]) - 1}{mes[4:7]}"
+    if mes in d and d.get(previo):
+        return (d[mes] - d[previo]) / d[previo] * 100.0
     return None
+
+
+def ultimo_mes_comun(pa: list[storage.Point], pb: list[storage.Point]) -> str | None:
+    """El mes más reciente que está en las dos series."""
+    comunes = {p[0][:7] for p in pa} & {p[0][:7] for p in pb}
+    return max(comunes) if comunes else None
 
 
 def check_all() -> list[str]:
@@ -64,17 +68,24 @@ def check_all() -> list[str]:
         pa, pb = storage.read_series(r.a), storage.read_series(r.b)
         if not pa or not pb:
             continue
-        if abs((parse_date(pa[-1][0]) - parse_date(pb[-1][0])).days) > r.max_days_apart:
-            continue
         if r.mode == "yoy":
-            ya, yb = yoy(pa), yoy(pb)
-            if not ya or not yb:
+            # Se comparan SIEMPRE el mismo mes en las dos series. Comparando el último punto de cada una salían
+            # falsas alarmas: el INE publica antes que Eurostat, así que se estaba comparando la variación de
+            # agosto con la de julio. En una serie movida como los combustibles líquidos, dos meses seguidos se
+            # llevan quince puntos sin que pase nada, y el aviso enseña a no hacer caso de los avisos.
+            mes = ultimo_mes_comun(pa, pb)
+            if not mes:
                 continue
-            diff = abs(ya[1] - yb[1])
+            ya, yb = yoy_de(pa, mes), yoy_de(pb, mes)
+            if ya is None or yb is None:
+                continue
+            diff = abs(ya - yb)
             if diff > r.tolerance:
-                alerts.append(f"{r.label or r.a + ' vs ' + r.b}: {ya[1]:+.1f}% ({ya[0]}) frente a {yb[1]:+.1f}% "
-                              f"({yb[0]}), {diff:.1f} puntos de diferencia (tolerancia {r.tolerance})")
+                alerts.append(f"{r.label or r.a + ' vs ' + r.b} en {mes}: {ya:+.1f}% frente a {yb:+.1f}%, "
+                              f"{diff:.1f} puntos de diferencia (tolerancia {r.tolerance})")
         else:
+            if abs((parse_date(pa[-1][0]) - parse_date(pb[-1][0])).days) > r.max_days_apart:
+                continue
             va, vb = pa[-1][1] * r.to_common_a, pb[-1][1] * r.to_common_b
             diff = pct_change(va, vb)
             if diff > r.tolerance:

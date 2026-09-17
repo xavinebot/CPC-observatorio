@@ -119,3 +119,22 @@ def test_descartar_vacia_la_cuarentena(sandbox):
 def test_csv_ida_y_vuelta(sandbox):
     storage.write_series("test_serie", [("2026-01-01", 1.23456), ("2025-12-01", 0.5)])
     assert storage.read_series("test_serie") == [("2025-12-01", 0.5), ("2026-01-01", 1.2346)]
+
+
+# ----------------------------------------------------------------- contraste entre fuentes
+def test_contraste_compara_el_mismo_mes_en_las_dos_series():
+    """El INE publica antes que Eurostat: si se compara el ultimo punto de cada una, se comparan meses distintos.
+
+    Paso de verdad los dias 15, 16 y 17 de septiembre de 2026: el aviso decia que el IPC de combustibles liquidos
+    del INE y el de Eurostat se llevaban 14,9 puntos, cuando lo que pasaba es que uno iba por agosto y el otro por
+    julio. En el mismo mes coinciden al decimal. Un aviso falso repetido enseña a no hacer caso de los avisos.
+    """
+    from observatorio import contrast
+    # el INE va un mes por delante y en agosto pega un salto; en los meses comunes son identicas
+    ine = [("2025-07-01", 100.0), ("2025-08-01", 100.0), ("2026-07-01", 131.5), ("2026-08-01", 146.4)]
+    euro = [("2025-07-01", 100.0), ("2025-08-01", 100.0), ("2026-07-01", 131.5)]
+    assert contrast.ultimo_mes_comun(ine, euro) == "2026-07"
+    assert contrast.yoy_de(ine, "2026-07") == pytest.approx(31.5)
+    assert contrast.yoy_de(euro, "2026-07") == pytest.approx(31.5)
+    # y el mes que solo tiene una de las dos no se usa para comparar
+    assert contrast.yoy_de(euro, "2026-08") is None
