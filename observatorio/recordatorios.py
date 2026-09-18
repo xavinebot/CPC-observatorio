@@ -40,9 +40,10 @@ RECORDATORIOS: list[tuple[str, str, str]] = [
     (
         "2026-09-29", "2026-12-15",
         "🏛️ <b>Mira si ya está publicada la ficha de datos.gob.es.</b> Busca «Cristales para Chimeneas» en "
-        "<code>datos.gob.es/es/empresas</code>: la revisan a mano antes de publicarla, así que tarda semanas. "
-        "Cuando aparezca, apúntala en la pestaña <code>GSC_enlaces</code> de la hoja «Datos CPC» como dominio que "
-        "enlaza, tipo administración. Si a mediados de diciembre no está, escribe al contacto del portal.",
+        "<code>datos.gob.es/es/empresas</code> y en el catálogo de aplicaciones. El 18 de septiembre pidieron la "
+        "licencia y cinco imágenes y se contestó el mismo día, así que la pelota está en su tejado. Cuando "
+        "aparezca, apúntala en la pestaña <code>GSC_enlaces</code> de la hoja «Datos CPC» como dominio que enlaza, "
+        "tipo administración. Si a mediados de diciembre no está, escribe al contacto del portal.",
     ),
     (
         "2026-09-28", "2026-10-26",
