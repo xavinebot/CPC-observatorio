@@ -1249,5 +1249,23 @@
 "humedad_pct": 0,
 "seca": true,
 "_metodo": "claude"
+},
+"5a9d66b9afddbc75": {
+"es_lena": true,
+"especie": "encina",
+"kg": 10,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"f19262413fe65fad": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 600,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
 }
 }
