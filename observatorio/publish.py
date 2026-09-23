@@ -50,7 +50,7 @@ def serie_payload(s: catalog.Serie, points: list[storage.Point]) -> dict:
         "unit": s.unit, "kwh_per_unit": s.kwh_per_unit, "taxes_included": s.taxes_included,
         "freq": s.native_freq, "decimals": s.decimals, "notes": s.notes,
         "source": fuente_publicada(s.source),
-        "redistributable": s.redistributable,
+        "redistributable": s.redistributable, "solo_vista": s.solo_vista,
         "en_comparativa": s.en_comparativa, "subgrupo": s.subgrupo,
         "status": estado,
         "faltan": faltan,

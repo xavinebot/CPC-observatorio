@@ -70,6 +70,11 @@ class Serie:
     # "energia" (lo que mueve las dos) y "paises" (el mismo índice fuera de España). Vacío = sin agrupar.
     subgrupo: str = ""
     hidden: bool = False           # True = solo para contraste interno; no aparece en la web
+    # True = la fuente autoriza ENSEÑAR el dato, no llevárselo. El gráfico se dibuja sin los números dentro (sin
+    # datos incrustados en la página y sin la etiqueta al pasar el ratón), la tabla se queda en el último dato y
+    # el anterior, y no hay medias anuales. Va con redistributable=False, que es lo que quita el CSV.
+    # Lo pidió C.A.R.M.E.N. e.V. para su precio del pellet aleman, y se les prometió por escrito.
+    solo_vista: bool = False
 
 
 _REGISTRY: dict[str, Serie] = {}

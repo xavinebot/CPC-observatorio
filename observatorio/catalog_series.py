@@ -306,7 +306,11 @@ SRC_PROPELLETS = Source(
 SRC_CARMEN = Source(
     name="C.A.R.M.E.N. e.V., Marktpreise Pellets",
     url="https://www.carmen-ev.de/service/marktueberblick/marktpreise-energieholz/marktpreise-pellets/",
-    license=N("Uso comercial previa consulta con C.A.R.M.E.N. (pendiente)", "Usage commercial sur demande préalable auprès de C.A.R.M.E.N. (en attente)", "Uso commerciale previa richiesta a C.A.R.M.E.N. (in attesa)", "Kommerzielle Nutzung nach vorheriger Rücksprache mit C.A.R.M.E.N. (ausstehend)", "Uso comercial mediante consulta prévia à C.A.R.M.E.N. (pendente)"),
+    license=N("Uso autorizado por C.A.R.M.E.N. e.V. citando la fuente (correo del 23 sep 2026); sin redistribución",
+              "Usage autorisé par C.A.R.M.E.N. e.V. avec citation de la source (courriel du 23 sept. 2026) ; sans redistribution",
+              "Uso autorizzato da C.A.R.M.E.N. e.V. citando la fonte (e-mail del 23 set. 2026); senza ridistribuzione",
+              "Nutzung von C.A.R.M.E.N. e.V. mit Quellenangabe genehmigt (E-Mail vom 23.09.2026); keine Weitergabe",
+              "Uso autorizado pela C.A.R.M.E.N. e.V. citando a fonte (e-mail de 23 set. 2026); sem redistribuição"),
     license_url="https://www.carmen-ev.de/service/marktueberblick/marktpreise-energieholz/",
     attribution="Quelle: C.A.R.M.E.N. e.V.")
 register(Serie(
@@ -326,8 +330,11 @@ register(Serie(
            "Pellets lose (5 t), inkl. MwSt.", "Pellets a granel (5 t), com IVA"),
     country="DE", group="hogar", fuel="pellet", unit="EUR/kg", source=SRC_CARMEN, collector="pellets_eu",
     native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.05, max_value=2.0, max_change_pct=40,
-    kwh_per_unit=4.76, decimals=4, taxes_included=True, publishable=False, redistributable=False,
-    notes="Media alemana del precio de 5 t de pellet a granel, IVA incluido (C.A.R.M.E.N. e.V., encuesta mensual a unos 50 proveedores). Pendiente de confirmar el uso comercial."))
+    kwh_per_unit=4.76, decimals=4, taxes_included=True, redistributable=False, solo_vista=True,
+    notes="Media alemana del precio de 5 t de pellet a granel, IVA incluido (C.A.R.M.E.N. e.V., encuesta mensual a "
+          "unos 50 proveedores). C.A.R.M.E.N. autoriza enseñar la serie citando la fuente, no redistribuirla: por "
+          "eso el gráfico va sin los números dentro, la tabla enseña solo el último dato y el anterior, y no hay "
+          "descarga. Quien quiera las cifras, en su web."))
 
 
 # ----------------------------------------------------------------------------- materias primas del vitroceramico
