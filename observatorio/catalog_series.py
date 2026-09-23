@@ -330,7 +330,10 @@ register(Serie(
            "Pellets lose (5 t), inkl. MwSt.", "Pellets a granel (5 t), com IVA"),
     country="DE", group="hogar", fuel="pellet", unit="EUR/kg", source=SRC_CARMEN, collector="pellets_eu",
     native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.05, max_value=2.0, max_change_pct=40,
+    # publishable=False HASTA que el plugin con solo_vista este en produccion: si los datos llegan antes,
+    # la pagina alemana enseñaria la serie con los numeros dentro, que es justo lo que se prometio que no.
     kwh_per_unit=4.76, decimals=4, taxes_included=True, redistributable=False, solo_vista=True,
+    publishable=False,
     notes="Media alemana del precio de 5 t de pellet a granel, IVA incluido (C.A.R.M.E.N. e.V., encuesta mensual a "
           "unos 50 proveedores). C.A.R.M.E.N. autoriza enseñar la serie citando la fuente, no redistribuirla: por "
           "eso el gráfico va sin los números dentro, la tabla enseña solo el último dato y el anterior, y no hay "
