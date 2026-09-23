@@ -32,7 +32,7 @@ se puede recoger pero no republicar se queda recogido y sin publicar, esperando 
 
 | Dato | Fuente | Por qué no se publica |
 |---|---|---|
-| Pellet a granel en Alemania | C.A.R.M.E.N. e.V. | Sus condiciones piden "consulta previa" para uso comercial. Serie cargada desde 2005; publicar tras el correo. |
+| Precio del pellet a granel (5 t, con IVA), mensual desde 2005 | DE | C.A.R.M.E.N. e.V. | mensual | 2005 | uso autorizado por escrito citando la fuente (23 sep 2026); **sin redistribución** | **no** |
 
 ### Condiciones que impone AVEBIOM (autorización del 14 sep 2026)
 

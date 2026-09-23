@@ -337,3 +337,32 @@ diga cuál vale. Elegir por el orden del fichero es decidir el dato a cara o cru
 Es la misma regla que ya regía para todo lo demás —un hueco explicado vale más que un número inventado—, solo que
 ahora también cubre el caso de la fuente que dice dos cosas a la vez. Dos pruebas lo fijan, y la auditoría de los
 catorce recolectores sale limpia.
+
+## 22. Enseñar un dato no es entregarlo: la serie "solo vista"
+
+C.A.R.M.E.N. e.V. autorizó publicar su precio del pellet alemán desde 2005 **con una condición**: que de la
+gráfica no se puedan sacar los valores numéricos. Antes de aceptarla había que comprobar si era cierta, y **no lo
+era**: nuestros gráficos llevan los puntos como JSON dentro de la página y enseñan la cifra exacta al pasar el
+ratón. Escribirles «de una gráfica no se copian números» y publicar así habría sido faltar a la palabra dada, con
+la única fuente que existe para el pellet alemán.
+
+**Decisión (23 sep 2026): una serie puede marcarse `solo_vista`.** Cuando lo está:
+
+- el gráfico se dibuja **sin los datos dentro** y sin la etiqueta del ratón (el JavaScript se aparta solo al no
+  encontrarlos, así que tampoco salen los botones de rango);
+- se dibuja **entero**, porque sin botones el lector no podría pedir «Todo» y ese sería el único recorrido que
+  vería nunca;
+- la tabla se queda en **el último dato y el anterior**, que es lo que publica la propia fuente;
+- **no hay tabla de medias anuales**: veintiún años en filas son un CSV con otra ropa;
+- no hay descarga ni gráfico incrustable, que ya venían de `redistributable=False`.
+
+**Lo que NO se hace:** publicar los números redondeados para que «no sean exactos». Eso sería publicar un dato
+alterado, que es peor que no publicarlo.
+
+**La promesa vive en un test**, no en la memoria de nadie: comprueba las ocho cosas en cada despliegue. Una
+condición que una fuente pone por escrito tiene que poder romperse solo con un test en rojo.
+
+**Y una regla de orden, aprendida a la mala el mismo día:** los datos llegan a producción por GitHub y el plugin
+por despliegue. Si los datos viajan primero, la web enseña la serie con las reglas viejas. **Primero el plugin,
+después los datos.** Pasó, se revirtió en minutos y no llegó a verse, pero es la segunda vez que este orden
+muerde.
