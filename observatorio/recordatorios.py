@@ -53,14 +53,6 @@ RECORDATORIOS: list[tuple[str, str, str]] = [
         "finales de octubre, mírale la cobertura; estar en el mapa del sitio ya basta para que Google llegue, "
         "así que una que no entre suele señalar otra cosa.",
     ),
-    (
-        "2026-10-05", "2026-11-09",
-        "🇩🇪 <b>¿Contestó C.A.R.M.E.N. lo del gráfico?</b> El 18 de septiembre se les respondió aceptando su "
-        "condición (tabla de dos filas, sin medias anuales, sin CSV) y preguntando si el gráfico puede enseñar "
-        "el histórico desde 2005. Si no han dicho nada, una llamada al <code>+49 9421 960-300</code>, que es una "
-        "asociación pequeña y el correo se les queda sin leer. Con su respuesta se publica el precio del pellet "
-        "alemán: 260 meses desde 2005, que es lo que le falta a la página alemana. Detalle en CORREO-CARMEN.md.",
-    ),
 ]
 
 
