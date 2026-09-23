@@ -27,12 +27,11 @@ se puede recoger pero no republicar se queda recogido y sin publicar, esperando 
 | Índice del precio del pellet a granel | AT | proPellets Austria | mensual | enero 2006 | uso con cita, revocable | **no** |
 | Índice propio del precio de la leña (palet entregado y saco) | ES | elaboración propia | semanal | septiembre 2026 | CC BY 4.0 | sí |
 | Pellet, hueso de aceituna y astilla (saco, palet, granel; trimestral y media anual) | ES | AVEBIOM, Índice de Precios de Biocombustibles Sólidos | trimestral | 2012 (pellet), 2014 (hueso y astilla) | autorización escrita de AVEBIOM, 14 sep 2026 | **no** |
+| Precio del pellet a granel (5 t, con IVA), mensual desde 2005 | DE | C.A.R.M.E.N. e.V. | mensual | 2005 | uso autorizado por escrito citando la fuente (23 sep 2026); **sin redistribución** | **no** |
 
 ## 2. Lo que se recoge pero NO se publica todavía
 
-| Dato | Fuente | Por qué no se publica |
-|---|---|---|
-| Precio del pellet a granel (5 t, con IVA), mensual desde 2005 | DE | C.A.R.M.E.N. e.V. | mensual | 2005 | uso autorizado por escrito citando la fuente (23 sep 2026); **sin redistribución** | **no** |
+**Ninguno.** Las dos series que estaban aquí esperando autorización —AVEBIOM el 14 de septiembre y C.A.R.M.E.N. el 23— ya la tienen, y las dos se publican sin descarga.
 
 ### Condiciones que impone AVEBIOM (autorización del 14 sep 2026)
 
