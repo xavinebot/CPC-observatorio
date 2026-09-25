@@ -1,5 +1,5 @@
 {
- "last_run": "2026-09-24T08:45:29+00:00",
+ "last_run": "2026-09-25T09:09:11+00:00",
  "runs": [
   {
    "added": 10467,
@@ -620,20 +620,46 @@
    "soft_failures": [],
    "stale": [],
    "started": "2026-09-24T08:44:39+00:00"
+  },
+  {
+   "added": 10942,
+   "collectors": [
+    "wob",
+    "cnmc_glp",
+    "eurostat_nrg",
+    "eurostat_hicp",
+    "eurostat_sts",
+    "ree",
+    "ine_ipc",
+    "ine_ipri",
+    "worldbank",
+    "avebiom",
+    "pellets_eu",
+    "fr_fioul"
+   ],
+   "contrast_alerts": [],
+   "failures": [
+    "fr_fioul"
+   ],
+   "finished": "2026-09-25T09:09:11+00:00",
+   "quarantined": [],
+   "soft_failures": [],
+   "stale": [],
+   "started": "2026-09-25T09:05:04+00:00"
   }
  ],
  "series": {
   "avebiom": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:45:12+00:00",
+   "last_attempt": "2026-09-25T09:05:55+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:45:15+00:00"
+   "last_success": "2026-09-25T09:05:58+00:00"
   },
   "cnmc_glp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:44:43+00:00",
+   "last_attempt": "2026-09-25T09:05:07+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:44:44+00:00"
+   "last_success": "2026-09-25T09:05:09+00:00"
   },
   "comext": {
    "consecutive_failures": 0,
@@ -643,15 +669,15 @@
   },
   "eurostat_hicp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:44:45+00:00",
+   "last_attempt": "2026-09-25T09:05:12+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:44:46+00:00"
+   "last_success": "2026-09-25T09:05:16+00:00"
   },
   "eurostat_nrg": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:44:44+00:00",
+   "last_attempt": "2026-09-25T09:05:09+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:44:45+00:00"
+   "last_success": "2026-09-25T09:05:12+00:00"
   },
   "eurostat_nrg_ind": {
    "consecutive_failures": 0,
@@ -661,27 +687,27 @@
   },
   "eurostat_sts": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:44:46+00:00",
+   "last_attempt": "2026-09-25T09:05:17+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:44:52+00:00"
+   "last_success": "2026-09-25T09:05:38+00:00"
   },
   "fr_fioul": {
-   "consecutive_failures": 1,
-   "last_attempt": "2026-09-24T08:45:19+00:00",
-   "last_error": "RuntimeError: No se pudo descargar https://www.ecologie.gouv.fr/prix-des-produits-petroliers: HTTP 503 en https://www.ecologie.gouv.fr/prix-des-produits-petroliers",
+   "consecutive_failures": 2,
+   "last_attempt": "2026-09-25T09:06:01+00:00",
+   "last_error": "RuntimeError: No se pudo descargar https://www.ecologie.gouv.fr/prix-des-produits-petroliers: HTTPSConnectionPool(host='www.ecologie.gouv.fr', port=443): Max retries exceeded with url: /prix-des-produits-petroliers (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.ecologie.gouv.fr', port=443) at 0x7faab65e4c80>, 'Connection to www.ecologie.gouv.fr timed out. (connect timeout=60)'))",
    "last_success": "2026-09-23T08:50:18+00:00"
   },
   "ine_ipc": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:45:02+00:00",
+   "last_attempt": "2026-09-25T09:05:45+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:45:05+00:00"
+   "last_success": "2026-09-25T09:05:48+00:00"
   },
   "ine_ipri": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:45:05+00:00",
+   "last_attempt": "2026-09-25T09:05:48+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:45:12+00:00"
+   "last_success": "2026-09-25T09:05:54+00:00"
   },
   "lena": {
    "consecutive_failures": 0,
@@ -691,27 +717,27 @@
   },
   "pellets_eu": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:45:15+00:00",
+   "last_attempt": "2026-09-25T09:05:58+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:45:19+00:00"
+   "last_success": "2026-09-25T09:06:01+00:00"
   },
   "ree": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:44:52+00:00",
+   "last_attempt": "2026-09-25T09:05:38+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:45:02+00:00"
+   "last_success": "2026-09-25T09:05:45+00:00"
   },
   "wob": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:44:39+00:00",
+   "last_attempt": "2026-09-25T09:05:04+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:44:43+00:00"
+   "last_success": "2026-09-25T09:05:07+00:00"
   },
   "worldbank": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-09-24T08:45:12+00:00",
+   "last_attempt": "2026-09-25T09:05:54+00:00",
    "last_error": null,
-   "last_success": "2026-09-24T08:45:12+00:00"
+   "last_success": "2026-09-25T09:05:55+00:00"
   }
  },
  "telegram_offset": 0
