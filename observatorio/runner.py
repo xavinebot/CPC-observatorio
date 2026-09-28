@@ -21,6 +21,7 @@ def run(only: list[str] | None = None, *, backfill: bool = False, publish_after:
     names = only or collectors.names()
     failures: list[tuple[str, str]] = []
     soft_failures: list[tuple[str, str]] = []
+    pasajeros: list[tuple[str, str]] = []   # primer fallo seguido: se apunta, no se avisa
     added_total = 0
     quarantined: list[str] = []
     for name in names:
@@ -37,9 +38,20 @@ def run(only: list[str] | None = None, *, backfill: bool = False, publish_after:
             msg = f"{type(e).__name__}: {e}"
             print("   FALLO" + (" (fuente opcional)" if opcional else "") + ":", msg)
             traceback.print_exc(limit=2)
-            sstate["consecutive_failures"] = sstate.get("consecutive_failures", 0) + 1
+            seguidos = sstate.get("consecutive_failures", 0) + 1
+            sstate["consecutive_failures"] = seguidos
             sstate["last_error"] = msg[:500]
-            (soft_failures if opcional else failures).append((name, msg))
+            # Un tropiezo suelto de una fuente NO se avisa. Cuando una web se cae un rato o devuelve una pagina
+            # en blanco, la nuestra sigue enseñando el ultimo dato bueno y al dia siguiente se recoge solo: no
+            # hay nada que hacer, y el aviso solo enseña a no mirar los avisos. En cinco dias de septiembre de
+            # 2026 hubo tres, los tres se arreglaron solos.
+            # Se avisa al SEGUNDO fallo seguido, que ya no es mala suerte. Y si una fuente fallara en dias
+            # alternos sin llegar nunca a dos seguidos, lo caza el aviso de serie caducada, que mira el dato y
+            # no la descarga. Los tropiezos quedan apuntados y salen en el resumen de los lunes.
+            if opcional or seguidos < 2:
+                (soft_failures if opcional else pasajeros).append((name, msg))
+            else:
+                failures.append((name, msg))
             continue
         sstate["consecutive_failures"] = 0
         sstate["last_error"] = None
@@ -61,6 +73,7 @@ def run(only: list[str] | None = None, *, backfill: bool = False, publish_after:
     state["runs"].append({"started": started, "finished": storage.now_iso(), "collectors": names,
                           "added": added_total, "failures": [f[0] for f in failures],
                           "soft_failures": [f[0] for f in soft_failures],
+                          "pasajeros": [f[0] for f in pasajeros],
                           "quarantined": quarantined, "stale": [s[0] for s in stale],
                           "contrast_alerts": contrasts})
     state["last_run"] = storage.now_iso()
@@ -71,7 +84,7 @@ def run(only: list[str] | None = None, *, backfill: bool = False, publish_after:
         quarantine.notify_batch(quarantined)
     if notify and (failures or stale or contrasts):
         alerts.send(format_problems(failures, stale, contrasts))
-    print(f"\nResumen: +{added_total} puntos · fallos {len(failures)} · fallos de fuentes opcionales "
+    print(f"\nResumen: +{added_total} puntos · fallos {len(failures)} · tropiezos de un dia {len(pasajeros)} · fallos de fuentes opcionales "
           f"{len(soft_failures)} · cuarentena {len(quarantined)} · caducadas {len(stale)} · "
           f"contrastes {len(contrasts)}")
     return 1 if failures else 0
@@ -140,6 +153,10 @@ def weekly_summary() -> str:
     if blandos:
         lines.append("Fuentes opcionales que no responden (no se publican, no urge): "
                      + ", ".join(alerts.esc(b) for b in blandos))
+    # Los tropiezos de un dia que se arreglaron solos no avisan, pero tampoco se esconden.
+    pasajeros = sorted({n for r in runs for n in r.get("pasajeros", [])})
+    if pasajeros:
+        lines.append("Fuentes que fallaron un dia y volvieron solas: " + ", ".join(alerts.esc(b) for b in pasajeros))
     if state.get("last_run"):
         lines.append(f"Última ejecución: {state['last_run'][:16].replace('T', ' ')} UTC")
     if not runs:

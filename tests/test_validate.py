@@ -171,3 +171,42 @@ def test_la_misma_fecha_con_el_mismo_valor_no_molesta():
                                  reference=dt.date(2026, 9, 30))
     assert r.accepted == [("2026-09-01", 1.5073)]
     assert r.rejected == []
+
+
+# ----------------------------------------------------------------- avisos: el primer tropiezo no despierta a nadie
+def test_un_fallo_suelto_no_avisa_y_el_segundo_si(monkeypatch, sandbox):
+    """Una web que se cae un rato y vuelve no es una incidencia: la nuestra sigue con el ultimo dato bueno.
+
+    En cinco dias de septiembre de 2026 saltaron tres avisos asi (el ministerio frances dos y AVEBIOM uno) y los
+    tres se arreglaron solos. Un aviso que no pide hacer nada enseña a no mirar los avisos, y entonces el dia que
+    salta uno de verdad tampoco se mira.
+    """
+    from observatorio import runner
+
+    class Roto:
+        name = "roto"
+        optional = False
+        def fetch(self, *, backfill=False):
+            raise RuntimeError("la web no responde")
+        def check(self, r):
+            pass
+
+    monkeypatch.setattr(runner.collectors, "names", lambda: ["roto"])
+    monkeypatch.setattr(runner.collectors, "get", lambda n: Roto())
+    # En el entorno de pruebas no hay datos, asi que TODAS las series salen caducadas y eso avisa por su cuenta.
+    # Aqui se mira solo el aviso del fallo de descarga.
+    monkeypatch.setattr(runner, "stale_series", lambda: [])
+    monkeypatch.setattr(runner.contrast, "check_all", lambda: [])
+    enviados = []
+    monkeypatch.setattr(runner.alerts, "send", lambda *a, **k: enviados.append(a[0]) or True)
+
+    runner.run(only=["roto"], publish_after=False, notify=True)
+    assert enviados == [], "el primer fallo se apunta pero no avisa"
+    st = storage.load_state()["series"]["roto"]
+    assert st["consecutive_failures"] == 1
+    assert storage.load_state()["runs"][-1]["pasajeros"] == ["roto"], "queda apuntado para el resumen"
+
+    runner.run(only=["roto"], publish_after=False, notify=True)
+    assert len(enviados) == 1, "el segundo fallo seguido si avisa"
+    assert "roto" in enviados[0]
+    assert storage.load_state()["runs"][-1]["failures"] == ["roto"]

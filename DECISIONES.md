@@ -366,3 +366,23 @@ condición que una fuente pone por escrito tiene que poder romperse solo con un 
 por despliegue. Si los datos viajan primero, la web enseña la serie con las reglas viejas. **Primero el plugin,
 después los datos.** Pasó, se revirtió en minutos y no llegó a verse, pero es la segunda vez que este orden
 muerde.
+
+## 23. El primer tropiezo de una fuente no despierta a nadie
+
+En cinco días de septiembre de 2026 saltaron tres avisos de fallo de descarga: el ministerio francés el 24 y el 25,
+y AVEBIOM el 27. **Los tres se arreglaron solos al día siguiente** y ninguno afectó a lo publicado: cuando una
+fuente no responde, la web sigue enseñando el último dato bueno, que es justo como está diseñado.
+
+Un aviso que no pide hacer nada es peor que no avisar. Enseña a no mirar los avisos, y entonces el día que salta
+uno de verdad —como el del butano, que sí escondía un precio equivocado en la página— tampoco se mira.
+
+**Decisión (28 sep 2026): se avisa al SEGUNDO fallo seguido**, no al primero. Era ya la regla de las fuentes
+opcionales y pasa a valer para todas. Un fallo suelto queda apuntado y sale en el resumen de los lunes, en una
+línea que dice qué fuentes fallaron un día y volvieron solas.
+
+**Por qué no se escapa nada.** El retraso máximo de un aviso real es de un día, y durante ese día el dato
+publicado no cambia. Y si una fuente fallara en días alternos sin llegar nunca a dos seguidos, lo caza el aviso de
+**serie caducada**, que mira la antigüedad del dato y no el resultado de la descarga: esa es la red que importa,
+porque vigila lo que ve el lector y no lo que le pasa a un servidor ajeno.
+
+Hay un test que lo fija: un fallo no avisa, dos seguidos sí.
