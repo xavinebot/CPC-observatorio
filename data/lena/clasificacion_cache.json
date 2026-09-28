@@ -1267,5 +1267,23 @@
 "humedad_pct": 0,
 "seca": false,
 "_metodo": "claude"
+},
+"51fc4665ddc12cbd": {
+"es_lena": true,
+"especie": "pino",
+"kg": 0,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"ed3b8744a543b28b": {
+"es_lena": true,
+"especie": "encina",
+"kg": 350,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
 }
 }
