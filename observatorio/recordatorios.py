@@ -38,12 +38,11 @@ RECORDATORIOS: list[tuple[str, str, str]] = [
         "hay que mirar el marcado con la prueba de resultados enriquecidos de Google.",
     ),
     (
-        "2026-09-29", "2026-12-15",
-        "🏛️ <b>Mira si ya está publicada la ficha de datos.gob.es.</b> Busca «Cristales para Chimeneas» en "
-        "<code>datos.gob.es/es/empresas</code> y en el catálogo de aplicaciones. El 18 de septiembre pidieron la "
-        "licencia y cinco imágenes y se contestó el mismo día, así que la pelota está en su tejado. Cuando "
-        "aparezca, apúntala en la pestaña <code>GSC_enlaces</code> de la hoja «Datos CPC» como dominio que enlaza, "
-        "tipo administración. Si a mediados de diciembre no está, escribe al contacto del portal.",
+        "2026-09-29", "2026-10-26",
+        "🔗 <b>Apunta datos.gob.es en GSC_enlaces.</b> La ficha se publicó el 29 de septiembre en "
+        "<code>datos.gob.es/es/aplicaciones/observatorio-precios-calefaccion</code> y su enlace es dofollow: "
+        "cuenta como el primero de los diez dominios del criterio de los seis meses. En la hoja «Datos CPC», "
+        "pestaña <code>GSC_enlaces</code>: dominio datos.gob.es, tipo administración, fecha 29/09/2026.",
     ),
     (
         "2026-09-28", "2026-10-26",
