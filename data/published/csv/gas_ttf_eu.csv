@@ -3,7 +3,7 @@
 # Fuente: World Bank Commodity Price Data (The Pink Sheet) - https://www.worldbank.org/en/research/commodity-markets
 # Licencia: CC BY 4.0 - https://datacatalog.worldbank.org/search/dataset/0038238
 # Cita obligatoria: Fuente: World Bank Commodity Price Data (The Pink Sheet)
-# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-10-02T10:03:09+00:00
+# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-10-03T09:26:07+00:00
 date,value
 1960-01-01,0.4
 1960-02-01,0.4
@@ -805,3 +805,4 @@ date,value
 2026-06-01,15.17
 2026-07-01,18.06
 2026-08-01,21.11
+2026-09-01,25.42
