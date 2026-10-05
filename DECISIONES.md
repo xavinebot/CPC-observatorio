@@ -386,3 +386,22 @@ publicado no cambia. Y si una fuente fallara en días alternos sin llegar nunca 
 porque vigila lo que ve el lector y no lo que le pasa a un servidor ajeno.
 
 Hay un test que lo fija: un fallo no avisa, dos seguidos sí.
+
+## 24. Lo que se degrada en silencio acaba degradado para siempre
+
+La clave de la API de Claude del observatorio **se usa en un solo sitio**: clasificar las fichas de las cinco
+tiendas del índice de la leña (si es leña o briqueta, especie, kilos, formato). Las 138 series se descargan sin
+ella. Y está escrito para aguantar que falle: si no hay clave, se clasifica con las reglas de siempre y el índice
+se sigue publicando.
+
+Eso está bien. **El problema era que no se veía.** El fallo se capturaba, se escribía una línea en el log de
+GitHub Actions y a otra cosa; y si la clave desaparecía del todo en vez de ser rechazada, ni esa línea. El índice
+podía pasarse meses clasificando peor sin que nadie lo supiera.
+
+**Decisión (5 oct 2026): el resumen de los lunes lo dice.** La recogida guarda **por qué** se quedó sin API —sin
+clave, sin biblioteca, o la API no respondió— y el resumen semanal lo enseña con la frase entera: que se sigue
+publicando, que las fichas nuevas se leen peor, y cuál es la clave que hay que cambiar.
+
+**No es un aviso urgente y no debe serlo**: no hay nada roto y nadie tiene que levantarse a arreglarlo. Es la
+tercera categoría, la que faltaba: ni incidencia ni silencio, sino **una degradación visible**. Un sistema que se
+degrada con elegancia pero en secreto acaba degradado del todo, porque nadie se entera de que hay que arreglarlo.

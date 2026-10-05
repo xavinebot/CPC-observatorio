@@ -231,13 +231,22 @@ def classify_rules(name: str, text: str) -> dict:
             "humedad_pct": float(hum.group(1)) if hum else 0.0, "seca": ("seca" in s) or ("secad" in s)}
 
 
+# Por que se acabo clasificando con reglas en esta ejecucion. Lo mira el resumen de los lunes: si la clave caduca
+# y nadie la cambia, el indice se sigue publicando —las reglas funcionan— pero clasificando peor, y antes eso no
+# se veia en ningun sitio. No es para despertar a nadie; es para que no sea invisible.
+MOTIVO_REGLAS: str = ""
+
+
 def classify_claude(name: str, text: str) -> dict | None:
+    global MOTIVO_REGLAS
     key = config.secret("ANTHROPIC_API_KEY")
     if not key:
+        MOTIVO_REGLAS = "no hay clave de la API configurada"
         return None
     try:
         import anthropic
     except ImportError:
+        MOTIVO_REGLAS = "falta la biblioteca anthropic"
         return None
     client = anthropic.Anthropic(api_key=key)
     prompt = (f"Ficha de una tienda online española de leña.\nNombre (con la opción elegida): {name}\nTexto de la ficha: {text}\n\n"
@@ -252,6 +261,7 @@ def classify_claude(name: str, text: str) -> dict | None:
             if getattr(block, "type", "") == "tool_use":
                 return dict(block.input)
     except Exception as e:  # noqa: BLE001
+        MOTIVO_REGLAS = f"la API no respondio ({type(e).__name__})"
         print(f"   lena: API de Claude no disponible ({type(e).__name__}); uso reglas")
     return None
 
@@ -307,7 +317,11 @@ class Collector(_Base):
         append_readings(readings)
         print(f"   lena: {len(readings)} lecturas de {len(stores_ok)} tiendas {stores_ok}")
         out = {}
-        stats = {"date": date, "stores_read": stores_ok, "readings": len(readings), "series": {}}
+        clasificadas_con_reglas = sum(1 for r in readings if r.get("metodo") == "reglas")
+        stats = {"date": date, "stores_read": stores_ok, "readings": len(readings),
+                 "con_reglas": clasificadas_con_reglas, "motivo_reglas": MOTIVO_REGLAS, "series": {}}
+        if MOTIVO_REGLAS:
+            print(f"   lena: clasificando con reglas en vez de con la API — {MOTIVO_REGLAS}")
         for kind, sid in (("palet", "lena_palet_es"), ("saco", "lena_saco_es")):
             agg = aggregate(readings, kind)
             stats["series"][sid] = agg

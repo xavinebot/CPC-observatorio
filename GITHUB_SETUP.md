@@ -42,7 +42,7 @@ Los tokens no están ni pueden estar en el código. GitHub los guarda cifrados.
    |---|---|
    | `TELEGRAM_BOT_TOKEN` | el token del bot, el mismo que está en `C:\Users\Xavi\cpc-observatorio.env` |
    | `TELEGRAM_CHAT_ID` | el número que hay en ese mismo fichero |
-   | `ANTHROPIC_API_KEY` | la clave de la API, también en ese fichero |
+   | `ANTHROPIC_API_KEY` | la clave de la API, también en ese fichero. **Solo la usa el índice de la leña**, para clasificar las fichas de las tiendas; las 138 series se descargan sin ella. Si caduca, el índice se sigue publicando con reglas y el resumen de los lunes lo dice. |
 
    Para cada uno: escribe el nombre, pega el valor y pulsa **Add secret**.
 

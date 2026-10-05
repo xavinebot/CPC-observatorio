@@ -210,3 +210,43 @@ def test_un_fallo_suelto_no_avisa_y_el_segundo_si(monkeypatch, sandbox):
     assert len(enviados) == 1, "el segundo fallo seguido si avisa"
     assert "roto" in enviados[0]
     assert storage.load_state()["runs"][-1]["failures"] == ["roto"]
+
+
+# ----------------------------------------------------------------- la leña, clasificando con reglas
+def test_el_resumen_avisa_si_la_leña_clasifica_sin_la_api(monkeypatch, tmp_path):
+    """Si la clave de la API caduca, el indice de la leña se sigue publicando pero clasificando peor.
+
+    No es una incidencia —las reglas funcionan— asi que no despierta a nadie. Pero antes no se veia en ningun
+    sitio, y podia pasarse meses asi. Ahora sale en el resumen de los lunes.
+    """
+    import json as _json
+
+    from observatorio import runner
+    from observatorio.collectors import lena
+
+    monkeypatch.setattr(lena, "LENA_DIR", tmp_path)
+
+    # con la API: ni una palabra
+    (tmp_path / "ultimo_resumen.json").write_text(_json.dumps({"motivo_reglas": "", "con_reglas": 0}), encoding="utf-8")
+    assert runner._lena_con_reglas() == ""
+
+    # sin la API: el motivo, tal cual
+    (tmp_path / "ultimo_resumen.json").write_text(
+        _json.dumps({"motivo_reglas": "no hay clave de la API configurada", "con_reglas": 7}), encoding="utf-8")
+    assert runner._lena_con_reglas() == "no hay clave de la API configurada"
+    assert "clasificando" in runner.weekly_summary()
+    assert "ANTHROPIC_API_KEY" in runner.weekly_summary()
+
+    # y si el fichero no existe todavia, no se inventa nada
+    (tmp_path / "ultimo_resumen.json").unlink()
+    assert runner._lena_con_reglas() == ""
+
+
+def test_la_leña_apunta_por_que_se_quedo_sin_api(monkeypatch):
+    from observatorio import config
+    from observatorio.collectors import lena
+
+    monkeypatch.setattr(config, "secret", lambda n, d=None: None)
+    lena.MOTIVO_REGLAS = ""
+    assert lena.classify_claude("leña de encina", "palet 1000 kg") is None
+    assert lena.MOTIVO_REGLAS == "no hay clave de la API configurada"

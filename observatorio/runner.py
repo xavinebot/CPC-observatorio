@@ -128,6 +128,18 @@ def format_problems(failures, stale, contrasts) -> str:
     return "\n".join(lines)
 
 
+def _lena_con_reglas() -> str:
+    """Por que la ultima lectura de la leña no uso la API, o cadena vacia si la uso."""
+    try:
+        import json
+
+        from .collectors.lena import LENA_DIR
+        d = json.loads((LENA_DIR / "ultimo_resumen.json").read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001 — sin fichero todavia o ilegible: no se inventa nada
+        return ""
+    return str(d.get("motivo_reglas") or "")
+
+
 def weekly_summary() -> str:
     """Resumen 'todo va bien' con cifras, para saber que el sistema sigue vivo."""
     state = storage.load_state()
@@ -157,6 +169,14 @@ def weekly_summary() -> str:
     pasajeros = sorted({n for r in runs for n in r.get("pasajeros", [])})
     if pasajeros:
         lines.append("Fuentes que fallaron un dia y volvieron solas: " + ", ".join(alerts.esc(b) for b in pasajeros))
+    # El indice de la leña clasifica las fichas de las tiendas con la API de Claude y, si no puede, con reglas.
+    # Se sigue publicando igual, asi que no es una incidencia y no despierta a nadie; pero si la clave caduca,
+    # podria pasarse meses clasificando peor sin que se notara. Aqui se ve.
+    motivo = _lena_con_reglas()
+    if motivo:
+        lines.append("🪵 El índice de la leña está clasificando <b>con reglas</b>, no con la API: "
+                     + alerts.esc(motivo) + ". Se sigue publicando, pero las fichas nuevas se leen peor. "
+                     "La clave es <code>ANTHROPIC_API_KEY</code>, en el secreto del repositorio.")
     if state.get("last_run"):
         lines.append(f"Última ejecución: {state['last_run'][:16].replace('T', ' ')} UTC")
     if not runs:
