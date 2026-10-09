@@ -1,57 +1,81 @@
 """CNMC Data: precio regulado del butano envasado (desde 1994) y del GLP canalizado (desde 2006).
 
-Los ficheros CSV (separador ';', decimales con coma, BOM UTF-8) traen todo el histórico en cada descarga. La URL
-del recurso se resuelve con la API CKAN (`package_search`) para no depender de un UUID fijo; si falla, se usa la
-URL conocida.
+Los ficheros CSV (separador ';', decimales con coma, BOM UTF-8) traen todo el histórico en cada descarga.
+
+**Los conjuntos se buscan por su TÍTULO, no por su identificador.** La CNMC renumera: `ds_24367_1` murió el 16 de
+septiembre de 2026, y `ds_24382_1`, que lo sustituyó, murió el 6 de octubre —tres semanas— mientras que los del
+GLP canalizado conservaron el suyo. El identificador no es estable y el título sí, así que fijarse en el número
+es fijarse justo en lo que cambia. La última dirección que funcionó se guarda en `data/cnmc_urls.json` y solo se
+usa si el catálogo no responde: así el apaño se cura solo en vez de pudrirse dentro del código.
 """
 from __future__ import annotations
 
 import csv
 import io
+import json
 
+from .. import config
 from ..util import http_get, save_raw
 from .base import Collector as _Base
 
 CKAN = "https://catalogodatos.cnmc.es/api/3/action/package_search"
-# La CNMC renumeró sus conjuntos en septiembre de 2026 y los antiguos (ds_24367_1 y ds_24350_1) devuelven 404.
-# Los nuevos se comprobaron uno a uno contra lo que ya teníamos guardado antes de cambiarlos: el butano coincide
-# en 391 de 393 meses (las dos diferencias son meses con dos revisiones de precio, ver parse_csv) y el propano
-# canalizado en los 248, sin una sola discrepancia.
+CACHE_URLS = config.DATA / "cnmc_urls.json"
+
+# título exacto en el catálogo → (serie, columna que contiene, factor)
 DATASETS = {
-    # nombre CKAN → (serie, columna que contiene, factor)
-    "ds_24382_1": ("butano_es", "Venta al P", 0.01),            # c€/kg → €/kg
-    "ds_24386_1": ("propano_canalizado_es", "rmino variable", 0.01),
-}
-FALLBACK = {
-    "ds_24382_1": "https://catalogodatos.cnmc.es/dataset/7c1f4112-86b6-4cc7-9f67-469d9cd84ba2/resource/4a468073-1fec-4b73-baa9-579a73081e8a/download/ds_24382_1.csv",
-    "ds_24386_1": "https://catalogodatos.cnmc.es/dataset/263f5ceb-9352-4012-b994-9fbc6027c136/resource/f333de3e-2ed6-4a5f-a2a6-1669b3c345e8/download/ds_24386_1.csv",
+    "Estadística GLP - Precio GLP envasado regulado": ("butano_es", "Venta al P", 0.01),   # c€/kg → €/kg
+    "Precio GLP Canalizado (antes de impuestos)": ("propano_canalizado_es", "rmino variable", 0.01),
 }
 UA = {"User-Agent": "Mozilla/5.0 (compatible; CPC-Observatorio/0.1; +https://cristalesparachimeneas.es/contacto/)"}
+
+
+def _norm(s: str) -> str:
+    return " ".join(str(s).split()).casefold()
+
+
+def _urls_recordadas() -> dict:
+    try:
+        return json.loads(CACHE_URLS.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001 — sin fichero todavía o ilegible: se resuelve por el catálogo
+        return {}
 
 
 class Collector(_Base):
     name = "cnmc_glp"
     min_records = 380 + 240
 
-    def resolve_csv(self, ds: str) -> str:
+    def resolve_csv(self, titulo: str) -> tuple[str, bool]:
+        """Dirección del CSV de ese conjunto. Devuelve (url, la_dio_el_catálogo)."""
         try:
-            r = http_get(CKAN, params={"q": f"name:{ds}", "rows": 3}, headers=UA)
+            r = http_get(CKAN, params={"q": f'title:"{titulo}"', "rows": 10}, headers=UA)
             for pkg in r.json()["result"]["results"]:
-                if pkg.get("name") == ds:
-                    for res in pkg.get("resources", []):
-                        if str(res.get("format", "")).upper() == "CSV" and res.get("url", "").endswith(".csv"):
-                            return res["url"]
-        except Exception:  # noqa: BLE001 — cualquier fallo → URL conocida
+                # Comparación exacta: «Estadística GLP - Precio GLP envasado regulado» NO es «Precio GLP envasado
+                # regulado de Venta al Público». Se parecen, coexisten y son conjuntos distintos.
+                if _norm(pkg.get("title", "")) != _norm(titulo):
+                    continue
+                for res in pkg.get("resources", []):
+                    if str(res.get("format", "")).upper() == "CSV" and str(res.get("url", "")).endswith(".csv"):
+                        return res["url"], True
+        except Exception:  # noqa: BLE001 — el catálogo caído no es motivo para no intentar lo de ayer
             pass
-        return FALLBACK[ds]
+        recordada = _urls_recordadas().get(titulo)
+        if recordada:
+            return recordada, False
+        raise RuntimeError(f"CNMC: el catálogo no responde y no hay dirección guardada para «{titulo}»")
 
     def fetch(self, *, backfill: bool = False) -> dict[str, list[tuple]]:
         out = {}
-        for ds, (sid, col_part, factor) in DATASETS.items():
-            url = self.resolve_csv(ds)
+        recordar = _urls_recordadas()
+        for titulo, (sid, col_part, factor) in DATASETS.items():
+            url, del_catalogo = self.resolve_csv(titulo)
             text = http_get(url, headers=UA).content.decode("utf-8-sig")
-            save_raw(f"cnmc_{ds}.csv", text)
+            save_raw(f"cnmc_{sid}.csv", text)
+            # Si el título llevara a otro conjunto, aquí revienta por falta de columna en vez de publicar otra cosa.
             out[sid] = parse_csv(text, col_part, factor)
+            if del_catalogo:
+                recordar[titulo] = url
+        CACHE_URLS.parent.mkdir(parents=True, exist_ok=True)
+        CACHE_URLS.write_text(json.dumps(recordar, ensure_ascii=False, indent=1), encoding="utf-8")
         return out
 
 

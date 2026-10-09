@@ -405,3 +405,26 @@ publicando, que las fichas nuevas se leen peor, y cuál es la clave que hay que 
 **No es un aviso urgente y no debe serlo**: no hay nada roto y nadie tiene que levantarse a arreglarlo. Es la
 tercera categoría, la que faltaba: ni incidencia ni silencio, sino **una degradación visible**. Un sistema que se
 degrada con elegancia pero en secreto acaba degradado del todo, porque nadie se entera de que hay que arreglarlo.
+
+## 25. Si una fuente renumera, no te fijes en el número
+
+La CNMC publica sus datos abiertos con identificadores del tipo `ds_24382_1`, y **los cambia**. El del butano
+murió el 16 de septiembre; su sustituto murió el 6 de octubre, tres semanas después. Los del GLP canalizado, en
+cambio, conservaron el suyo. No hay patrón: el identificador sencillamente no es estable.
+
+La primera vez se arregló cambiando el número. Eso no es un arreglo, es aplazar el siguiente 404 —y el código
+guardaba además una URL fija «por si el catálogo no responde», que es exactamente la que envejece sin que nadie
+la mire.
+
+**Decisión (9 oct 2026): el conjunto se busca por su TÍTULO**, que sí es estable, con comparación exacta —en ese
+catálogo conviven «Estadística GLP · Precio GLP envasado regulado» y «Precio GLP envasado regulado de Venta al
+Público», que se buscan con las mismas palabras y traen columnas distintas—. Y la red de seguridad deja de ser
+una URL escrita a mano: **se guarda la última dirección que funcionó** en `data/cnmc_urls.json`, y solo se usa si
+el catálogo no responde. Se actualiza sola cada vez que sí responde.
+
+Si un día no hay ni catálogo ni dirección guardada, **falla en voz alta**. Y si el título llevara al conjunto
+equivocado, la lectura revienta por falta de la columna esperada en vez de publicar otro dato con la misma cara.
+
+**La regla general, que vale para cualquier fuente:** anclarse a lo que la fuente considera un detalle de
+implementación —un identificador, un UUID, el nombre de un fichero— es anclarse a lo que va a cambiar. Mejor el
+nombre que la fuente usa para hablar de ese dato.

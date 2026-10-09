@@ -263,3 +263,54 @@ def test_worldbank_avisa_si_falta_una_columna(monkeypatch):
     wb.save(buf)
     with pytest.raises(RuntimeError, match="falta la columna"):
         worldbank.parse(buf.getvalue())
+
+
+# ----------------------------------------------------------------- CNMC: el conjunto se busca por titulo
+class _Resp:
+    def __init__(self, payload):
+        self._p = payload
+    def json(self):
+        return self._p
+
+
+def test_cnmc_distingue_dos_conjuntos_de_titulo_parecido(monkeypatch):
+    """«Estadistica GLP - Precio GLP envasado regulado» NO es «Precio GLP envasado regulado de Venta al Publico».
+
+    Coexisten en el catalogo de la CNMC, se buscan con las mismas palabras y traen columnas distintas. Si se
+    coge el que no es, se publica otro dato con la misma cara.
+    """
+    bueno = "https://catalogodatos.cnmc.es/x/bueno.csv"
+    respuesta = {"result": {"results": [
+        {"title": "Precio GLP envasado regulado de Venta al Público",
+         "resources": [{"format": "CSV", "url": "https://catalogodatos.cnmc.es/x/otro.csv"}]},
+        {"title": "Estadística GLP - Precio GLP envasado regulado",
+         "resources": [{"format": "CSV", "url": bueno}]},
+    ]}}
+    monkeypatch.setattr(cnmc_glp, "http_get", lambda *a, **k: _Resp(respuesta))
+    url, del_catalogo = cnmc_glp.Collector().resolve_csv("Estadística GLP - Precio GLP envasado regulado")
+    assert url == bueno
+    assert del_catalogo is True
+
+
+def test_cnmc_si_el_catalogo_no_responde_usa_la_ultima_que_funciono(monkeypatch, tmp_path):
+    """La CNMC renumera (dos veces en tres semanas). La direccion aprendida es la red, no una URL escrita a mano.
+
+    Una URL fija en el codigo envejece y el dia que muere nadie se acuerda de donde estaba; la aprendida se
+    actualiza sola cada vez que el catalogo responde.
+    """
+    import json as _json
+    cache = tmp_path / "cnmc_urls.json"
+    cache.write_text(_json.dumps({"Precio GLP Canalizado (antes de impuestos)": "https://x/ayer.csv"}),
+                     encoding="utf-8")
+    monkeypatch.setattr(cnmc_glp, "CACHE_URLS", cache)
+    def caido(*a, **k):
+        raise RuntimeError("catalogo caido")
+    monkeypatch.setattr(cnmc_glp, "http_get", caido)
+    url, del_catalogo = cnmc_glp.Collector().resolve_csv("Precio GLP Canalizado (antes de impuestos)")
+    assert url == "https://x/ayer.csv"
+    assert del_catalogo is False, "no se reaprende de una direccion vieja: solo el catalogo enseña"
+
+    # y si no hay ni catalogo ni memoria, se dice en voz alta en vez de inventarse nada
+    cache.unlink()
+    with pytest.raises(RuntimeError, match="no hay dirección guardada"):
+        cnmc_glp.Collector().resolve_csv("Precio GLP Canalizado (antes de impuestos)")
