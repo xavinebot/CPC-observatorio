@@ -1,5 +1,8 @@
 # Nota de prensa y correo a periodistas
 
+> **Números actualizados el 12 de octubre de 2026** con `python -m observatorio prensa` y con la tabla de la
+> propia página. Antes de enviar nada, vuelve a actualizarlos: si la historia ha cambiado, cambia la nota.
+
 > **Preparado el 14 de septiembre de 2026. NO enviar todavía.** La sección está en staging; hasta que no esté en
 > producción no hay enlace que dar. La ventana buena para enviarlo es la **segunda quincena de octubre y la primera
 > de noviembre**, que es cuando se escriben los artículos de "cuánto te va a costar la calefacción este invierno"
@@ -11,24 +14,24 @@
 
 ## 1. La nota (media página)
 
-**El gasóleo de calefacción cuesta un 56 % más que hace un año al empezar la temporada**
+**El gasóleo de calefacción cuesta un 65 % más que hace un año al empezar la temporada**
 
-El gasóleo de calefacción se paga en España a **1,3962 euros por litro** (dato del 7 de septiembre de 2026, el
-último del Boletín Petrolero semanal de la Comisión Europea). Hace justo un año, el 8 de septiembre de 2025, estaba
-a **0,8939 euros**. Es una subida del **56,2 % en doce meses**, y **seis de cada diez céntimos de esa subida son
-de los últimos tres meses**: el 8 de junio el litro estaba todavía a 1,0915 euros.
+El gasóleo de calefacción se paga en España a **1,4953 euros por litro** (dato del 5 de octubre de 2026, el
+último del Boletín Petrolero semanal de la Comisión Europea). Hace justo un año, el 6 de octubre de 2025, estaba
+a **0,9074 euros**. Es una subida del **64,8 % en doce meses**, y **siete de cada diez céntimos de esa subida son
+de los últimos tres meses**: el 6 de julio el litro estaba todavía a 1,0785 euros.
 
 El movimiento lo confirma una segunda fuente independiente: el índice armonizado de precios de consumo de los
-combustibles líquidos, que elaboran el INE y Eurostat, sube un **31,5 % interanual** en julio de 2026.
+combustibles líquidos, que elaboran el INE y Eurostat, sube un **46,4 % interanual** en agosto de 2026.
 
 Para poner la cifra en contexto: el máximo de la serie, que arranca en 2005, es de **1,5937 euros** en junio de
-2022. El precio de hoy sigue un 12 % por debajo de aquel récord.
+2022. El precio de hoy sigue un 6 % por debajo de aquel récord.
 
 **Qué significa para una casa.** Convertido a euros por kilovatio hora de **calor útil** —es decir, teniendo en
 cuenta la energía que lleva cada combustible y el rendimiento real del aparato que lo quema— el gasóleo sale hoy a
-**0,155 €/kWh**. Calentar una vivienda que necesite 10.000 kWh de calor al año costaría unos **1.550 euros** de
-gasóleo, frente a unos 1.260 de butano, 1.040 de gas natural, 900 de pellet en saco, 890 con una bomba de calor y
-640 de hueso de aceituna. Un radiador eléctrico, la forma más cara, se iría a unos 2.670.
+**0,166 €/kWh**. Calentar una vivienda que necesite 10.000 kWh de calor al año costaría unos **1.660 euros** de
+gasóleo, frente a unos 1.320 de butano, 900 de pellet en saco, 855 de gas natural, 836 con una bomba de calor y
+640 de hueso de aceituna. Un radiador eléctrico, la forma más cara, se iría a unos 2.510.
 
 **De dónde salen los datos.** Todas las series son públicas y de fuentes oficiales: el Boletín Petrolero semanal de
 la Comisión Europea, Eurostat, la CNMC, el INE y el Índice de Precios de Biocombustibles Sólidos de AVEBIOM. Se
@@ -45,13 +48,13 @@ Actualizado cada día. Datos, sin opiniones ni previsiones.
 
 Un periodista no abre una nota de prensa adjunta. Abre un correo de cinco líneas con un número. Asunto y cuerpo:
 
-**Asunto:** El gasóleo de calefacción, un 56 % más caro que hace un año (dato oficial, con la serie desde 2005)
+**Asunto:** El gasóleo de calefacción, un 65 % más caro que hace un año (dato oficial, con la serie desde 2005)
 
 > Buenos días:
 >
-> Por si le sirve para la temporada: el gasóleo de calefacción está a 1,3962 €/l, frente a 0,8939 hace justo un
-> año. Un **+56,2 % en doce meses**. Es el dato del Boletín Petrolero semanal de la Comisión Europea del 7 de
-> septiembre, y el índice del INE para combustibles líquidos apunta en la misma dirección (+31,5 % interanual).
+> Por si le sirve para la temporada: el gasóleo de calefacción está a 1,4953 €/l, frente a 0,9074 hace justo un
+> año. Un **+64,8 % en doce meses**. Es el dato del Boletín Petrolero semanal de la Comisión Europea del 5 de
+> octubre, y el índice del INE para combustibles líquidos apunta en la misma dirección (+46,4 % interanual).
 >
 > Tenemos la serie completa desde 2005 y la comparación de todos los combustibles en euros por kWh de calor útil,
 > con la fuente y la fecha de cada dato: [enlace]
