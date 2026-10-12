@@ -428,3 +428,27 @@ equivocado, la lectura revienta por falta de la columna esperada en vez de publi
 **La regla general, que vale para cualquier fuente:** anclarse a lo que la fuente considera un detalle de
 implementación —un identificador, un UUID, el nombre de un fichero— es anclarse a lo que va a cambiar. Mejor el
 nombre que la fuente usa para hablar de ese dato.
+
+## 26. Un enlace muerto no da error en ninguna parte
+
+El 12 de octubre de 2026 había **dos enlaces rotos** en las fichas de las fuentes: la CNMC había reorganizado su
+portal y Eurostat había movido su aviso de derechos. Las descargas de datos seguían funcionando perfectamente —lo
+roto era el enlace que se le enseña al lector— así que **ningún aviso saltó, ninguna recogida falló y nadie se
+enteró** hasta que a alguien se le ocurrió pulsarlos.
+
+Eso es grave para este proyecto en concreto, porque la promesa no es solo publicar el número: es publicarlo **con
+su fuente y su licencia enlazadas para que cualquiera pueda comprobarnos**. Un enlace muerto convierte esa
+promesa en una frase.
+
+**Decisión (12 oct 2026): el resumen de los lunes comprueba las 22 direcciones** que la web enseña —las de fuente
+y las de licencia de todas las series publicadas— y nombra las muertas, diciendo qué ficha hay que arreglar.
+Veintidós peticiones una vez por semana.
+
+**Solo se avisa de lo definitivo: 404 y 410.** Un tiempo de espera agotado, un 500 o un 403 de un cortafuegos que
+no quiere robots no son un enlace muerto, son un mal día. Un comprobador de enlaces que avisa de todo es la forma
+más rápida de que nadie lea el resumen de los lunes.
+
+**La familia de problemas que esto cierra:** lo que no falla no se mira. La recogida se vigila sola desde el
+principio, pero todo lo que rodea al dato —el enlace a la fuente, la licencia, la clasificación de la leña— podía
+pudrirse en silencio porque nada reventaba. Son tres cosas distintas con la misma forma, y las tres se arreglan
+igual: no con un aviso urgente, sino haciéndolas visibles una vez por semana.

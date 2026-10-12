@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import traceback
 
-from . import alerts, catalog, collectors, config, contrast, publish, quarantine, recordatorios, storage
+from . import (alerts, catalog, collectors, config, contrast, enlaces, publish, quarantine, recordatorios,
+               storage)
 from .util import parse_date, today
 from .validate import validate_points
 
@@ -172,6 +173,16 @@ def weekly_summary() -> str:
     # El indice de la leña clasifica las fichas de las tiendas con la API de Claude y, si no puede, con reglas.
     # Se sigue publicando igual, asi que no es una incidencia y no despierta a nadie; pero si la clave caduca,
     # podria pasarse meses clasificando peor sin que se notara. Aqui se ve.
+    # Los enlaces a las fuentes, una vez por semana. Un enlace muerto no da error en ninguna recogida y no lo
+    # nota nadie hasta que alguien lo pulsa; y es la mitad de la promesa de la pagina.
+    try:
+        rotos = enlaces.comprobar()
+    except Exception:  # noqa: BLE001 — sin red, el resumen sale igual
+        rotos = []
+    for url, codigo, quien in rotos:
+        lines.append(f"🔗 <b>Enlace muerto ({codigo})</b> en la ficha de {alerts.esc(', '.join(quien))}: "
+                     f"<code>{alerts.esc(url)}</code>. Los datos siguen llegando; lo que esta roto es el enlace "
+                     "que se le enseña al lector.")
     motivo = _lena_con_reglas()
     if motivo:
         lines.append("🪵 El índice de la leña está clasificando <b>con reglas</b>, no con la API: "

@@ -1,9 +1,9 @@
 # Bombona de butano (8-20 kg), precio regulado con impuestos (ES)
 # Unidad: EUR/kg
-# Fuente: CNMC Data (Comisión Nacional de los Mercados y la Competencia) - https://data.cnmc.es/energia/mercado-minorista-de-glp
+# Fuente: CNMC Data (Comisión Nacional de los Mercados y la Competencia) - https://data.cnmc.es/energia/productos-petroliferos/estadistica-de-precios-regulados-glp
 # Licencia: CC BY-SA 4.0 - https://data.cnmc.es/condiciones-de-uso
 # Cita obligatoria: Fuente: CNMC Data, licencia CC BY-SA 4.0
-# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-10-12T11:56:50+00:00
+# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-10-12T12:45:11+00:00
 date,value
 1994-01-01,0.4753
 1994-02-01,0.4572

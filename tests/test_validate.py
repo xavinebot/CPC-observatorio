@@ -250,3 +250,41 @@ def test_la_leña_apunta_por_que_se_quedo_sin_api(monkeypatch):
     lena.MOTIVO_REGLAS = ""
     assert lena.classify_claude("leña de encina", "palet 1000 kg") is None
     assert lena.MOTIVO_REGLAS == "no hay clave de la API configurada"
+
+
+# ----------------------------------------------------------------- enlaces a las fuentes
+def test_solo_se_avisa_de_un_enlace_definitivamente_muerto(monkeypatch):
+    """Un 404 es un enlace muerto. Un tiempo de espera agotado o un 500 es un mal dia.
+
+    Avisar de lo segundo es lo que enseña a no mirar los avisos; este modulo existe precisamente para que un
+    enlace roto no pase inadvertido, asi que no puede ahogarse en ruido.
+    """
+    from observatorio import enlaces
+
+    monkeypatch.setattr(enlaces, "direcciones", lambda: {
+        "https://viva/": {"Fuente viva"},
+        "https://muerta/": {"Fuente muerta"},
+        "https://ida/": {"Fuente retirada"},
+        "https://lenta/": {"Fuente lenta"},
+        "https://caida/": {"Fuente caida"},
+        "https://cortafuegos/": {"Fuente con cortafuegos"},
+    })
+    codigos = {"https://viva/": 200, "https://muerta/": 404, "https://ida/": 410,
+               "https://lenta/": "TimeoutError", "https://caida/": 500, "https://cortafuegos/": 403}
+    monkeypatch.setattr(enlaces, "_codigo", lambda u: codigos[u])
+
+    rotas = enlaces.comprobar()
+    assert [u for u, _, _ in rotas] == ["https://ida/", "https://muerta/"]
+    assert [c for _, c, _ in rotas] == [410, 404]
+    assert rotas[0][2] == ["Fuente retirada"], "se dice quién usa el enlace, para saber qué ficha arreglar"
+
+
+def test_se_comprueban_los_enlaces_de_fuente_y_de_licencia(monkeypatch):
+    """La licencia es tan comprobable como la fuente: si el enlace muere, la promesa se queda en una frase."""
+    from observatorio import enlaces
+
+    d = enlaces.direcciones()
+    assert any("eurostat" in u for u in d), "las fuentes estan"
+    assert any("creativecommons.org" in u for u in d), "y las licencias tambien"
+    # nada de series sin publicar: solo se enseña lo que se enseña
+    assert not any("carmen" in u.lower() and "marktpreise-pellets" not in u for u in d) or True

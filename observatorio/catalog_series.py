@@ -22,7 +22,7 @@ SRC_WOB = Source(
     attribution="Fuente: Comisión Europea, Weekly Oil Bulletin")
 SRC_CNMC = Source(
     name="CNMC Data (Comisión Nacional de los Mercados y la Competencia)",
-    url="https://data.cnmc.es/energia/mercado-minorista-de-glp",
+    url="https://data.cnmc.es/energia/productos-petroliferos/estadistica-de-precios-regulados-glp",
     license="CC BY-SA 4.0", license_url="https://data.cnmc.es/condiciones-de-uso",
     attribution="Fuente: CNMC Data, licencia CC BY-SA 4.0")
 SRC_EUROSTAT = Source(
@@ -346,7 +346,7 @@ SRC_COMEXT = Source(
     name="Eurostat, Comercio exterior de la UE (Comext)",
     url="https://ec.europa.eu/eurostat/web/international-trade-in-goods/database",
     license=N("CC BY 4.0", "CC BY 4.0", "CC BY 4.0", "CC BY 4.0", "CC BY 4.0"),
-    license_url="https://ec.europa.eu/eurostat/about-us/policies/copyright",
+    license_url="https://ec.europa.eu/eurostat/web/main/help/copyright-notice",
     attribution="Fuente: Eurostat, Comext")
 
 AVISO_UNITARIO = ("Precio medio de importación en la UE: el valor declarado en aduana dividido por los kilos. "
