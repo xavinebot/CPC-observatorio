@@ -20,11 +20,16 @@ SRC_WOB = Source(
     url="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en",
     license=N("CC BY 4.0 (Decisión 2011/833/UE)", "CC BY 4.0 (décision 2011/833/UE)", "CC BY 4.0 (decisione 2011/833/UE)", "CC BY 4.0 (Beschluss 2011/833/EU)", "CC BY 4.0 (Decisão 2011/833/UE)"), license_url="https://commission.europa.eu/legal-notice_en",
     attribution="Fuente: Comisión Europea, Weekly Oil Bulletin")
-SRC_CNMC = Source(
-    name="CNMC Data (Comisión Nacional de los Mercados y la Competencia)",
-    url="https://data.cnmc.es/energia/productos-petroliferos/estadistica-de-precios-regulados-glp",
-    license="CC BY-SA 4.0", license_url="https://data.cnmc.es/condiciones-de-uso",
-    attribution="Fuente: CNMC Data, licencia CC BY-SA 4.0")
+# La CNMC publica el GLP envasado y el canalizado como dos conjuntos distintos, con su propia página y su propio
+# periodo. Cada serie enlaza al suyo: enviar al lector a la sección entera y que busque cuál de los dos es el que
+# mira no es citar la fuente, es dejarle el trabajo a medias. Comprobado el 12 de octubre de 2026: la página del
+# envasado dice «Ene 1994 - Oct 2026» y la del canalizado «Ene 2006 - Sep 2026», que son exactamente las dos series.
+_CNMC = dict(name="CNMC Data (Comisión Nacional de los Mercados y la Competencia)",
+             license="CC BY-SA 4.0", license_url="https://data.cnmc.es/condiciones-de-uso",
+             attribution="Fuente: CNMC Data, licencia CC BY-SA 4.0")
+_CNMC_BASE = "https://data.cnmc.es/energia/estadistica-precios-regulados-glp/conjuntos-de-datos/"
+SRC_CNMC_ENVASADO = Source(url=_CNMC_BASE + "estadistica-glp-precio-glp-envasado", **_CNMC)
+SRC_CNMC_CANALIZADO = Source(url=_CNMC_BASE + "estadistica-glp-precio-glp-canalizado", **_CNMC)
 SRC_EUROSTAT = Source(
     name="Eurostat", url="https://ec.europa.eu/eurostat",
     license="CC BY 4.0", license_url="https://ec.europa.eu/eurostat/web/main/help/copyright-notice",
@@ -82,7 +87,7 @@ register(Serie(
     name=N("Bombona de butano (8-20 kg), precio regulado con impuestos", "Bouteille de butane (8-20 kg), prix réglementé TTC",
            "Bombola di butano (8-20 kg), prezzo regolato tasse incluse", "Butangasflasche (8-20 kg), regulierter Preis inkl. Steuern",
            "Botija de butano (8-20 kg), preço regulado com impostos"),
-    country="ES", group="hogar", fuel="butano", unit="EUR/kg", source=SRC_CNMC, collector="cnmc_glp",
+    country="ES", group="hogar", fuel="butano", unit="EUR/kg", source=SRC_CNMC_ENVASADO, collector="cnmc_glp",
     native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.2, max_value=5.0,
     max_change_pct=25, kwh_per_unit=12.7, decimals=4, taxes_included=True,
     notes="Precio máximo de venta al público en €/kg; la bombona de 12,5 kg = valor × 12,5. Se revisa cada dos meses, y algunos meses cambia también a mitad de mes: cada mes lleva aquí el último precio que entró en vigor."))
@@ -91,7 +96,7 @@ register(Serie(
     name=N("Propano canalizado, término variable (antes de impuestos)", "Propane en réseau, terme variable (hors taxes)",
            "Propano canalizzato, quota variabile (prima delle imposte)", "Leitungsgebundenes Propan, Arbeitspreis (vor Steuern)",
            "Propano canalizado, termo variável (antes de impostos)"),
-    country="ES", group="hogar", fuel="propano", unit="EUR/kg", source=SRC_CNMC, collector="cnmc_glp",
+    country="ES", group="hogar", fuel="propano", unit="EUR/kg", source=SRC_CNMC_CANALIZADO, collector="cnmc_glp",
     native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.2, max_value=5.0,
     max_change_pct=25, kwh_per_unit=12.8, decimals=4, taxes_included=False,
     notes="Precio regulado del GLP por canalización a consumidor final, sin impuestos ni término fijo. Se revisa cada mes."))
