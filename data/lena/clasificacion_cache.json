@@ -1285,5 +1285,14 @@
 "humedad_pct": 0,
 "seca": true,
 "_metodo": "claude"
+},
+"d4166ae04b990bf2": {
+"es_lena": true,
+"especie": "pino",
+"kg": 0,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
 }
 }
