@@ -452,3 +452,27 @@ más rápida de que nadie lea el resumen de los lunes.
 principio, pero todo lo que rodea al dato —el enlace a la fuente, la licencia, la clasificación de la leña— podía
 pudrirse en silencio porque nada reventaba. Son tres cosas distintas con la misma forma, y las tres se arreglan
 igual: no con un aviso urgente, sino haciéndolas visibles una vez por semana.
+
+## 27. Una lista de «los que sí» siempre se queda corta
+
+El 15 de septiembre de 2026 se dieron de alta dos recolectores nuevos: `comext` (las seis materias primas del
+vitrocerámico) y `eurostat_nrg_ind` (la electricidad y el gas industriales de cinco países). Se registraron en el
+catálogo, se probaron, se publicaron… y **no se añadieron a la lista del workflow diario**, que enumeraba uno por
+uno los recolectores que debía ejecutar.
+
+Resultado: **16 series publicando el mismo dato durante cinco semanas** sin que fallara nada. No hubo error, no
+hubo aviso, los tests pasaban y la web enseñaba cifras con su fecha, solo que la fecha no avanzaba. Saltó el 21
+de octubre, cuando las de Comext cumplieron los 110 días del aviso de caducidad. **Las otras diez habrían tardado
+año y medio**, porque son semestrales y su umbral es de 520 días.
+
+**Decisión (21 oct 2026): la recogida diaria pasa a ser «todos salvo los que tienen su propio horario».** Una
+opción nueva, `--salvo`, y el workflow dice `run --salvo lena` (la leña se lee los lunes, en su propio workflow).
+Un recolector nuevo entra solo.
+
+**Y un test lo vigila**: lee el fichero del workflow, exige que no vuelva a haber un `--only` y comprueba que la
+única exclusión sea la leña. Si alguien reintroduce una lista fija, salta ahí y no cinco semanas después.
+
+**La forma del error, que es la que importa:** había dos listas de lo mismo —el catálogo y el workflow— y nada
+obligaba a que coincidieran. Es el mismo patrón que el identificador de la CNMC (§25) y que el enlace muerto
+(§26): algo que hay que mantener a mano en dos sitios, que no da error cuando se desincroniza, y que por eso se
+descubre tarde. La solución es siempre la misma: que no haya dos listas, o que una compruebe a la otra.

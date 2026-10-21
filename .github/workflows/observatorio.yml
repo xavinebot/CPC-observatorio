@@ -39,10 +39,11 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        # Las tiendas de lena solo se leen los lunes (workflow aparte): aqui se excluye ese recolector.
-        run: |
-          python -m observatorio run \
-            --only wob cnmc_glp eurostat_nrg eurostat_hicp eurostat_sts ree ine_ipc ine_ipri worldbank avebiom pellets_eu fr_fioul
+        # TODOS los recolectores menos la lena, que se lee los lunes en el workflow de al lado.
+        # Antes aqui habia una lista fija de "los que si", y cada recolector nuevo habia que acordarse de
+        # añadirlo tambien aqui. Se olvido con comext y eurostat_nrg_ind, y sus 16 series se quedaron
+        # congeladas cinco semanas sin que fallara nada. Con --salvo, un recolector nuevo entra solo.
+        run: python -m observatorio run --salvo lena
         continue-on-error: true
 
       - name: Guardar los datos nuevos en el repositorio

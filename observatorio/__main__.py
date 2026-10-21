@@ -1,6 +1,6 @@
 """Línea de comandos del observatorio.
 
-  python -m observatorio run [--only nombre ...] [--backfill] [--no-notify]
+  python -m observatorio run [--only nombre ...] [--salvo nombre ...] [--backfill] [--no-notify]
   python -m observatorio status
   python -m observatorio approve <serie_id> | discard <serie_id>
   python -m observatorio summary        (envía el resumen semanal)
@@ -21,6 +21,11 @@ def main(argv=None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
     r = sub.add_parser("run", help="recolectar, validar, publicar y avisar")
     r.add_argument("--only", nargs="*", help="solo estos recolectores")
+    # Lo contrario de --only, y es el que usa la recogida diaria. Con una lista fija de "los que sí",
+    # cada recolector nuevo hay que acordarse de añadirlo en dos sitios; cuando se olvida, sus series se
+    # quedan congeladas sin que falle nada. Pasó con comext y eurostat_nrg_ind entre septiembre y octubre
+    # de 2026. Diciendo "todos salvo la leña", un recolector nuevo entra solo.
+    r.add_argument("--salvo", nargs="*", default=[], help="todos los recolectores menos estos")
     r.add_argument("--backfill", action="store_true", help="aceptar puntos anteriores al último (carga de histórico)")
     r.add_argument("--no-notify", action="store_true")
     r.add_argument("--no-publish", action="store_true")
@@ -37,7 +42,12 @@ def main(argv=None) -> int:
     args = p.parse_args(argv)
 
     if args.cmd == "run":
-        unknown = [n for n in (args.only or []) if n not in collectors.names()]
+        if args.salvo and args.only:
+            print("ERROR: --only y --salvo no se pueden usar a la vez")
+            return 2
+        if args.salvo:
+            args.only = [n for n in collectors.names() if n not in args.salvo]
+        unknown = [n for n in (args.only or []) if n not in collectors.names()]             + [n for n in args.salvo if n not in collectors.names()]
         if unknown:
             print("Recolectores desconocidos:", unknown, "· disponibles:", collectors.names())
             return 2

@@ -314,3 +314,38 @@ def test_cnmc_si_el_catalogo_no_responde_usa_la_ultima_que_funciono(monkeypatch,
     cache.unlink()
     with pytest.raises(RuntimeError, match="no hay dirección guardada"):
         cnmc_glp.Collector().resolve_csv("Precio GLP Canalizado (antes de impuestos)")
+
+
+# ----------------------------------------------------------------- que ningun recolector se quede sin correr
+def test_la_recogida_diaria_no_se_deja_ningun_recolector():
+    """Un recolector que no corre no falla: sus series se quedan congeladas y nadie se entera.
+
+    Paso de verdad: comext (6 materias primas) y eurostat_nrg_ind (10 series de energia industrial) se dieron de
+    alta el 15 de septiembre de 2026 en el catalogo, pero no en la lista del workflow diario. Estuvieron cinco
+    semanas publicando el mismo dato sin que fallara nada, y solo salto cuando el aviso de serie caducada llego
+    a los 110 dias. Las otras diez habrian tardado un año y medio en avisar, porque son semestrales.
+
+    Por eso el workflow dice ahora "todos salvo la leña" en vez de enumerar los que si. Este test comprueba que
+    sigue siendo asi: si alguien vuelve a poner una lista fija, salta aqui y no cinco semanas despues.
+    """
+    import re
+    from pathlib import Path
+
+    from observatorio import collectors
+
+    wf = Path(__file__).resolve().parents[1] / ".github" / "workflows" / "observatorio.yml"
+    texto = wf.read_text(encoding="utf-8")
+    orden = re.search(r"run:\s*python -m observatorio run([^\n]*)", texto)
+    assert orden, "no encuentro la orden de recogida en el workflow diario"
+    args = orden.group(1)
+
+    assert "--only" not in args, (
+        "el workflow diario vuelve a llevar una lista fija de recolectores: cada uno nuevo habria que "
+        "acordarse de añadirlo aqui, y cuando se olvida sus series se congelan en silencio. Usa --salvo.")
+    assert "--salvo" in args, "la recogida diaria tiene que ser 'todos salvo los que tienen su propio horario'"
+
+    excluidos = args.split("--salvo", 1)[1].split("--")[0].split()
+    for n in excluidos:
+        assert n in collectors.names(), f"el workflow excluye '{n}', que no es un recolector"
+    # la lena tiene su propio workflow los lunes; cualquier otra exclusion hay que justificarla aqui
+    assert set(excluidos) == {"lena"}, f"exclusiones sin justificar en el workflow diario: {excluidos}"
