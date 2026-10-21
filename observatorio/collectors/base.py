@@ -9,6 +9,10 @@ from __future__ import annotations
 
 
 class Collector:
+    # Cada cuantos dias deberia ejecutarse. Sirve para detectar un recolector que ha dejado de correr,
+    # que es un fallo que no da error: las series se quedan congeladas y la web sigue enseñando su ultima
+    # fecha. Paso con comext y eurostat_nrg_ind, cinco semanas (DECISIONES 27).
+    cada_dias = 1
     name: str = "base"
     series: list[str] = []          # ids de las series que produce
     min_records: int = 1            # nº mínimo de puntos totales que debe devolver una descarga

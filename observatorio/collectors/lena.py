@@ -287,6 +287,7 @@ MIN_KG_PALET = 500   # por debajo de media tonelada el precio por kilo no es com
 
 class Collector(_Base):
     name = "lena"
+    cada_dias = 7   # las tiendas se leen los lunes, en su propio workflow
     min_records = 1
     supports_backfill = False
 

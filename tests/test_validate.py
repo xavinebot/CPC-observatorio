@@ -288,3 +288,38 @@ def test_se_comprueban_los_enlaces_de_fuente_y_de_licencia(monkeypatch):
     assert any("creativecommons.org" in u for u in d), "y las licencias tambien"
     # nada de series sin publicar: solo se enseña lo que se enseña
     assert not any("carmen" in u.lower() and "marktpreise-pellets" not in u for u in d) or True
+
+
+def test_se_detecta_un_recolector_que_ha_dejado_de_correr(monkeypatch):
+    """La fecha del dato no sirve para esto: cada fuente tiene su desfase y agosto en octubre es normal.
+
+    Lo que no tiene ambiguedad es si el recolector ha corrido. Si no ha corrido, algo esta roto en la maquinaria
+    diga lo que diga la fuente. Es el aviso que falto cinco semanas con comext (DECISIONES 27).
+    """
+    import datetime as _dt
+
+    from observatorio import runner
+
+    class Diario:
+        cada_dias = 1
+    class Semanal:
+        cada_dias = 7
+
+    ahora = _dt.datetime.now(_dt.timezone.utc)
+    def hace(dias):
+        return (ahora - _dt.timedelta(days=dias)).isoformat()
+
+    monkeypatch.setattr(runner.collectors, "names", lambda: ["aldia", "parado", "semanal_ok", "semanal_parado", "nuevo"])
+    monkeypatch.setattr(runner.collectors, "get",
+                        lambda n: Semanal() if n.startswith("semanal") else Diario())
+    monkeypatch.setattr(runner.storage, "load_state", lambda: {"series": {
+        "aldia": {"last_success": hace(1)},
+        "parado": {"last_success": hace(9)},
+        "semanal_ok": {"last_success": hace(8)},      # semanal: 8 dias es normal
+        "semanal_parado": {"last_success": hace(30)},
+        "nuevo": {},                                   # registrado y sin ejecutar nunca
+    }})
+    parados = dict(runner.recolectores_parados())
+    assert set(parados) == {"parado", "semanal_parado", "nuevo"}
+    assert parados["nuevo"] == -1, "el que no ha corrido nunca se marca aparte"
+    assert parados["parado"] == 9

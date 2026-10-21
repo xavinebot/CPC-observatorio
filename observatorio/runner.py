@@ -2,6 +2,7 @@
 comprobar caducidad y contraste → publicar → avisar."""
 from __future__ import annotations
 
+import datetime as dt
 import traceback
 
 from . import (alerts, catalog, collectors, config, contrast, enlaces, publish, quarantine, recordatorios,
@@ -129,6 +130,30 @@ def format_problems(failures, stale, contrasts) -> str:
     return "\n".join(lines)
 
 
+def recolectores_parados() -> list[tuple[str, int]]:
+    """Recolectores que llevan sin ejecutarse mas de tres veces su periodo. (nombre, dias).
+
+    Es el aviso que faltaba el 15 de septiembre de 2026: comext y eurostat_nrg_ind se quedaron fuera de la lista
+    del workflow y 16 series publicaron el mismo dato cinco semanas sin que fallara nada. Mirar la FECHA DEL DATO
+    no lo detecta —cada fuente tiene su propio desfase de publicacion y agosto en octubre es normal—, pero mirar
+    si el recolector ha corrido no tiene ambiguedad: si no ha corrido, algo esta roto en la maquinaria, diga lo
+    que diga la fuente.
+    """
+    estado = storage.load_state().get("series", {})
+    hoy = dt.datetime.now(dt.timezone.utc)
+    parados = []
+    for n in collectors.names():
+        cada = getattr(collectors.get(n), "cada_dias", 1)
+        ls = estado.get(n, {}).get("last_success")
+        if not ls:
+            parados.append((n, -1))
+            continue
+        dias = (hoy - dt.datetime.fromisoformat(ls)).days
+        if dias > 3 * cada:
+            parados.append((n, dias))
+    return sorted(parados)
+
+
 def _lena_con_reglas() -> str:
     """Por que la ultima lectura de la leña no uso la API, o cadena vacia si la uso."""
     try:
@@ -183,6 +208,11 @@ def weekly_summary() -> str:
         lines.append(f"🔗 <b>Enlace muerto ({codigo})</b> en la ficha de {alerts.esc(', '.join(quien))}: "
                      f"<code>{alerts.esc(url)}</code>. Los datos siguen llegando; lo que esta roto es el enlace "
                      "que se le enseña al lector.")
+    # Un recolector que ha dejado de ejecutarse no da error en ninguna parte.
+    for n, dias in recolectores_parados():
+        cuando = "nunca ha funcionado" if dias < 0 else f"lleva {dias} días sin ejecutarse"
+        lines.append(f"⏸️ <b>El recolector {alerts.esc(n)} {cuando}.</b> Sus series siguen publicándose con su "
+                     "última fecha, así que no falla nada: comprueba que está en la recogida diaria.")
     motivo = _lena_con_reglas()
     if motivo:
         lines.append("🪵 El índice de la leña está clasificando <b>con reglas</b>, no con la API: "

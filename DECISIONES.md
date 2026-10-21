@@ -476,3 +476,18 @@ Un recolector nuevo entra solo.
 obligaba a que coincidieran. Es el mismo patrón que el identificador de la CNMC (§25) y que el enlace muerto
 (§26): algo que hay que mantener a mano en dos sitios, que no da error cuando se desincroniza, y que por eso se
 descubre tarde. La solución es siempre la misma: que no haya dos listas, o que una compruebe a la otra.
+
+### Corolario de la §27: lo que hay que vigilar es el recolector, no el dato
+
+Al revisar si quedaban más series congeladas apareció que **la fecha del último dato no sirve para detectarlo**.
+Los índices industriales publican agosto en octubre, AVEBIOM es trimestral y la CNMC actualiza el canalizado a
+mediados de mes: 51 de las 138 series llevan "dos periodos de retraso" y las 51 están perfectamente. Un umbral
+que las distinguiera de una serie muerta tendría que ser tan generoso que no detectaría nada.
+
+**Lo que no tiene ambigüedad es si el recolector ha corrido.** Si no ha corrido, algo está roto en la maquinaria,
+diga lo que diga la fuente. Cada recolector declara ahora cada cuántos días debería ejecutarse (`cada_dias`, 1
+por defecto y 7 para la leña) y el resumen de los lunes nombra a los que llevan más de tres veces ese periodo
+parados, incluidos los que se han registrado y no se han ejecutado nunca.
+
+Con esto, el fallo de las cinco semanas se habría visto en siete días —y el `--salvo` con su test hace además
+que no pueda repetirse por esa causa concreta—.
