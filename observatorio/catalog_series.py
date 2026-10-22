@@ -51,7 +51,7 @@ SRC_WB = Source(
 SRC_AVEBIOM = Source(
     name="AVEBIOM, Índice de Precios de Biocombustibles Sólidos (IPB)",
     url="https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
-    license=N("Autorizado por AVEBIOM (correo del 14 sep 2026): citando la fuente con enlace y sin modificar los datos", "Autorisé par AVEBIOM (courriel du 14 sept. 2026) : en citant la source avec un lien et sans modifier les données", "Autorizzato da AVEBIOM (email del 14 set. 2026): citando la fonte con collegamento e senza modificare i dati", "Genehmigt von AVEBIOM (E-Mail vom 14.09.2026): mit Quellenangabe und Link, ohne die Daten zu verändern", "Autorizado pela AVEBIOM (e-mail de 14 set. 2026): citando a fonte com ligação e sem modificar os dados"),
+    license=N("Autorizado por AVEBIOM: citando la fuente con enlace y sin modificar los datos", "Autorisé par AVEBIOM : en citant la source avec un lien et sans modifier les données", "Autorizzato da AVEBIOM: citando la fonte con collegamento e senza modificare i dati", "Genehmigt von AVEBIOM: mit Quellenangabe und Link, ohne die Daten zu verändern", "Autorizado pela AVEBIOM: citando a fonte com ligação e sem modificar os dados"),
     license_url="https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/",
     attribution="Fuente: AVEBIOM, Índice de Precios de Biocombustibles Sólidos")
 SRC_LENA = Source(
@@ -313,11 +313,11 @@ SRC_PROPELLETS = Source(
 SRC_CARMEN = Source(
     name="C.A.R.M.E.N. e.V., Marktpreise Pellets",
     url="https://www.carmen-ev.de/service/marktueberblick/marktpreise-energieholz/marktpreise-pellets/",
-    license=N("Uso autorizado por C.A.R.M.E.N. e.V. citando la fuente (correo del 23 sep 2026); sin redistribución",
-              "Usage autorisé par C.A.R.M.E.N. e.V. avec citation de la source (courriel du 23 sept. 2026) ; sans redistribution",
-              "Uso autorizzato da C.A.R.M.E.N. e.V. citando la fonte (e-mail del 23 set. 2026); senza ridistribuzione",
-              "Nutzung von C.A.R.M.E.N. e.V. mit Quellenangabe genehmigt (E-Mail vom 23.09.2026); keine Weitergabe",
-              "Uso autorizado pela C.A.R.M.E.N. e.V. citando a fonte (e-mail de 23 set. 2026); sem redistribuição"),
+    license=N("Uso autorizado por C.A.R.M.E.N. e.V. citando la fuente; sin redistribución",
+              "Usage autorisé par C.A.R.M.E.N. e.V. avec citation de la source ; sans redistribution",
+              "Uso autorizzato da C.A.R.M.E.N. e.V. citando la fonte; senza ridistribuzione",
+              "Nutzung von C.A.R.M.E.N. e.V. mit Quellenangabe genehmigt; keine Weitergabe",
+              "Uso autorizado pela C.A.R.M.E.N. e.V. citando a fonte; sem redistribuição"),
     license_url="https://www.carmen-ev.de/service/marktueberblick/marktpreise-energieholz/",
     attribution="Quelle: C.A.R.M.E.N. e.V.")
 register(Serie(
