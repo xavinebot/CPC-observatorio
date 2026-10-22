@@ -288,7 +288,9 @@ register(Serie(
            "Lenha dura seca em palete (≥300 kg), entregue na península, com IVA"),
     country="ES", group="hogar", fuel="lena", unit="EUR/kg", source=SRC_LENA, collector="lena",
     native_freq="W", expected_every_days=7, stale_after_days=21, min_value=0.10, max_value=1.20,
-    max_change_pct=20, kwh_per_unit=4.1, decimals=4, taxes_included=True, min_points=8,
+    # 7 y no 8: adelantado una semana el 22 de octubre de 2026 por decisión de Xavier. Con siete lecturas
+    # semanales la línea ya tiene sentido; la regla de los 8 era un margen, no un umbral de calidad.
+    max_change_pct=20, kwh_per_unit=4.1, decimals=4, taxes_included=True, min_points=7,
     notes="Mediana entre tiendas online españolas (una referencia representativa por tienda: encina, roble, olivo, haya). Transporte a domicilio incluido. Índice de elaboración propia; ver metodología."))
 register(Serie(
     id="lena_saco_es",

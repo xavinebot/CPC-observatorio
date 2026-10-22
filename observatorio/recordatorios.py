@@ -26,11 +26,6 @@ RECORDATORIOS: list[tuple[str, str, str]] = [
         "industriales. Desde la ficha del cristal a medida, nada. El detalle está en OBSERVATORIO.md §6.",
     ),
     (
-        "2026-10-19", "2026-11-09",
-        "🌳 <b>Mira el índice de la leña.</b> Debería haberse publicado solo al llegar a las ocho semanas de "
-        "lecturas. Si sigue en «series en construcción», algo falla en la recogida de las tiendas.",
-    ),
-    (
         "2026-10-13", "2026-11-23",
         "🔎 <b>Comprueba Google Dataset Search.</b> Entra en <code>datasetsearch.research.google.com</code> y busca "
         "«precio gasóleo calefacción España». Deberían salir las series del observatorio: el marcado está puesto y "
