@@ -1,31 +1,6 @@
 {
- "last_run": "2026-10-25T08:43:13+00:00",
+ "last_run": "2026-10-26T09:21:36+00:00",
  "runs": [
-  {
-   "added": 10975,
-   "collectors": [
-    "wob",
-    "cnmc_glp",
-    "eurostat_nrg",
-    "eurostat_hicp",
-    "eurostat_sts",
-    "ree",
-    "ine_ipc",
-    "ine_ipri",
-    "worldbank",
-    "avebiom",
-    "pellets_eu",
-    "fr_fioul",
-    "lena"
-   ],
-   "contrast_alerts": [],
-   "failures": [],
-   "finished": "2026-09-14T09:38:59+00:00",
-   "quarantined": [],
-   "soft_failures": [],
-   "stale": [],
-   "started": "2026-09-14T09:35:16+00:00"
-  },
   {
    "added": 3493,
    "collectors": [
@@ -1403,68 +1378,95 @@
    "soft_failures": [],
    "stale": [],
    "started": "2026-10-25T08:42:42+00:00"
+  },
+  {
+   "added": 10988,
+   "collectors": [
+    "wob",
+    "cnmc_glp",
+    "eurostat_nrg",
+    "eurostat_nrg_ind",
+    "eurostat_hicp",
+    "eurostat_sts",
+    "ree",
+    "ine_ipc",
+    "ine_ipri",
+    "worldbank",
+    "comext",
+    "avebiom",
+    "pellets_eu",
+    "fr_fioul"
+   ],
+   "contrast_alerts": [],
+   "failures": [],
+   "finished": "2026-10-26T09:21:36+00:00",
+   "pasajeros": [],
+   "quarantined": [],
+   "soft_failures": [],
+   "stale": [],
+   "started": "2026-10-26T09:20:57+00:00"
   }
  ],
  "series": {
   "avebiom": {
-   "consecutive_failures": 1,
-   "last_attempt": "2026-10-25T08:43:05+00:00",
-   "last_error": "RuntimeError: AVEBIOM: no encuentro los tres PDF del índice. https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/: solo [] (228 bytes); https://www.avebiom.org/proyectos/indice-precios-biomasa-al-consumidor: solo [] (218 bytes)",
-   "last_success": "2026-10-24T08:23:56+00:00"
+   "consecutive_failures": 0,
+   "last_attempt": "2026-10-26T09:21:25+00:00",
+   "last_error": null,
+   "last_success": "2026-10-26T09:21:30+00:00"
   },
   "cnmc_glp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:46+00:00",
+   "last_attempt": "2026-10-26T09:21:01+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:42:47+00:00"
+   "last_success": "2026-10-26T09:21:03+00:00"
   },
   "comext": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:43:05+00:00",
+   "last_attempt": "2026-10-26T09:21:24+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:43:05+00:00"
+   "last_success": "2026-10-26T09:21:25+00:00"
   },
   "eurostat_hicp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:48+00:00",
+   "last_attempt": "2026-10-26T09:21:04+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:42:49+00:00"
+   "last_success": "2026-10-26T09:21:05+00:00"
   },
   "eurostat_nrg": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:47+00:00",
+   "last_attempt": "2026-10-26T09:21:03+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:42:48+00:00"
+   "last_success": "2026-10-26T09:21:03+00:00"
   },
   "eurostat_nrg_ind": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:48+00:00",
+   "last_attempt": "2026-10-26T09:21:03+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:42:48+00:00"
+   "last_success": "2026-10-26T09:21:04+00:00"
   },
   "eurostat_sts": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:49+00:00",
+   "last_attempt": "2026-10-26T09:21:05+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:42:50+00:00"
+   "last_success": "2026-10-26T09:21:07+00:00"
   },
   "fr_fioul": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:43:12+00:00",
+   "last_attempt": "2026-10-26T09:21:34+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:43:13+00:00"
+   "last_success": "2026-10-26T09:21:35+00:00"
   },
   "ine_ipc": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:55+00:00",
+   "last_attempt": "2026-10-26T09:21:14+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:42:58+00:00"
+   "last_success": "2026-10-26T09:21:18+00:00"
   },
   "ine_ipri": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:58+00:00",
+   "last_attempt": "2026-10-26T09:21:18+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:43:04+00:00"
+   "last_success": "2026-10-26T09:21:23+00:00"
   },
   "lena": {
    "consecutive_failures": 0,
@@ -1474,27 +1476,27 @@
   },
   "pellets_eu": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:43:09+00:00",
+   "last_attempt": "2026-10-26T09:21:30+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:43:12+00:00"
+   "last_success": "2026-10-26T09:21:34+00:00"
   },
   "ree": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:50+00:00",
+   "last_attempt": "2026-10-26T09:21:07+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:42:55+00:00"
+   "last_success": "2026-10-26T09:21:14+00:00"
   },
   "wob": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:42:43+00:00",
+   "last_attempt": "2026-10-26T09:20:57+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:42:46+00:00"
+   "last_success": "2026-10-26T09:21:01+00:00"
   },
   "worldbank": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-10-25T08:43:04+00:00",
+   "last_attempt": "2026-10-26T09:21:23+00:00",
    "last_error": null,
-   "last_success": "2026-10-25T08:43:05+00:00"
+   "last_success": "2026-10-26T09:21:24+00:00"
   }
  },
  "telegram_offset": 0
