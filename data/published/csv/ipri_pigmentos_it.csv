@@ -3,7 +3,7 @@
 # Fuente: Eurostat - https://ec.europa.eu/eurostat
 # Licencia: CC BY 4.0 - https://ec.europa.eu/eurostat/web/main/help/copyright-notice
 # Cita obligatoria: Fuente: Eurostat
-# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-10-27T09:21:11+00:00
+# Recopilado por Observatorio de precios de cristalesparachimeneas.es - generado 2026-10-28T10:03:23+00:00
 date,value
 2011-01-01,59.6
 2011-02-01,60.3
@@ -193,3 +193,4 @@ date,value
 2026-06-01,122.5
 2026-07-01,124.2
 2026-08-01,122
+2026-09-01,123.5
