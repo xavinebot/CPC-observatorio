@@ -1294,5 +1294,14 @@
 "humedad_pct": 0,
 "seca": false,
 "_metodo": "claude"
+},
+"838efb42cbe5f5ff": {
+"es_lena": true,
+"especie": "encina",
+"kg": 150,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
 }
 }
