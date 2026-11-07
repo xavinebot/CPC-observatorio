@@ -1,30 +1,6 @@
 {
- "last_run": "2026-11-06T11:28:30+00:00",
+ "last_run": "2026-11-07T10:40:34+00:00",
  "runs": [
-  {
-   "added": 10928,
-   "collectors": [
-    "wob",
-    "cnmc_glp",
-    "eurostat_nrg",
-    "eurostat_hicp",
-    "eurostat_sts",
-    "ree",
-    "ine_ipc",
-    "ine_ipri",
-    "worldbank",
-    "avebiom",
-    "pellets_eu",
-    "fr_fioul"
-   ],
-   "contrast_alerts": [],
-   "failures": [],
-   "finished": "2026-09-20T08:49:27+00:00",
-   "quarantined": [],
-   "soft_failures": [],
-   "stale": [],
-   "started": "2026-09-20T08:48:44+00:00"
-  },
   {
    "added": 10919,
    "collectors": [
@@ -1456,68 +1432,95 @@
    "soft_failures": [],
    "stale": [],
    "started": "2026-11-06T11:27:59+00:00"
+  },
+  {
+   "added": 10965,
+   "collectors": [
+    "wob",
+    "cnmc_glp",
+    "eurostat_nrg",
+    "eurostat_nrg_ind",
+    "eurostat_hicp",
+    "eurostat_sts",
+    "ree",
+    "ine_ipc",
+    "ine_ipri",
+    "worldbank",
+    "comext",
+    "avebiom",
+    "pellets_eu",
+    "fr_fioul"
+   ],
+   "contrast_alerts": [],
+   "failures": [],
+   "finished": "2026-11-07T10:40:34+00:00",
+   "pasajeros": [],
+   "quarantined": [],
+   "soft_failures": [],
+   "stale": [],
+   "started": "2026-11-07T10:40:03+00:00"
   }
  ],
  "series": {
   "avebiom": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:23+00:00",
+   "last_attempt": "2026-11-07T10:40:27+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:25+00:00"
+   "last_success": "2026-11-07T10:40:30+00:00"
   },
   "cnmc_glp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:02+00:00",
+   "last_attempt": "2026-11-07T10:40:06+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:04+00:00"
+   "last_success": "2026-11-07T10:40:07+00:00"
   },
   "comext": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:22+00:00",
+   "last_attempt": "2026-11-07T10:40:26+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:23+00:00"
+   "last_success": "2026-11-07T10:40:27+00:00"
   },
   "eurostat_hicp": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:05+00:00",
+   "last_attempt": "2026-11-07T10:40:08+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:06+00:00"
+   "last_success": "2026-11-07T10:40:09+00:00"
   },
   "eurostat_nrg": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:04+00:00",
+   "last_attempt": "2026-11-07T10:40:07+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:04+00:00"
+   "last_success": "2026-11-07T10:40:07+00:00"
   },
   "eurostat_nrg_ind": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:04+00:00",
+   "last_attempt": "2026-11-07T10:40:07+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:05+00:00"
+   "last_success": "2026-11-07T10:40:08+00:00"
   },
   "eurostat_sts": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:06+00:00",
+   "last_attempt": "2026-11-07T10:40:09+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:08+00:00"
+   "last_success": "2026-11-07T10:40:10+00:00"
   },
   "fr_fioul": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:29+00:00",
+   "last_attempt": "2026-11-07T10:40:33+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:30+00:00"
+   "last_success": "2026-11-07T10:40:34+00:00"
   },
   "ine_ipc": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:13+00:00",
+   "last_attempt": "2026-11-07T10:40:17+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:16+00:00"
+   "last_success": "2026-11-07T10:40:20+00:00"
   },
   "ine_ipri": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:16+00:00",
+   "last_attempt": "2026-11-07T10:40:20+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:21+00:00"
+   "last_success": "2026-11-07T10:40:26+00:00"
   },
   "lena": {
    "consecutive_failures": 0,
@@ -1527,27 +1530,27 @@
   },
   "pellets_eu": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:25+00:00",
+   "last_attempt": "2026-11-07T10:40:30+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:29+00:00"
+   "last_success": "2026-11-07T10:40:33+00:00"
   },
   "ree": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:08+00:00",
+   "last_attempt": "2026-11-07T10:40:10+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:13+00:00"
+   "last_success": "2026-11-07T10:40:17+00:00"
   },
   "wob": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:00+00:00",
+   "last_attempt": "2026-11-07T10:40:03+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:02+00:00"
+   "last_success": "2026-11-07T10:40:06+00:00"
   },
   "worldbank": {
    "consecutive_failures": 0,
-   "last_attempt": "2026-11-06T11:28:21+00:00",
+   "last_attempt": "2026-11-07T10:40:26+00:00",
    "last_error": null,
-   "last_success": "2026-11-06T11:28:22+00:00"
+   "last_success": "2026-11-07T10:40:26+00:00"
   }
  },
  "telegram_offset": 0
