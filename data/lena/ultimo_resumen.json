@@ -1,26 +1,27 @@
 {
- "date": "2026-11-02",
+ "date": "2026-11-09",
  "stores_read": [
   "S1",
+  "S2",
   "S3",
   "S4",
   "S6"
  ],
- "readings": 44,
+ "readings": 89,
  "con_reglas": 0,
  "motivo_reglas": "",
  "series": {
   "lena_palet_es": {
-   "value": null,
-   "stores": 2,
-   "refs": 12,
-   "min": 0.366,
+   "value": 0.4622,
+   "stores": 3,
+   "refs": 45,
+   "min": 0.2625,
    "max": 0.6633
   },
   "lena_saco_es": {
-   "value": 0.6656,
-   "stores": 2,
-   "refs": 6,
+   "value": 0.666,
+   "stores": 3,
+   "refs": 9,
    "min": 0.595,
    "max": 1.1003
   }
