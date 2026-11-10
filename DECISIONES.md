@@ -491,3 +491,15 @@ parados, incluidos los que se han registrado y no se han ejecutado nunca.
 
 Con esto, el fallo de las cinco semanas se habría visto en siete días —y el `--salvo` con su test hace además
 que no pueda repetirse por esa causa concreta—.
+
+## 28. Dos fuentes del mismo dato se comparan en la misma semana
+
+*10 de noviembre de 2026.* Llegó el aviso «Gasoleo FR: 1.944 (2026-11-02) frente a 1.732 (2026-11-06), diferencia
+10.9 %». No era un error: el ministerio francés ya había publicado el precio del viernes 6, después de la mayor bajada
+del año (−21 céntimos: descuento de TotalEnergies y precio al por mayor a la baja), y el Boletín Petrolero de la UE
+todavía iba por el del lunes 2, que es el **mismo número** que el ministerio dio el viernes 30 de octubre.
+
+Comparando el último valor de cada fuente, cualquier semana movida da una falsa alarma, y la tolerancia del 6 % era a
+la vez demasiado ancha para cazar un error de verdad. Ahora la regla es de tipo `pareado`: el lunes del Boletín contra
+el viernes anterior del ministerio (`contrast.pareja`). En el histórico coinciden al decimal en 349 de 351 semanas, así
+que la tolerancia baja al 1 %. Si el ministerio aún no ha dado el de esa semana, no se compara.

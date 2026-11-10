@@ -2,6 +2,10 @@
 
 Cada regla compara dos series y avisa si difieren más de `tolerance`:
   - mode='level': compara el último valor de cada una (convertido a la unidad común con los factores).
+  - mode='pareado': para dos fuentes que publican EL MISMO dato con unos días de desfase (el Boletín Petrolero
+                  de la UE pone el lunes lo que el ministerio francés dio el viernes anterior): el último valor de A
+                  contra el de B más reciente ANTERIOR a esa fecha (como mucho `max_days_apart` días). Comparando el
+                  último de cada una, una bajada fuerte de una semana a otra salta como «no cuadran» (10-nov-2026).
   - mode='yoy':   compara la variación interanual (%) del último mes que está en LAS DOS series (sirve
                   para índices con bases distintas, p. ej. INE 2021=100 frente a Eurostat 2015=100). Tiene que
                   ser el mismo mes: el INE publica antes que Eurostat y comparar agosto con julio da falsas
@@ -30,8 +34,11 @@ class Rule:
 
 RULES: list[Rule] = [
     # Gasoleo de calefaccion de Francia: el Weekly Oil Bulletin (el dato que Francia envia a la Comision) frente a
-    # la serie del propio ministerio frances. Fechas distintas (lunes contra viernes), asi que la tolerancia es holgada.
-    Rule("gasoleo_fr", "fioul_fr_ministere", 6.0, "level", max_days_apart=10,
+    # la serie del propio ministerio frances. Es el MISMO numero: el del lunes del Boletin es el del viernes anterior
+    # del ministerio (349 de 351 semanas iguales al decimo de centimo, 2020-2026). Se emparejan asi y la tolerancia
+    # es estrecha. Antes se comparaba el ultimo de cada una con un 6 %, y la bajada del 6-nov-2026 (-11 % en una
+    # semana, descuento de TotalEnergies) salto como falsa alarma.
+    Rule("gasoleo_fr", "fioul_fr_ministere", 1.0, "pareado", max_days_apart=6,
          label="Gasoleo FR: Boletin Petrolero de la UE frente al ministerio frances"),
     # El IPRI del vidrio (23.1) del INE y el que publica Eurostat para España (C231) son el MISMO dato.
     Rule("ipri_vidrio_es", "ipri_vidrio_es_eurostat", 1.0, "level", label="IPRI vidrio ES: INE frente a Eurostat"),
@@ -56,6 +63,13 @@ def ultimo_mes_comun(pa: list[storage.Point], pb: list[storage.Point]) -> str | 
     """El mes más reciente que está en las dos series."""
     comunes = {p[0][:7] for p in pa} & {p[0][:7] for p in pb}
     return max(comunes) if comunes else None
+
+
+def pareja(pa: list[storage.Point], pb: list[storage.Point], max_dias: int) -> storage.Point | None:
+    """El punto de B más reciente ANTERIOR al último de A, como mucho `max_dias` días antes (modo 'pareado')."""
+    fa = parse_date(pa[-1][0])
+    previos = [p for p in pb if 0 < (fa - parse_date(p[0])).days <= max_dias]
+    return max(previos, key=lambda p: parse_date(p[0])) if previos else None
 
 
 def check_all() -> list[str]:
@@ -83,6 +97,15 @@ def check_all() -> list[str]:
             if diff > r.tolerance:
                 alerts.append(f"{r.label or r.a + ' vs ' + r.b} en {mes}: {ya:+.1f}% frente a {yb:+.1f}%, "
                               f"{diff:.1f} puntos de diferencia (tolerancia {r.tolerance})")
+        elif r.mode == "pareado":
+            pbx = pareja(pa, pb, r.max_days_apart)
+            if not pbx:
+                continue   # el ministerio aún no ha dado el de esa semana: no hay con qué comparar
+            va, vb = pa[-1][1] * r.to_common_a, pbx[1] * r.to_common_b
+            diff = pct_change(vb, va)
+            if diff > r.tolerance:
+                alerts.append(f"{r.label or r.a + ' vs ' + r.b}: {va:.4g} ({pa[-1][0]}) frente a {vb:.4g} "
+                              f"({pbx[0]}, el de esa semana), diferencia {diff:.1f}% (tolerancia {r.tolerance}%)")
         else:
             if abs((parse_date(pa[-1][0]) - parse_date(pb[-1][0])).days) > r.max_days_apart:
                 continue
