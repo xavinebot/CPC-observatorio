@@ -140,6 +140,21 @@ def test_contraste_compara_el_mismo_mes_en_las_dos_series():
     assert contrast.yoy_de(euro, "2026-08") is None
 
 
+def test_contraste_fioul_fr_empareja_el_lunes_del_boletin_con_el_viernes_del_ministerio():
+    """10-nov-2026: aviso falso «1.944 frente a 1.732». El Boletin de la UE del lunes 2-nov repite el dato del
+    ministerio del viernes 30-oct; el ministerio ya habia dado el del 6-nov, tras una bajada real del 11 %.
+    Emparejados por semana son el mismo numero; si de verdad no cuadran, si avisa."""
+    from observatorio import contrast
+    boletin = [("2026-10-26", 1.9518), ("2026-11-02", 1.9441)]
+    ministerio = [("2026-10-23", 1.9517), ("2026-10-30", 1.9441), ("2026-11-06", 1.7324)]
+    assert contrast.pareja(boletin, ministerio, 6) == ("2026-10-30", 1.9441)
+    assert contrast.pareja(boletin, [("2026-11-06", 1.7324)], 6) is None, "sin el de esa semana no se compara"
+    regla = next(r for r in contrast.RULES if r.a == "gasoleo_fr")
+    assert regla.mode == "pareado"
+    assert contrast.pct_change(1.9441, 1.9441) <= regla.tolerance
+    assert contrast.pct_change(1.9441, 1.80) > regla.tolerance, "un error de verdad sigue saltando"
+
+
 # ----------------------------------------------------------------- misma fecha, dos valores
 def _serie_de_prueba():
     from observatorio.catalog import Serie, Source
