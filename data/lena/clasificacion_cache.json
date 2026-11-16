@@ -1321,5 +1321,59 @@
 "humedad_pct": 0,
 "seca": true,
 "_metodo": "claude"
+},
+"78efb8d930157559": {
+"es_lena": false,
+"especie": "pino",
+"kg": 0,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
+},
+"da10de7b954b045e": {
+"es_lena": true,
+"especie": "encina",
+"kg": 150,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"efdbd0423b445ced": {
+"es_lena": true,
+"especie": "encina",
+"kg": 10,
+"formato": "saco",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"1db1599c46cbfc26": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 300,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"639712e01129eadf": {
+"es_lena": true,
+"especie": "encina",
+"kg": 350,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": true,
+"_metodo": "claude"
+},
+"1c9f4e44d26e4fe3": {
+"es_lena": true,
+"especie": "olivo",
+"kg": 600,
+"formato": "saca",
+"humedad_pct": 0,
+"seca": false,
+"_metodo": "claude"
 }
 }
