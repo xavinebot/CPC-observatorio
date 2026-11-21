@@ -164,6 +164,98 @@ def test_avebiom_avisa_si_cambia_la_maqueta():
         avebiom.parse_block("un PDF con otra pinta\n", "SACO de 15 kg", 1 / 15)
 
 
+# Muestras reales, RECORTADAS: el texto que pdfplumber saca de los tres PDF del 3T·2026 (octubre de 2026), una
+# página por salto de página (\f). El repositorio es público y AVEBIOM no permite redistribuir sus datos, así que
+# solo quedan las filas que usamos y los cinco trimestres que ya están en data/series (ver la cabecera de cada
+# fichero). La tabla anual se queda con sus columnas de 2026: sin medias anuales.
+def paginas_avebiom(kind: str) -> list[str]:
+    return fx(f"avebiom_{kind}_3T2026.txt").decode("utf-8").split("\f")
+
+
+def redondeado(pts, dec=4):
+    return [(d, round(v, dec)) for d, v in pts]
+
+
+def test_avebiom_tabla_trimestral_del_pellet():
+    from observatorio.catalog_series import AVB
+    out = avebiom.parse_pdf("PELLET", paginas_avebiom("PELLET"), AVB)
+    fechas = ["2025-07-01", "2025-10-01", "2026-01-01", "2026-04-01", "2026-07-01"]
+    # saco de 15 kg: 5,12 5,31 5,29 5,67 5,92 €/saco → /15
+    assert redondeado(out["pellet_saco_es"], 6) == list(zip(fechas, [round(x / 15, 6) for x in (5.12, 5.31, 5.29, 5.67, 5.92)]))
+    # palet: 335,66 345,20 349,96 372,29 390,75 €/t → /1000
+    assert redondeado(out["pellet_palet_es"], 6) == list(zip(fechas, [0.33566, 0.3452, 0.34996, 0.37229, 0.39075]))
+    # granel en CISTERNA, que es lo que dice el catálogo (la fila de volquete no se usa)
+    assert redondeado(out["pellet_granel_es"], 6) == list(zip(fechas, [0.33358, 0.34644, 0.36113, 0.36648, 0.38221]))
+    # el extracto no trae medias anuales (la lectura de las anuales la prueban los tests de arriba)
+    assert out["pellet_saco_es_anual"] == []
+
+
+def test_avebiom_tabla_trimestral_del_hueso_y_la_astilla():
+    from observatorio.catalog_series import AVB
+    hueso = avebiom.parse_pdf("HUESO", paginas_avebiom("HUESO"), AVB)
+    # granel en cisterna: 223,92 232,09 244,0 258,96 256,33 €/t
+    assert redondeado(hueso["hueso_granel_es"], 6) == [
+        ("2025-07-01", 0.22392), ("2025-10-01", 0.23209), ("2026-01-01", 0.244),
+        ("2026-04-01", 0.25896), ("2026-07-01", 0.25633)]
+    astilla = avebiom.parse_pdf("ASTILLA", paginas_avebiom("ASTILLA"), AVB)
+    # 145,72 145,80 150,83 149,42 149,78 €/t
+    assert redondeado(astilla["astilla_es"], 6) == [
+        ("2025-07-01", 0.14572), ("2025-10-01", 0.1458), ("2026-01-01", 0.15083),
+        ("2026-04-01", 0.14942), ("2026-07-01", 0.14978)]
+
+
+def test_avebiom_las_dos_tablas_coinciden_en_los_trimestres_del_ano():
+    # 1T, 2T y 3T de 2026 salen en la tabla anual y en la trimestral; en esta edición valen lo mismo y queda un
+    # solo punto por fecha (si no coincidieran irían los dos y la validación los mandaría a cuarentena).
+    from observatorio.catalog_series import AVB
+    for kind in ("PELLET", "HUESO", "ASTILLA"):
+        paginas = paginas_avebiom(kind)
+        texto = "\n".join(paginas)
+        for sid, (pdf, block, factor, _n, _k) in AVB.items():
+            if pdf != kind:
+                continue
+            _anual, del_anio = avebiom.parse_block("\n".join(paginas[:3]), block, factor)
+            trim = dict(avebiom.parse_trimestral(texto, block, factor))
+            for d, v in del_anio:
+                assert trim[d] == v, (sid, d)
+
+
+def test_avebiom_sin_tabla_trimestral_sigue_con_la_anual(capsys):
+    from observatorio.catalog_series import AVB
+    paginas = paginas_avebiom("PELLET")[:3]     # sin la página de la tabla trimestral
+    out = avebiom.parse_pdf("PELLET", paginas, AVB)
+    assert [d for d, _ in out["pellet_saco_es"]] == ["2026-01-01", "2026-04-01", "2026-07-01"]
+    assert "Precio medio trimestral" in capsys.readouterr().out
+
+
+def test_avebiom_tabla_trimestral_con_columnas_que_no_cuadran():
+    texto = "Precio medio trimestral para el PELLET\n3T · 2025 4T · 2025 1T · 2026\nSACO de 15 kg\n€/saco 5,12 5,31\n"
+    with pytest.raises(RuntimeError, match="2 valores para 3 trimestres"):
+        avebiom.parse_trimestral(texto, "SACO de 15 kg", 1 / 15)
+
+
+def test_avebiom_los_trimestres_antiguos_entran_por_la_carga_de_historico():
+    # Lo que ya está guardado (1T-3T 2026) cuenta como duplicado; los dos trimestres de 2025 son anteriores al
+    # último punto, así que la recogida diaria los mandaría a cuarentena y la carga con --backfill los acepta
+    # pasando el resto de reglas (rango, revisiones).
+    import datetime as dt
+
+    from observatorio.catalog_series import AVB
+    from observatorio.validate import validate_points
+    serie = catalog.get("pellet_saco_es")
+    guardado = [("2026-01-01", 0.3527), ("2026-04-01", 0.378), ("2026-07-01", 0.3947)]
+    nuevos = avebiom.parse_pdf("PELLET", paginas_avebiom("PELLET"), AVB)["pellet_saco_es"]
+    hoy = dt.date(2026, 11, 21)
+    diario = validate_points(serie, nuevos, guardado, reference=hoy)
+    assert [r.date for r in diario.rejected] == ["2025-07-01", "2025-10-01"]
+    carga = validate_points(serie, nuevos, guardado, backfill=True, reference=hoy)
+    assert carga.rejected == [] and carga.backfilled == 2
+    # los de 2026 vuelven como "revisión" solo porque el CSV guarda 4 decimales (5,29/15 = 0,35266…): al
+    # escribirlos se redondean y el fichero no cambia
+    assert {d for d, _ in carga.accepted} >= {"2025-07-01", "2025-10-01"}
+    assert all(round(v, 4) == dict(guardado)[d] for d, v in carga.accepted if d in dict(guardado))
+
+
 # ----------------------------------------------------------------- C.A.R.M.E.N. (tabla HTML)
 HTML_CARMEN = """
 <table><thead><tr><th>wdt_ID</th><th>Zahl_Monat</th><th>Jahr</th><th>Jahr_Monat</th><th>Sackware</th>

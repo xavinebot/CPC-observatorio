@@ -1,0 +1,19 @@
+# Extracto RECORTADO del texto que pdfplumber saca del PDF de AVEBIOM del 3T·2026 (octubre de 2026).
+# Fuente: AVEBIOM, Índice de Precios de Biocombustibles Sólidos
+# (https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/). Precios con 21 % de IVA.
+# Por licencia (AVEBIOM autoriza mostrar sus datos citándolos, no redistribuirlos) aquí solo quedan las filas
+# que usa el observatorio y los cinco trimestres (3T·2025 a 3T·2026) que ya están en data/series. La tabla
+# anual se ha reducido a sus columnas de 2026 y se han quitado las demás filas, los c€/kWh, el IPB y el texto.
+# Las páginas van separadas por un salto de página; las que no hacen falta están vacías.
+Índice de precios de
+ASTILLA
+para uso doméstico en España
+Evolución 3T/2014 - 3T /2026
+Fecha de actualización: octubre 2026Precio medio anual para la ASTILLA
+Astilla a granel P31,5 - P45 (G30)
+2026 (1T) 2026 (2T) 2026 (3T)
+€/tn 150,83 149,42 149,78Precio medio trimestral para la ASTILLA
+Astilla a granel P31,5 - P45 (G30)
+3T · 2025 4T · 2025 1T · 2026 2T · 2026 3T · 2026
+€/tn 145,72 145,80 150,83 149,42 149,78
+www.avebiom.org octubre 2026 4
