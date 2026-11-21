@@ -343,6 +343,45 @@ register(Serie(
           "eso el gráfico va sin los números dentro, la tabla enseña solo el último dato y el anterior, y no hay "
           "descarga. Quien quiera las cifras, en su web."))
 
+# Francia: precio oficial del pellet a los hogares (21 nov 2026). Lo publica el SDES (servicio de estadística del
+# ministerio de la Transición Ecológica) en su «Conjoncture mensuelle de l'énergie», con datos del CEEB (Centre
+# d'études de l'économie du bois), en euros por tonelada con impuestos, desde enero de 2007. Licencia Ouverte
+# (Etalab 2.0): se puede publicar y redistribuir citando la fuente, así que estas dos sí llevan CSV.
+# El dato es TRIMESTRAL aunque el fichero sea mensual (repite el valor en los tres meses del trimestre): se guarda un
+# punto por trimestre, fechado el primer día, como el de AVEBIOM. Ver DECISIONES §29.
+SRC_SDES_BOIS = Source(
+    name="SDES, Conjoncture mensuelle de l'énergie (prix ménages bois, données CEEB)",
+    url="https://www.statistiques.developpement-durable.gouv.fr/catalogue?page=datafile"
+        "&datafileRid=0bf930dc-bfac-4e6f-a063-ec1774c6d029",
+    license="Licence Ouverte / Etalab 2.0", license_url="https://www.etalab.gouv.fr/licence-ouverte-open-licence/",
+    attribution="Source : SDES, Conjoncture mensuelle de l'énergie (prix ménages bois, données CEEB), Licence Ouverte")
+# Como en España: a la comparativa va el saco, que es lo que compra una casa con estufa; el granel pide silo.
+SDES_BOIS = {
+    "pellet_saco_fr": ("PX_BOIS_GRANSACS_TONNE", True,
+                       N("Pellet en sacos, con IVA", "Granulés en sacs, TTC", "Pellet in sacchi, IVA inclusa",
+                         "Pellets in Säcken, inkl. MwSt.", "Pellets em sacos, com IVA"),
+                       "Precio de la tonelada de pellet en sacos. La web lo enseña también por saco de 15 kg (el "
+                       "formato habitual) multiplicando, sin más: el SDES no publica el precio de un saco suelto."),
+    "pellet_granel_fr": ("PX_BOIS_GRANVRAC_TONNE", False,
+                         N("Pellet a granel, con IVA", "Granulés en vrac, TTC", "Pellet sfuso, IVA inclusa",
+                           "Pellets lose, inkl. MwSt.", "Pellets a granel, com IVA"),
+                         "Precio de la tonelada de pellet a granel («en vrac»: se entrega suelto, para caldera con silo)."),
+}
+for sid, (_col, comparativa, name, nota) in SDES_BOIS.items():
+    register(Serie(
+        id=sid, name=name, country="FR", group="hogar", fuel="pellet", unit="EUR/kg", source=SRC_SDES_BOIS,
+        collector="sdes_bois", native_freq="Q",
+        # El trimestre sale unos cuatro meses después de cerrarse (el 2.º de 2026, en la entrega del 6 de noviembre)
+        # y el punto va fechado el primer día del trimestre: justo antes de llegar el siguiente, el último tiene
+        # ya unos 310 días. 380 deja dos meses de margen para una entrega que se retrase.
+        expected_every_days=92, stale_after_days=380,
+        min_value=0.03, max_value=2.0, max_change_pct=60, kwh_per_unit=4.76, taxes_included=True,
+        # La fuente da €/t con hasta cuatro decimales: siete decimales en €/kg lo guardan tal cual, sin redondear.
+        decimals=7, publishable=True, redistributable=True, en_comparativa=comparativa,
+        notes=("Precio medio a consumidor final en Francia, con impuestos (TTC); trimestral. " + nota + " "
+               "Poder calorífico usado para pasarlo a €/kWh: 4,76 kWh/kg, el mismo que en España y Alemania "
+               "(el SDES usa 4,6 kWh/kg en su propio precio por 100 kWh).")))
+
 
 # ----------------------------------------------------------------------------- materias primas del vitroceramico
 # Lo que hay dentro del cristal de una chimenea. El vitroceramico es un vidrio de ALUMINOSILICATO DE LITIO: por eso

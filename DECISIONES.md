@@ -512,3 +512,32 @@ guardado (`revision_fuente`) y cada revisión grande aprobada a mano desde la cu
 fecha, el dato de antes y el de después. Lo que no se nota con los decimales de la serie no cuenta. Se publica en
 `data/published/correcciones.json`, solo con series publicadas, y la web lo enseña en la metodología. Lo anterior al
 21-nov-2026 no se registraba, y así se dice («desde»).
+
+## 29. El pellet de Francia: un punto por trimestre, aunque el fichero sea mensual
+
+*21 de noviembre de 2026.* Se añade el precio oficial del pellet para los hogares en Francia (SDES, «Conjoncture
+mensuelle de l'énergie», datos del CEEB; Licence Ouverte): `pellet_saco_fr` y `pellet_granel_fr`, en €/kg con
+impuestos, desde 2007. Detalle de la fuente en FUENTES.md §4.10.
+
+**El fichero tiene una fila por mes, pero el dato es trimestral**: los tres meses de cada trimestre llevan el mismo
+valor (abril, mayo y junio de 2026: 387,68 €/t a granel y 385,23 en sacos). Se comprobó en los 78 trimestres con dato,
+de 2007 a 2026, también en los primeros años: en todos, los tres meses son idénticos. Guardar tres puntos iguales
+haría creer que hay un dato al mes y pintaría escalones en el gráfico; así que se guarda **un punto por trimestre,
+fechado el primer día** (el 2.º de 2026 es el 2026-04-01), igual que AVEBIOM en España. No se promedia nada: el valor
+es el que da la fuente.
+
+Si algún día un trimestre trae meses distintos (porque el SDES pase a dar dato mensual, o por un error), el
+recolector no elige ni promedia: manda los valores distintos con la misma fecha y la validación los lleva a cuarentena
+con su aviso (regla de la §21). Ahí se decide, con el caso delante, si la serie pasa a mensual.
+
+Otras decisiones de la misma alta:
+- **A la comparativa va el saco** y el granel no, como en España con AVEBIOM (el granel pide caldera con silo). Un
+  solo formato de pellet por país en la tabla.
+- **Poder calorífico 4,76 kWh/kg**, el mismo que el pellet de España y Alemania y el que enseña la tabla de factores
+  de la web, aunque el SDES use 4,6 en sus columnas por 100 kWh (que no se leen). Con dos valores distintos para el
+  mismo combustible, la comparación entre países dejaría de ser de igual a igual.
+- **Siete decimales**: la fuente da €/t con hasta cuatro decimales y así el €/kg se guarda sin redondear.
+- **Caducidad a los 380 días.** El trimestre llega unos cuatro meses después de cerrarse y va fechado el primer día:
+  cuando llega ya tiene unos 220 días, y justo antes de que llegue el siguiente, unos 310. Con el umbral de AVEBIOM
+  (230) la serie saldría «caducada» casi siempre sin que pasara nada.
+- **La última entrega no se fija a mano**: se lee de la ficha del conjunto de datos en cada ejecución.

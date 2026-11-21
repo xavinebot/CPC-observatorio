@@ -12,7 +12,7 @@ import pathlib
 import pytest
 
 from observatorio import catalog
-from observatorio.collectors import avebiom, cnmc_glp, eurostat, lena, pellets_eu, worldbank
+from observatorio.collectors import avebiom, cnmc_glp, eurostat, lena, pellets_eu, sdes_bois, worldbank
 
 FIX = pathlib.Path(__file__).parent / "fixtures"
 
@@ -254,6 +254,84 @@ def test_avebiom_los_trimestres_antiguos_entran_por_la_carga_de_historico():
     # escribirlos se redondean y el fichero no cambia
     assert {d for d, _ in carga.accepted} >= {"2025-07-01", "2025-10-01"}
     assert all(round(v, 4) == dict(guardado)[d] for d, v in carga.accepted if d in dict(guardado))
+
+
+# ----------------------------------------------------------------- SDES (Francia, pellet de los hogares)
+# Muestra real recortada de la entrega 2026-11: cabeceras, los cuatro meses vacíos del final (jul-oct 2026), doce
+# trimestres con dato (3T 2023 a 2T 2026), los tres primeros de 2007 y tres meses vacíos de 2006.
+def sdes_csv() -> str:
+    return fx("sdes_bois_2026-11.csv").decode("utf-8-sig")
+
+
+def test_sdes_un_punto_por_trimestre_en_euros_por_kilo():
+    pts = sdes_bois.parse_csv(sdes_csv(), sdes_bois.columnas())
+    granel, saco = dict(pts["pellet_granel_fr"]), dict(pts["pellet_saco_fr"])
+    # 387,68 y 385,23 €/t en abril, mayo y junio de 2026 → un solo punto, el 1 de abril
+    assert granel["2026-04-01"] == 0.38768 and saco["2026-04-01"] == 0.38523
+    assert granel["2026-01-01"] == 0.38271 and saco["2026-01-01"] == 0.36768
+    # los €/t con cuatro decimales de los primeros años se guardan tal cual
+    assert granel["2007-01-01"] == 0.2179495 and saco["2007-04-01"] == 0.2526252
+    # 12 trimestres recientes + 3 de 2007, sin fechas repetidas y sin nada de los meses vacíos
+    for serie in (pts["pellet_granel_fr"], pts["pellet_saco_fr"]):
+        assert len(serie) == 15 and len({d for d, _ in serie}) == 15
+        assert serie[0][0] == "2007-01-01" and serie[-1][0] == "2026-04-01"
+        assert all(d[5:7] in ("01", "04", "07", "10") and d.endswith("-01") for d, _ in serie)
+
+
+def test_sdes_trimestre_con_meses_distintos_va_a_cuarentena():
+    """Si un trimestre trajera tres valores distintos, no se promedia ni se elige: van todos con la misma fecha y la
+    validación los manda a cuarentena (fecha repetida en el lote). Caso inventado a partir de la muestra."""
+    import datetime as dt
+
+    from observatorio.validate import validate_points
+    texto = sdes_csv().replace('"2026-05";387.68;385.23', '"2026-05";390.00;385.23')
+    pts = sdes_bois.parse_csv(texto, sdes_bois.columnas())
+    assert sorted(v for d, v in pts["pellet_granel_fr"] if d == "2026-04-01") == [0.38768, 0.39]
+    assert [v for d, v in pts["pellet_saco_fr"] if d == "2026-04-01"] == [0.38523]   # la otra no se toca
+    res = validate_points(catalog.get("pellet_granel_fr"), pts["pellet_granel_fr"], [], backfill=True,
+                          reference=dt.date(2026, 11, 21))
+    assert {r.date for r in res.rejected} == {"2026-04-01"}
+    assert {r.reason for r in res.rejected} == {"fecha_duplicada_en_el_lote"}
+    assert len(res.accepted) == 14
+
+
+def test_sdes_avisa_si_cambia_el_fichero():
+    texto = sdes_csv()
+    with pytest.raises(RuntimeError, match="PX_BOIS_GRANSACS_TONNE"):
+        sdes_bois.parse_csv(texto.replace("PX_BOIS_GRANSACS_TONNE", "PX_BOIS_SACS"), sdes_bois.columnas())
+    with pytest.raises(RuntimeError, match="no en euros TTC"):
+        sdes_bois.parse_csv(texto.replace('"n/a";"euros TTC"', '"n/a";"euros HT"'), sdes_bois.columnas())
+    with pytest.raises(RuntimeError, match="PERIODE"):
+        sdes_bois.parse_csv("\n".join(texto.splitlines()[3:]), sdes_bois.columnas())
+
+
+def test_sdes_la_muestra_recortada_no_pasa_la_comprobacion():
+    # La muestra solo trae 15 trimestres; una descarga así de corta es un fichero recortado, no un dato.
+    pts = sdes_bois.parse_csv(sdes_csv(), sdes_bois.columnas())
+    with pytest.raises(RuntimeError, match="registros|trimestres"):
+        sdes_bois.Collector().check(pts)
+
+
+def test_sdes_toma_la_ultima_entrega_de_la_ficha():
+    meta = json.loads(fx("sdes_dataset_2026-11.json"))
+    assert sdes_bois.ultimo_millesime(meta) == "2026-11"
+    # con varias entregas, la más reciente (la ficha real de hoy solo trae una; se añade otra para probarlo)
+    fich = next(f for f in meta["datafiles"] if f["rid"] == sdes_bois.DATAFILE)
+    fich["millesimes"] = [{"millesime": "2026-10"}, *fich["millesimes"], {"millesime": "2025-12"}]
+    assert sdes_bois.ultimo_millesime(meta) == "2026-11"
+    meta["datafiles"] = [f for f in meta["datafiles"] if f["rid"] != sdes_bois.DATAFILE]
+    with pytest.raises(RuntimeError, match="no trae entregas"):
+        sdes_bois.ultimo_millesime(meta)
+
+
+def test_sdes_la_comparativa_lleva_el_saco_como_en_espana():
+    assert catalog.get("pellet_saco_fr").en_comparativa is True
+    assert catalog.get("pellet_granel_fr").en_comparativa is False
+    assert catalog.get("pellet_saco_es").en_comparativa is True
+    assert catalog.get("pellet_granel_es").en_comparativa is False
+    for sid in ("pellet_saco_fr", "pellet_granel_fr"):
+        s = catalog.get(sid)
+        assert s.redistributable and s.publishable and s.taxes_included and s.kwh_per_unit == 4.76
 
 
 # ----------------------------------------------------------------- C.A.R.M.E.N. (tabla HTML)
