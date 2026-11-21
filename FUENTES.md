@@ -25,6 +25,7 @@ se puede recoger pero no republicar se queda recogido y sin publicar, esperando 
 | Electricidad y gas natural para la industria, sin impuestos recuperables | ES FR IT DE PT | Eurostat (nrg_pc_205, nrg_pc_203) | semestral | 2007 | CC BY 4.0 | sí |
 | Materias primas: gas europeo (TTF), mineral de hierro, Brent, cobre | mundial | Banco Mundial (Pink Sheet) | mensual | 1960 | CC BY 4.0 | sí |
 | Índice del precio del pellet a granel | AT | proPellets Austria | mensual | enero 2006 | uso con cita, revocable | **no** |
+| Precio del pellet a granel (6 t) y en saco de 15 kg, con IVA | AT | proPellets Austria, Preiserhebung | mensual | granel enero 2006 · saco noviembre 2021 | uso con cita, revocable | **no** |
 | Índice propio del precio de la leña (palet entregado y saco) | ES | elaboración propia | semanal | septiembre 2026 | CC BY 4.0 | sí |
 | Pellet, hueso de aceituna y astilla (saco, palet, granel; trimestral y media anual) | ES | AVEBIOM, Índice de Precios de Biocombustibles Sólidos | trimestral | 2012 (pellet), 2014 (hueso y astilla) | autorización escrita de AVEBIOM, 14 sep 2026 | **no** |
 | Precio del pellet para los hogares, en sacos y a granel (con impuestos) | FR | SDES, Conjoncture mensuelle de l'énergie (datos del CEEB) | trimestral | 2007 | Licence Ouverte / Etalab 2.0 | sí |
@@ -152,6 +153,22 @@ interanual para que el tipo de cambio no ensucie la lectura.
 ### 4.8 proPellets Austria
 Único índice de pellet de otro país con fichero descargable y histórico largo (desde 2006). Es un índice, no euros
 por tonelada. Su permiso es "uso con cita" y revocable, así que se publica el índice citando la fuente pero sin CSV.
+
+**El precio en euros (21 nov 2026).** El Excel del índice (PPI06) no trae precios, pero la página
+`aktuelle-pelletpreise` los enseña en gráficos incrustados de 23degrees, y sus datos están en un fichero público:
+- **Granel**: gráfico «Pelletpreise in Cent/kg» («6 to, ISO 17225-2 A1 oder ENplus A1, **inkl. USt.**»), mensual
+  desde 1999 en céntimos por kg. Se publica desde **enero de 2006**, cuando empieza su recogida sistemática (la base
+  de su índice); los meses sueltos de 1999-2005 no. Cuadra con el índice: oct-2022 63,36 c/kg ÷ 17,78 (ene-2006) =
+  356, el PPI06 de ese mes es 356,37. Serie `pellet_granel_at` (€/kg = c/kg ÷ 100). Va a «frente a Europa».
+- **Saco de 15 kg**: gráfico «Preis eines 15 kg Pelletsacks in Euro» («bei Abnahme einer Tonne, Selbstabholung,
+  **inkl. USt.**»), mensual desde **noviembre de 2021**. Serie `pellet_saco_at` (€/kg = € del saco ÷ 15). Es la que
+  entra en la comparativa, como el saco en España y Francia.
+- **Cómo se lee**: el enlace del gráfico se busca en la página (`…-line-pelletpreise-in-cent-kg`,
+  `…-line-preis-eines-15-kg-sacks-pellets`); su ficha pública (`app.23degrees.eu/services/public/content/byslug/<slug>`)
+  da el id de los datos (`typeSpecific.dataId`, cambia cada mes) y los datos están en
+  `app.23degrees.eu/services/publicdata/<id>` (filas `a0`=«MM/AA», `a2`=año, `a3`=valor). Si la ficha deja de decir
+  «inkl. USt.», el recolector no la lee: no se publica como «con IVA» un precio que quizá ya no lo lleve.
+- **Permiso**: el mismo que el índice (uso citando «Quelle: Preiserhebung proPellets Austria», revocable). Sin CSV.
 
 ### 4.9 Índice propio de la leña (España)
 No existe ninguna fuente oficial del precio de la leña en España, y el IPC armonizado tampoco lo cubre. Es lo más

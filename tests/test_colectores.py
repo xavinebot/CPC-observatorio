@@ -427,6 +427,36 @@ def test_carmen_avisa_si_no_esta_la_tabla():
         pellets_eu.parse_carmen("<table><tr><td>nada</td></tr></table>")
 
 
+def _fix_json(nombre):
+    import json as _json
+    from pathlib import Path as _Path
+    return _json.loads((_Path(__file__).parent / "fixtures" / nombre).read_text(encoding="utf-8"))
+
+
+def test_propellets_granel_de_centimos_a_euros_por_kilo_desde_2006():
+    pts = pellets_eu.parse_23degrees(_fix_json("propellets_granel_datos_2026-11.json"), por_kg=100.0)
+    assert pts[0][0] == "2006-01-01"                      # lo de 2005 no entra: la recogida sistemática empieza en 2006
+    assert abs(pts[0][1] - 0.1778) < 0.001                 # 17,78 céntimos el kilo en enero de 2006
+    assert pts[-1][0] == "2026-11-01"
+    assert abs(pts[-1][1] - 0.447734) < 0.00001          # 44,77 céntimos el kilo = 447,73 € la tonelada (su web)
+
+
+def test_propellets_saco_de_15_kg_a_euros_por_kilo():
+    pts = pellets_eu.parse_23degrees(_fix_json("propellets_saco_datos_2026-11.json"), por_kg=15.0)
+    assert pts[0][0] == "2021-11-01"
+    assert pts[-1][0] == "2026-11-01"
+    assert abs(pts[-1][1] * 15 - 7.4228) < 0.001         # 7,42 € el saco, como en su web
+
+
+def test_propellets_no_lee_si_el_grafico_deja_de_decir_con_iva():
+    ficha = _fix_json("propellets_granel_grafico_2026-11.json")
+    assert pellets_eu.id_datos(ficha) == "6af958785e4c1fc4f7b543fb"
+    import json as _json
+    sin_iva = _json.loads(_json.dumps(ficha).replace("inkl. USt", "ohne USt"))
+    with pytest.raises(RuntimeError, match="inkl. USt"):
+        pellets_eu.id_datos(sin_iva)
+
+
 # ----------------------------------------------------------------- índice de la leña
 def lectura(**kw):
     base = dict(date="2026-09-12", store="S1", name="x", price=300.0, es_lena=True, especie="encina",

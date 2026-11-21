@@ -2,12 +2,19 @@
 
 - proPellets: el XLSX está en una ruta que cambia cada año (`/assets/upload/Pelletpreise/<año>/PPI06.xlsx`); se
   localiza el enlace en la página. Hoja única: fila "Jahr" con los años en columnas y una fila por mes.
+- proPellets, precio en euros (21-nov-2026): la web no lo da en texto, sino en gráficos incrustados de 23degrees. El
+  de «Pelletpreise in Cent/kg» (granel, 6 t, ENplus A1, inkl. USt., mensual desde 1999) y el de «Preis eines 15 kg
+  Sacks» (saco de 15 kg al comprar una tonelada, recogido en tienda, inkl. USt., desde nov-2021). Cada gráfico tiene
+  una ficha pública (`/services/public/content/byslug/<slug>`) con el id de sus datos, que cambia cada mes, y los
+  datos en `/services/publicdata/<id>`: filas `a0`=«MM/AA», `a2`=año, `a3`=valor. El slug se saca de la página.
+  Si la ficha deja de decir «inkl. USt.», no se lee: no se publica como «con IVA» un precio que quizá no lo lleve.
 - C.A.R.M.E.N.: la tabla histórica (wpDataTables) viene incrustada en el HTML con columnas
   `Zahl_Monat, Jahr, Jahr_Monat, Sackware, 2 Tonnen, 5 Tonnen, ...` en €/t con IVA. Usamos "5 Tonnen".
 """
 from __future__ import annotations
 
 import io
+import json
 import re
 
 import openpyxl
@@ -19,6 +26,12 @@ from .base import Collector as _Base
 PP_PAGE = "https://www.propellets.at/aktuelle-pelletpreise"
 CARMEN_PAGE = "https://www.carmen-ev.de/service/marktueberblick/marktpreise-energieholz/marktpreise-pellets/"
 UA = {"User-Agent": "Mozilla/5.0 (compatible; CPC-Observatorio/0.1; +https://cristalesparachimeneas.es/contacto/)"}
+API_23 = "https://app.23degrees.eu/services"
+GRANEL_23 = r"app\.23degrees\.eu/embed/([A-Za-z0-9]+-line-pelletpreise-in-cent-kg)\b"
+SACO_23 = r"app\.23degrees\.eu/embed/([A-Za-z0-9]+-line-preis-eines-15-kg-sacks-pellets)\b"
+# La recogida sistemática de proPellets empieza en enero de 2006 (es la base de su índice): lo de antes, con meses
+# sueltos, no se publica.
+DESDE_23 = 2006
 MONTHS_DE = ["jän", "feb", "mär", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "dez"]
 
 
@@ -32,6 +45,11 @@ class Collector(_Base):
             out["pellet_indice_at"] = fetch_propellets()
         except Exception as e:  # noqa: BLE001
             print(f"   pellets_eu: proPellets no leído ({e})")
+        for sid, patron in (("pellet_granel_at", GRANEL_23), ("pellet_saco_at", SACO_23)):
+            try:
+                out[sid] = fetch_propellets_precio(patron, sid)
+            except Exception as e:  # noqa: BLE001
+                print(f"   pellets_eu: proPellets, {sid} no leído ({e})")
         try:
             out["pellet_granel_de"] = fetch_carmen()
         except Exception as e:  # noqa: BLE001
@@ -97,3 +115,43 @@ def parse_carmen(html: str) -> list[tuple]:
             if pts:
                 return sorted(pts)
     raise RuntimeError("C.A.R.M.E.N.: no encuentro la tabla histórica de pellets")
+
+
+def fetch_propellets_precio(patron: str, sid: str) -> list[tuple]:
+    html = http_get(PP_PAGE, headers=UA).text
+    m = re.search(patron, html)
+    if not m:
+        raise RuntimeError("proPellets: no encuentro el gráfico en la página")
+    ficha = http_get(f"{API_23}/public/content/byslug/{m.group(1)}", headers=UA).json()
+    datos = http_get(f"{API_23}/publicdata/{id_datos(ficha)}", headers=UA).json()
+    save_raw(f"propellets_{sid}.json", json.dumps({"ficha_slug": m.group(1), "datos": datos}).encode())
+    return parse_23degrees(datos, por_kg=(15.0 if "saco" in sid else 100.0))
+
+
+def id_datos(ficha: dict) -> str:
+    """El id de los datos del gráfico. Comprueba antes que la ficha dice que el precio lleva IVA."""
+    if "inkl. USt" not in json.dumps(ficha, ensure_ascii=False):
+        raise RuntimeError("proPellets: el gráfico ya no dice «inkl. USt.»; no se lee hasta revisarlo")
+    did = (ficha.get("typeSpecific") or {}).get("dataId")
+    if not did:
+        raise RuntimeError("proPellets: la ficha del gráfico no trae el id de los datos")
+    return did
+
+
+def parse_23degrees(datos: dict, *, por_kg: float) -> list[tuple]:
+    """Filas «MM/AA» → (primer día del mes, euros por kg). `por_kg`: 100 si viene en céntimos por kg, 15 si es el
+    precio del saco de 15 kg en euros."""
+    pts = {}
+    for f in datos.get("data") or []:
+        try:
+            mes = int(str(f["a0"]).split("/")[0])
+            ano = int(f["a2"])
+            v = float(f["a3"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if ano < DESDE_23 or not 1 <= mes <= 12 or v <= 0:
+            continue
+        pts[f"{ano}-{mes:02d}-01"] = round(v / por_kg, 6)
+    if not pts:
+        raise RuntimeError("proPellets: el gráfico no trae datos reconocibles")
+    return sorted(pts.items())

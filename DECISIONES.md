@@ -579,3 +579,20 @@ C25.9, C17.2, C20.1): sería poner con el mismo nombre un índice que mide otra 
 radiadores, abrasivos con los aislantes, química básica entera con los pigmentos), y la comparación con los demás
 países dejaría de ser de igual a igual. La siderurgia C24.1 es confidencial (también en el INE portugués) y la
 electrónica C26 sigue plana. Si algún día Eurostat publica las subclases para Portugal, se añaden con una línea.
+
+## 32. Austria: el precio del pellet en euros, sin reconstruir nada (21 nov 2026)
+
+La página de Austria solo tenía el índice de proPellets, y Austria es el país del pellet. Xavier pidió el precio en
+euros. Se había descartado porque el Excel del índice no lo trae y reconstruir euros desde el índice sería inventar.
+Al mirar la web de proPellets con calma, el precio sí está publicado, mes a mes, en los gráficos de su página (granel
+desde 1999 y saco de 15 kg desde nov-2021), con IVA, y con sus datos en un fichero público del servicio de gráficos.
+
+- **Se publica tal cual lo da proPellets**, sin reconstruir nada: granel en c/kg ÷ 100 y saco en € ÷ 15 (por kg, como
+  el resto de series; la web vuelve a enseñar «el saco de 15 kg» y «la tonelada»).
+- **Granel desde enero de 2006**, el inicio de su recogida sistemática, aunque el gráfico llegue a 1999 con meses
+  sueltos. Comprobado que cuadra con su índice PPI06.
+- **A la comparativa va el saco** (como en España y Francia); el granel, a «frente a Europa».
+- **Mismo permiso que el índice**: citando la fuente, revocable, sin CSV (`redistributable=False`).
+- **Salvaguarda**: si el gráfico deja de decir «inkl. USt.», el recolector no lo lee.
+- Hizo falta permitir `app.23degrees.eu` en la red del entorno de Claude (GitHub Actions no tiene esa limitación).
+
