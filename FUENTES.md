@@ -27,6 +27,7 @@ se puede recoger pero no republicar se queda recogido y sin publicar, esperando 
 | Índice del precio del pellet a granel | AT | proPellets Austria | mensual | enero 2006 | uso con cita, revocable | **no** |
 | Índice propio del precio de la leña (palet entregado y saco) | ES | elaboración propia | semanal | septiembre 2026 | CC BY 4.0 | sí |
 | Pellet, hueso de aceituna y astilla (saco, palet, granel; trimestral y media anual) | ES | AVEBIOM, Índice de Precios de Biocombustibles Sólidos | trimestral | 2012 (pellet), 2014 (hueso y astilla) | autorización escrita de AVEBIOM, 14 sep 2026 | **no** |
+| Precio del pellet para los hogares, en sacos y a granel (con impuestos) | FR | SDES, Conjoncture mensuelle de l'énergie (datos del CEEB) | trimestral | 2007 | Licence Ouverte / Etalab 2.0 | sí |
 | Precio del pellet a granel (5 t, con IVA), mensual desde 2005 | DE | C.A.R.M.E.N. e.V. | mensual | 2005 | uso autorizado por escrito citando la fuente (23 sep 2026); **sin redistribución** | **no** |
 
 ## 2. Lo que se recoge pero NO se publica todavía
@@ -193,6 +194,34 @@ salida estructurada, y el resultado se guarda en caché por contenido: solo se p
 Coste estimado por debajo de 0,10 € al mes. Si no hay clave de API configurada, el sistema sigue funcionando con
 reglas, reconociendo menos productos.
 
+### 4.10 SDES: precio del pellet de los hogares en Francia (21 nov 2026)
+Es el dato que faltaba en la página francesa: euros por tonelada, oficial y con histórico desde 2007. Lo publica el
+**SDES** (servicio de estadística del ministerio de la Transición Ecológica) en su «Conjoncture mensuelle de l'énergie»
+(conjunto `631b03afb61e5c6479370169`), fichero **«1.4. Prix ménages Bois»** (`0bf930dc-bfac-4e6f-a063-ec1774c6d029`).
+Según su nota metodológica, el precio de los granulados viene del **CEEB** (Centre d'études de l'économie du bois).
+
+- **Qué se lee:** `PX_BOIS_GRANSACS_TONNE` (pellet en sacos) y `PX_BOIS_GRANVRAC_TONNE` (a granel), en «euros TTC»
+  por tonelada → series `pellet_saco_fr` y `pellet_granel_fr`, en €/kg (÷ 1000). Las columnas por 100 kWh PCI no se
+  usan: el SDES calcula con 4,6 kWh/kg y la web usa 4,76 para el pellet de todos los países.
+- **Formato:** API abierta del portal DiDo, sin clave. La ficha del conjunto
+  (`https://data.statistiques.developpement-durable.gouv.fr/dido/api/v1/datasets/631b03afb61e5c6479370169`) dice
+  cuál es la última entrega del fichero (`millesime`, p. ej. `2026-11`); con ella se pide el CSV
+  (`.../datafiles/0bf930dc-…/csv?millesime=2026-11&withColumnName=true&withColumnDescription=true&withColumnUnit=true`):
+  separado por `;`, tres filas de cabecera (descripción, unidad, nombre de columna) y un mes por fila, de lo más nuevo
+  a lo más viejo, con los meses sin dato vacíos (desde 1979 hasta el mes en curso; con dato, de enero de 2007 en
+  adelante).
+- **Es trimestral aunque parezca mensual:** repite el valor en los tres meses del trimestre (comprobado en los 78
+  trimestres de 2007 a 2026). Se guarda un punto por trimestre, fechado el primer día (DECISIONES §29).
+- **Retraso:** el 2.º trimestre de 2026 apareció en la entrega del 6 de noviembre de 2026, unos cuatro meses después
+  de cerrarse. Por eso la serie avisa de caducidad a los 380 días del último punto, no antes.
+- **Licencia:** Licence Ouverte / Etalab 2.0 (`fr-lo` en la ficha). Permite reproducir, redistribuir y uso comercial
+  citando la fuente y la fecha de actualización. Por eso estas dos sí llevan CSV descargable.
+- **Cómo citar:** «Source : SDES, Conjoncture mensuelle de l'énergie (prix ménages bois, données CEEB), Licence
+  Ouverte», con enlace a la ficha del fichero:
+  `https://www.statistiques.developpement-durable.gouv.fr/catalogue?page=datafile&datafileRid=0bf930dc-bfac-4e6f-a063-ec1774c6d029`.
+- **A la comparativa va el saco**, como en España; el granel se publica con su gráfico pero no compite en la tabla.
+  La web enseña también el precio de 15 kg (el saco habitual) multiplicando: el SDES no da el precio de un saco suelto.
+
 ## 5. Marco legal del índice de leña (resumen)
 
 - Una lista de precios de una tienda **no** suele ser una base de datos protegida: la inversión está en vender, no
@@ -222,6 +251,7 @@ reglas, reconociendo menos productos.
    PDF).
 6. La serie mensual de pellet del CEEB francés dentro del portal de datos del ministerio: la búsqueda por interfaz
    automática no devolvió resultados. Merece un segundo intento navegando a mano.
+   **Encontrada el 21 nov 2026** (y es trimestral, no mensual): ver 4.10.
 
 ## Litio: sí hay fuente, y es europea (15 sep 2026)
 

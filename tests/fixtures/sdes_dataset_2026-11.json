@@ -1,0 +1,446 @@
+{
+ "id": "631b03afb61e5c6479370169",
+ "title": "Conjoncture mensuelle de l'énergie",
+ "license": "fr-lo",
+ "frequency": "monthly",
+ "last_update": "2026-11-06T09:18:53.100Z",
+ "weburl": "https://www.statistiques.developpement-durable.gouv.fr/catalogue?page=dataset&datasetId=631b03afb61e5c6479370169",
+ "datafiles": [
+  {
+   "rid": "daf4715a-0795-4098-bdb1-d90b6e6a568d",
+   "title": "1.1. Prix ménages Pétrole",
+   "description": "Produits pétroliers, prix pour un ménage, en euros TTC",
+   "legal_notice": "SDES",
+   "weburl": "https://www.statistiques.developpement-durable.gouv.fr/catalogue?page=datafile&datafileRid=daf4715a-0795-4098-bdb1-d90b6e6a568d",
+   "millesimes": [
+    {
+     "millesime": "2026-11",
+     "date_diffusion": "2026-11-06T07:45:00.000Z",
+     "weburl": "https://www.statistiques.developpement-durable.gouv.fr/catalogue?page=datafile&datafileRid=daf4715a-0795-4098-bdb1-d90b6e6a568d&datafileMillesime=2026-11",
+     "rows": 574,
+     "columns": [
+      {
+       "name": "PERIODE",
+       "description": "Période",
+       "unit": "n/a",
+       "type": "yearmonth",
+       "filters": [
+        "contains",
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_PROPANE_CITERNE_TONNE",
+       "description": "Tarif d'une tonne de propane en citerne",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_PROPANE_CITERNE_100KWH",
+       "description": "Prix au détail de 100 kWh PCI de propane en citerne",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_PROPANE_TONNE",
+       "description": "Prix d'une tonne de propane",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_PROPANE_PCS_100KWH",
+       "description": "Prix au détail de 100 kWh PCS de propane",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_PROPANE_PCI_100KWH",
+       "description": "Prix au détail de 100 kWh PCI de propane",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_BUTANE_BOUTEILLE13KG",
+       "description": "Prix au détail d'une bouteille de butane de 13 kg",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_FOD_100L_C1",
+       "description": "Prix au détail de 100 litres de FOD au tarif C1",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_FOD_100KWH_C1",
+       "description": "Prix au détail de 10 kWh PCI de FOD au tarif C1",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_ESS_LITRE",
+       "description": "Prix au détail d'un litre d'essence ordinaire",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_SUPER_ARS_LITRE",
+       "description": "Prix au détail d'un litre de super carburant ARS",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_SP95_LITRE",
+       "description": "Prix au détail d'un litre de super sans plomb 95",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_SP98_LITRE",
+       "description": "Prix au détail d'un litre de super sans plomb 98",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_GAZOLE_LITRE",
+       "description": "Prix au détail d'un litre de gazole",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_GPLC_LITRE",
+       "description": "Prix au détail d'un litre de GPLc",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_SP95_E10_LITRE",
+       "description": "Prix au détail d'un litre de super sans plomb 95-E10",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_PETRO_SUPERETHANOL_E85_LITRE",
+       "description": "Prix au détail d'un litre de superéthanol E85",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      }
+     ],
+     "extendedFilters": [],
+     "geoFields": [],
+     "refs": []
+    }
+   ]
+  },
+  {
+   "rid": "0bf930dc-bfac-4e6f-a063-ec1774c6d029",
+   "title": "1.4. Prix ménages Bois",
+   "description": "Bois, prix pour un ménage, en euros TTC",
+   "legal_notice": "SDES",
+   "weburl": "https://www.statistiques.developpement-durable.gouv.fr/catalogue?page=datafile&datafileRid=0bf930dc-bfac-4e6f-a063-ec1774c6d029",
+   "millesimes": [
+    {
+     "millesime": "2026-11",
+     "date_diffusion": "2026-11-06T07:45:00.000Z",
+     "weburl": "https://www.statistiques.developpement-durable.gouv.fr/catalogue?page=datafile&datafileRid=0bf930dc-bfac-4e6f-a063-ec1774c6d029&datafileMillesime=2026-11",
+     "rows": 574,
+     "columns": [
+      {
+       "name": "PERIODE",
+       "description": "Période",
+       "unit": "n/a",
+       "type": "yearmonth",
+       "filters": [
+        "contains",
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_BOIS_GRANVRAC_TONNE",
+       "description": "Prix au détail d'une tonne de granulés de bois en vrac",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_BOIS_GRANSACS_TONNE",
+       "description": "Prix au détail d'une tonne de granulés de bois en sacs",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_BOIS_GRANVRAC_100KWH",
+       "description": "Prix au détail de 100 kWh PCI de bois en vrac",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      },
+      {
+       "name": "PX_BOIS_GRANSACS_100KWH",
+       "description": "Prix au détail de 100 kWh PCI de bois en sacs",
+       "unit": "euros TTC",
+       "precision": null,
+       "type": "number",
+       "filters": [
+        "eq",
+        "ne",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "in",
+        "nin"
+       ],
+       "availableValues": []
+      }
+     ],
+     "extendedFilters": [],
+     "geoFields": [],
+     "refs": []
+    }
+   ]
+  }
+ ]
+}
