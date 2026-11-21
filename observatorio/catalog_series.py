@@ -230,7 +230,7 @@ for sid, cc, nace, nk, hidden in STS:
 
 # ----------------------------------------------------------------------------- materias primas (Banco Mundial)
 WB = {
-    "gas_ttf_eu": ("Natural gas, Europe", "USD/mmbtu", N("Gas natural en Europa (TTF), precio mayorista", "Gaz naturel en Europe (TTF), prix de gros", "Gas naturale in Europa (TTF), prezzo all'ingrosso", "Erdgas Europa (TTF), Großhandelspreis", "Gás natural na Europa (TTF), preço grossista")),
+    "gas_ttf_eu": ("Natural gas, Europe", "USD/mmbtu", N("Gas natural en Europa, precio mayorista (Banco Mundial; TTF desde 2015)", "Gaz naturel en Europe, prix de gros (Banque mondiale ; TTF depuis 2015)", "Gas naturale in Europa, prezzo all’ingrosso (Banca Mondiale; TTF dal 2015)", "Erdgas Europa, Großhandelspreis (Weltbank; TTF seit 2015)", "Gás natural na Europa, preço grossista (Banco Mundial; TTF desde 2015)")),
     "mineral_hierro": ("Iron ore, cfr spot", "USD/dmtu", N("Mineral de hierro (62 % Fe), precio spot", "Minerai de fer (62 % Fe), prix spot", "Minerale di ferro (62 % Fe), prezzo spot", "Eisenerz (62 % Fe), Spotpreis", "Minério de ferro (62 % Fe), preço spot")),
     "brent": ("Crude oil, Brent", "USD/bbl", N("Petróleo Brent", "Pétrole Brent", "Petrolio Brent", "Rohöl Brent", "Petróleo Brent")),
     "cobre": ("Copper", "USD/t", N("Cobre (LME)", "Cuivre (LME)", "Rame (LME)", "Kupfer (LME)", "Cobre (LME)")),
@@ -243,7 +243,7 @@ for sid, (col, unit, name) in WB.items():
         collector="worldbank", native_freq="M", expected_every_days=31, stale_after_days=70,
         min_value=lo, max_value=hi, max_change_pct=60, decimals=2,
         subgrupo="energia" if sid in ("gas_ttf_eu", "brent") else "chimenea",
-        notes=f"Media mensual en dólares nominales (columna '{col}' del Pink Sheet). Mostrar la variación interanual evita el efecto del tipo de cambio."))
+        notes=f"Media mensual en dólares nominales (columna '{col}' del Pink Sheet). Va en dólares: en euros la variación puede ser distinta si el tipo de cambio se ha movido."))
 
 # ----------------------------------------------------------------------------- biomasa (AVEBIOM) — autorizado el 14 sep 2026
 # De la biomasa, a la comparativa solo va el formato que usa de verdad una casa con estufa: el saco de pellet y
@@ -504,8 +504,8 @@ COMEXT = {
                      "Ossido di titanio, prezzo all’import nell’UE",
                      "Titanoxid, Importpreis in der EU",
                      "Óxido de titânio, preço de importação na UE"),
-                   "Nucleante: es lo que hace que el vidrio cristalice de forma controlada al recocerlo y se "
-                   "convierta en vitrocerámica. También es el pigmento blanco de las pinturas."),
+                   "Nucleante: es lo que hace que el vidrio cristalice de forma controlada en el tratamiento "
+                   "térmico (ceramización) y se convierta en vitrocerámica. También es el pigmento blanco de las pinturas."),
     "circonio_eu": ("28256000", 0.5, 60.0, 4,
                     N("Óxido de circonio, precio de importación en la UE",
                       "Oxyde de zirconium, prix à l’import dans l’UE",
@@ -530,7 +530,7 @@ ENERGIA_IND = {
                        "Elettricità per l’industria (500-2.000 MWh/anno), senza imposte recuperabili",
                        "Industriestrom (500-2.000 MWh/Jahr), ohne erstattungsfähige Steuern",
                        "Eletricidade para a indústria (500-2.000 MWh/ano), sem impostos recuperáveis"),
-                     "Lo que paga de verdad un taller mediano, no un hogar: banda de consumo industrial y sin el "
+                     "Lo que paga de verdad una industria mediana, no un hogar: banda de consumo industrial y sin el "
                      "IVA ni los impuestos que la empresa recupera. Eurostat nrg_pc_205."),
     "gas": ("nrg_pc_203", "EUR/kWh", 0.005, 0.5,
             N("Gas natural para la industria (1.000-10.000 GJ/año), sin impuestos recuperables",
@@ -538,8 +538,8 @@ ENERGIA_IND = {
               "Gas naturale per l’industria (1.000-10.000 GJ/anno), senza imposte recuperabili",
               "Erdgas für die Industrie (1.000-10.000 GJ/Jahr), ohne erstattungsfähige Steuern",
               "Gás natural para a indústria (1.000-10.000 GJ/ano), sem impostos recuperáveis"),
-            "El horno de vidrio funde a unos 1.600 °C con gas: en una vidriera es la mayor partida de coste "
-            "después de la materia prima. Eurostat nrg_pc_203."),
+            "El horno de vidrio funde a unos 1.600 °C con gas, así que la energía "
+            "pesa mucho en su coste. Eurostat nrg_pc_203."),
 }
 for clave, (ds, unidad, lo, hi, nombre, nota) in ENERGIA_IND.items():
     for cc in ("ES", "FR", "IT", "DE", "PT"):
@@ -563,7 +563,7 @@ STS_ES = {
                           "Prezzi alla produzione: motori e turbine (NACE C28.11)",
                           "Erzeugerpreise: Motoren und Turbinen (NACE C28.11)",
                           "Preços industriais: motores e turbinas (NACE C28.11)"),
-                        "Los ventiladores de convección y de extracción de humos."),
+                        "Referencia aproximada: no hay un índice propio de ventiladores; esta rama (motores y turbinas) es la más cercana."),
     "ipri_tornilleria_es": (N("Precios industriales: pernos y tornillería (NACE C25.94)",
                               "Prix à la production : boulonnerie et visserie (NACE C25.94)",
                               "Prezzi alla produzione: bulloni e viteria (NACE C25.94)",
