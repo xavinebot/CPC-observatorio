@@ -541,3 +541,41 @@ Otras decisiones de la misma alta:
   cuando llega ya tiene unos 220 días, y justo antes de que llegue el siguiente, unos 310. Con el umbral de AVEBIOM
   (230) la serie saldría «caducada» casi siempre sin que pasara nada.
 - **La última entrega no se fija a mano**: se lee de la ficha del conjunto de datos en cada ejecución.
+
+## 30. La leña de Francia: en la unidad de la fuente, y sin poner un poder calorífico nuestro
+
+*21 de noviembre de 2026.* Se añade `lena_buche_fr`: el precio de la leña en troncos de 33 cm, sin entrega a domicilio,
+de la encuesta anual de la ADEME (data.ademe.fr, «Prix des combustibles bois pour le chauffage domestique», Licence
+Ouverte), de 2005 a 2025. Detalle de la fuente en FUENTES.md §4.11.
+
+- **Se guarda en €/MWh PCI, que es como lo publica la ADEME**, y no en €/estéreo. Pasarlo a estéreo sería
+  multiplicar por el factor de la propia ADEME (2.000 kWh/estéreo), pero el dato de origen es el €/MWh; y para la
+  comparativa, el €/MWh no necesita ningún poder calorífico: `kwh_per_unit = 1000` es solo cambiar de MWh a kWh. En
+  España la leña va en €/kg con 4,1 kWh/kg porque así la vendemos y la medimos nosotros; en Francia el estéreo
+  necesitaría una densidad y una humedad que no da nadie, y eso sería inventar. El precio por estéreo, si se quiere
+  enseñar, es una cuenta de la web (×2) diciendo que el factor es de la ADEME.
+- **33 cm**, porque es el tronco que cabe en una estufa o un inserto, que es lo que tiene quien compra un cristal.
+- **Sin entrega**, porque la columna con entrega trae un 0 en 2010 (dato que falta), troncos con entrega más baratos
+  que sin ella en 2006 y, en 2025, exactamente el mismo valor que sin entrega. La de sin entrega no tiene ningún hueco.
+- **Un 0 es un dato que falta**, no un precio: el recolector lo salta y nunca lo rellena.
+- **Impuestos: sin afirmar.** La ficha no dice si el precio es TTC. Casi seguro que sí (el pellet de la misma encuesta
+  cuadra con el TTC del SDES), pero no se escribe «con IVA» hasta leerlo en el informe: `taxes_included=None`.
+- **Va a la comparativa** de la página francesa: es el único precio de leña de Francia y el €/kWh sale sin supuestos.
+- **Fecha del punto: 1 de enero del año de la encuesta**, como las demás series anuales. Caducidad a los 1.100 días:
+  la encuesta de cada año sale en octubre o noviembre del siguiente.
+- **El conjunto se busca por su título** en el catálogo de data.ademe.fr (regla de la §25), y en la misma consulta se
+  comprueba que la licencia sigue siendo la Licence Ouverte; si cambia, falla en voz alta y no se publica nada.
+
+## 31. Portugal: los aparatos domésticos sí; el resto de ramas, no
+
+*21 de noviembre de 2026.* La comprobación del 15 de septiembre buscó para Portugal las mismas subclases que para los
+demás países y solo encontró el vidrio. Pero Francia ya iba con la clase C27.5 (aparatos domésticos) porque no publica
+la subclase C27.52, y **Portugal publica esa misma clase**, completa desde 2005: se añade `ipri_aparatos_domesticos_pt`
+con el mismo nombre que la francesa. En la página de profesionales cae sola en la comparación entre países, porque la
+web agrupa por el identificador sin el país (`ipri_aparatos_domesticos`).
+
+Las demás ramas **no se añaden**, aunque Portugal publique la clase de tres cifras que las contiene (C25.2, C23.9,
+C25.9, C17.2, C20.1): sería poner con el mismo nombre un índice que mide otra cosa (depósitos metálicos con los
+radiadores, abrasivos con los aislantes, química básica entera con los pigmentos), y la comparación con los demás
+países dejaría de ser de igual a igual. La siderurgia C24.1 es confidencial (también en el INE portugués) y la
+electrónica C26 sigue plana. Si algún día Eurostat publica las subclases para Portugal, se añaden con una línea.

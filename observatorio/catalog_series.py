@@ -204,6 +204,7 @@ STS = [
     ("ipri_aparatos_domesticos_de", "DE", "C2752", "aparatos", False),
     ("ipri_aparatos_domesticos_it", "IT", "C2752", "aparatos", False),
     ("ipri_aparatos_domesticos_fr", "FR", "C275", "aparatos275", False),
+    ("ipri_aparatos_domesticos_pt", "PT", "C275", "aparatos275", False),
     ("ipri_siderurgia_de", "DE", "C241", "siderurgia", False),
     ("ipri_siderurgia_it", "IT", "C241", "siderurgia", False),
     ("ipri_siderurgia_fr", "FR", "C241", "siderurgia", False),
@@ -382,6 +383,37 @@ for sid, (_col, comparativa, name, nota) in SDES_BOIS.items():
                "Poder calorífico usado para pasarlo a €/kWh: 4,76 kWh/kg, el mismo que en España y Alemania "
                "(el SDES usa 4,6 kWh/kg en su propio precio por 100 kWh).")))
 
+# Francia: precio de la leña en troncos para los hogares (21 nov 2026). Lo publica la ADEME (agencia pública francesa
+# de la transición ecológica) a partir de su encuesta anual a revendedores profesionales, en data.ademe.fr, con
+# Licence Ouverte: se puede publicar y redistribuir citando la fuente. Viene en euros por MWh PCI, no por estéreo: se
+# guarda tal cual, y el paso a €/kWh es dividir entre mil, sin poder calorífico que poner nosotros. Ver DECISIONES §30.
+SRC_ADEME_BOIS = Source(
+    name="ADEME, Prix des combustibles bois pour le chauffage domestique (enquête annuelle)",
+    url="https://data.ademe.fr/datasets/prix-bois-domestique",
+    license="Licence Ouverte / Etalab", license_url="https://www.etalab.gouv.fr/licence-ouverte-open-licence/",
+    attribution="Source : ADEME, Prix des combustibles bois pour le chauffage domestique, Licence Ouverte")
+# serie -> (combustible tal como lo escribe la ADEME en «type_combustible», columna de precio)
+ADEME_BOIS = {"lena_buche_fr": ("Bûches de 33 cm", "prix_non_livre")}
+register(Serie(
+    id="lena_buche_fr",
+    name=N("Leña en troncos de 33 cm, sin entrega a domicilio", "Bûches de 33 cm, prix non livré",
+           "Legna in ciocchi da 33 cm, senza consegna", "Scheitholz 33 cm, ohne Lieferung",
+           "Lenha em toros de 33 cm, sem entrega ao domicílio"),
+    country="FR", group="hogar", fuel="lena", unit="EUR/MWh", source=SRC_ADEME_BOIS, collector="ademe_bois",
+    # Encuesta de septiembre-octubre que se publica al año siguiente (la de 2025, el 22 de octubre de 2026). El punto
+    # va fechado el 1 de enero del año de la encuesta, así que cuando llega ya tiene unos 660 días, y justo antes
+    # del siguiente, unos 1.030. 1.100 deja dos meses de margen para una entrega que se retrase.
+    native_freq="A", expected_every_days=366, stale_after_days=1100, min_value=5, max_value=300,
+    max_change_pct=40, kwh_per_unit=1000.0, decimals=2,
+    # La ADEME no dice en el fichero si el precio lleva impuestos (casi seguro que sí: ver FUENTES §4.11). Mientras no
+    # se compruebe en su informe, no se afirma ni una cosa ni otra.
+    taxes_included=None, redistributable=True,
+    notes=("Precio medio nacional de la leña en troncos de 33 cm vendida por profesionales, recogida por el "
+           "comprador (sin entrega a domicilio), en euros por MWh PCI, que es como lo publica la ADEME. Para "
+           "pasarlo a estéreo la ADEME usa 2.000 kWh por estéreo: el precio de un estéreo es el doble del de un "
+           "MWh. Encuesta anual a revendedores (en septiembre y octubre; la de 2024 se hizo en el primer "
+           "trimestre). No incluye la leña «a hacer», la de los montes comunales ni el mercado informal.")))
+
 
 # ----------------------------------------------------------------------------- materias primas del vitroceramico
 # Lo que hay dentro del cristal de una chimenea. El vitroceramico es un vidrio de ALUMINOSILICATO DE LITIO: por eso
@@ -521,6 +553,9 @@ STS_ES = {
 }
 # Las mismas ramas, pais por pais. Comprobado en Eurostat el 15 sep 2026: España, Francia, Italia y Alemania
 # publican las diez; Portugal solo el vidrio y la electronica. Lo que no publica un pais, sencillamente no sale.
+# Revisado el 21 nov 2026: Portugal tambien da los aparatos domesticos (C27.5, como Francia), que van arriba en
+# STS. De las demas solo publica la clase de tres cifras (C25.2, C23.9, C25.9, C17.2, C20.1), que es otro indice;
+# la siderurgia (C24.1) es confidencial y la electronica (C26) sigue plana en 100,6. FUENTES.md lo detalla.
 RAMAS_PAIS = {
     "electronica":            ("chimenea", ("ES", "FR", "IT", "DE")),
     "motores":                ("chimenea", ("ES", "FR", "IT", "DE")),

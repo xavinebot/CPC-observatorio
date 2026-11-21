@@ -12,7 +12,7 @@ import pathlib
 import pytest
 
 from observatorio import catalog
-from observatorio.collectors import avebiom, cnmc_glp, eurostat, lena, pellets_eu, sdes_bois, worldbank
+from observatorio.collectors import ademe_bois, avebiom, cnmc_glp, eurostat, lena, pellets_eu, sdes_bois, worldbank
 
 FIX = pathlib.Path(__file__).parent / "fixtures"
 
@@ -332,6 +332,78 @@ def test_sdes_la_comparativa_lleva_el_saco_como_en_espana():
     for sid in ("pellet_saco_fr", "pellet_granel_fr"):
         s = catalog.get(sid)
         assert s.redistributable and s.publishable and s.taxes_included and s.kwh_per_unit == 4.76
+
+
+# ----------------------------------------------------------------- ADEME (leña de Francia, JSON de data-fair)
+def ademe_lineas() -> dict:
+    return json.loads(fx("ademe_bois_lineas_2026-11.json"))
+
+
+def test_ademe_un_punto_al_ano_en_euros_por_mwh_tal_cual():
+    pts = ademe_bois.parse_lines(ademe_lineas(), ademe_bois.productos())
+    serie = pts["lena_buche_fr"]
+    # de 2005 a 2025, un punto por año, fechado el 1 de enero, sin huecos y sin convertir nada
+    assert len(serie) == 21 and serie[0] == ("2005-01-01", 28.0) and serie[-1] == ("2025-01-01", 47.0)
+    d = dict(serie)
+    assert d["2010-01-01"] == 33.0 and d["2024-01-01"] == 46.5 and d["2023-01-01"] == 46.0
+    assert ademe_bois.Collector().check(pts) is None
+
+
+def test_ademe_un_precio_a_cero_es_un_dato_que_falta():
+    """En 2010 el precio CON entrega viene a 0 en todos los combustibles: no es gratis, es que no está."""
+    pts = ademe_bois.parse_lines(ademe_lineas(), {"x": ("Bûches de 33 cm", "prix_livre")})
+    fechas = [d for d, _ in pts["x"]]
+    assert "2010-01-01" not in fechas and len(fechas) == 20
+    assert all(v > 0 for _, v in pts["x"])
+
+
+def test_ademe_dos_filas_del_mismo_ano_van_a_cuarentena():
+    """Caso inventado a partir de la muestra: si un año trae dos valores, no se elige uno."""
+    import datetime as dt
+
+    from observatorio.validate import validate_points
+    d = ademe_lineas()
+    d["results"].append({"annee": 2025, "type_combustible": "Bûches de 33 cm", "prix_non_livre": 48, "prix_livre": 48})
+    pts = ademe_bois.parse_lines(d, ademe_bois.productos())["lena_buche_fr"]
+    assert sorted(v for f, v in pts if f == "2025-01-01") == [47.0, 48.0]
+    res = validate_points(catalog.get("lena_buche_fr"), pts, [], backfill=True, reference=dt.date(2026, 11, 21))
+    assert {r.date for r in res.rejected} == {"2025-01-01"} and len(res.accepted) == 20
+
+
+def test_ademe_avisa_si_cambia_el_conjunto():
+    d = ademe_lineas()
+    with pytest.raises(RuntimeError, match="Bûches 33 cm"):
+        ademe_bois.parse_lines(d, {"x": ("Bûches 33 cm", "prix_non_livre")})
+    sin_col = {"total": d["total"], "results": [{k: v for k, v in f.items() if k != "prix_non_livre"}
+                                                 for f in d["results"]]}
+    with pytest.raises(RuntimeError, match="prix_non_livre"):
+        ademe_bois.parse_lines(sin_col, ademe_bois.productos())
+    with pytest.raises(RuntimeError, match="recortada"):
+        ademe_bois.parse_lines({"total": 170, "results": d["results"][:20]}, ademe_bois.productos())
+    # una descarga con pocos años no pasa la comprobación
+    corta = ademe_bois.parse_lines({"total": 9, "results": [f for f in d["results"] if f["annee"] >= 2017][:9 * 9]},
+                                   ademe_bois.productos())
+    with pytest.raises(RuntimeError, match="registros|años"):
+        ademe_bois.Collector().check(corta)
+
+
+def test_ademe_busca_el_conjunto_por_su_titulo_y_su_licencia():
+    cat = json.loads(fx("ademe_catalogo_2026-11.json"))
+    # en el catálogo real hay también el de chauffage collectif, que se busca con las mismas palabras
+    assert ademe_bois.buscar_conjunto(cat).endswith("/datasets/prix-bois-domestique")
+    fich = next(d for d in cat["results"] if d["title"] == ademe_bois.TITULO)
+    fich["license"] = {"title": "Tous droits réservés"}
+    with pytest.raises(RuntimeError, match="licencia"):
+        ademe_bois.buscar_conjunto(cat)
+    cat["results"] = [d for d in cat["results"] if d["title"] != ademe_bois.TITULO]
+    with pytest.raises(RuntimeError, match="no encuentro"):
+        ademe_bois.buscar_conjunto(cat)
+
+
+def test_ademe_la_lena_de_francia_va_a_la_comparativa_en_su_unidad():
+    s = catalog.get("lena_buche_fr")
+    assert s.unit == "EUR/MWh" and s.kwh_per_unit == 1000.0 and s.fuel == "lena" and s.native_freq == "A"
+    assert s.redistributable and s.publishable and s.en_comparativa and s.country == "FR"
 
 
 # ----------------------------------------------------------------- C.A.R.M.E.N. (tabla HTML)
