@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 from collections import defaultdict
 
-from . import catalog, config, storage
+from . import catalog, config, correcciones, storage
 from .util import parse_date, today
 
 MAX_NATIVE_POINTS_DAILY = 800   # para series diarias publicamos ~2 años en detalle; el resto, mensual
@@ -108,6 +108,7 @@ def build_all() -> None:
     for c, payload in per_country.items():
         (config.PUBLISHED_DIR / f"{c.lower()}.json").write_text(
             json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    correcciones.publicar()
 
 
 def fuente_publicada(src: catalog.Source) -> dict:

@@ -5,7 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import traceback
 
-from . import (alerts, catalog, collectors, config, contrast, enlaces, publish, quarantine, recordatorios,
+from . import (alerts, catalog, collectors, config, contrast, correcciones, enlaces, publish, quarantine, recordatorios,
                storage)
 from .util import parse_date, today
 from .validate import validate_points
@@ -65,6 +65,8 @@ def run(only: list[str] | None = None, *, backfill: bool = False, publish_after:
             if v.accepted:
                 storage.write_series(serie_id, existing + v.accepted, serie.decimals)
                 added_total += len(v.accepted)
+            if v.revised:
+                correcciones.registrar(serie_id, v.revised, "revision_fuente")
             print(f"   {serie_id}: +{len(v.accepted)} (dup {v.duplicates}, rev {v.revisions}, "
                   f"backfill {v.backfilled}), rechazados {len(v.rejected)}")
             if v.rejected:

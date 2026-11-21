@@ -7,7 +7,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from . import alerts, catalog, config, storage
+from . import alerts, catalog, config, correcciones, storage
 from .validate import Rejected
 
 
@@ -67,6 +67,9 @@ def approve(serie_id: str) -> int:
     s = catalog.get(serie_id)
     pts = storage.read_series(serie_id)
     valid = [(p["date"], float(p["value"])) for p in q["points"] if p.get("value") is not None]
+    # Si lo aprobado cambia un dato que ya estaba publicado, es una corrección y va al registro público.
+    antes = {d: v for d, v in pts}
+    correcciones.registrar(serie_id, [(d, antes[d], v) for d, v in valid if d in antes], "revision_aprobada")
     storage.write_series(serie_id, pts + valid, s.decimals)
     path(serie_id).unlink()
     return len(valid)

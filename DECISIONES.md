@@ -503,3 +503,12 @@ Comparando el último valor de cada fuente, cualquier semana movida da una falsa
 la vez demasiado ancha para cazar un error de verdad. Ahora la regla es de tipo `pareado`: el lunes del Boletín contra
 el viernes anterior del ministerio (`contrast.pareja`). En el histórico coinciden al decimal en 349 de 351 semanas, así
 que la tolerancia baja al 1 %. Si el ministerio aún no ha dado el de esa semana, no se compara.
+
+## Registro público de correcciones (21 nov 2026)
+
+Para ser una fuente que se pueda citar hay que decir cuándo cambia un dato ya publicado. Desde hoy se apunta solo
+(`observatorio/correcciones.py`, `data/correcciones.json`): cada revisión pequeña que la fuente hace de un dato ya
+guardado (`revision_fuente`) y cada revisión grande aprobada a mano desde la cuarentena (`revision_aprobada`), con la
+fecha, el dato de antes y el de después. Lo que no se nota con los decimales de la serie no cuenta. Se publica en
+`data/published/correcciones.json`, solo con series publicadas, y la web lo enseña en la metodología. Lo anterior al
+21-nov-2026 no se registraba, y así se dice («desde»).
