@@ -344,6 +344,39 @@ register(Serie(
           "eso el gráfico va sin los números dentro, la tabla enseña solo el último dato y el anterior, y no hay "
           "descarga. Quien quiera las cifras, en su web."))
 
+# Austria: el precio en euros de proPellets (21 nov 2026). Hasta ahora solo se publicaba su índice (PPI06), porque el
+# precio no viene en el Excel. Está en dos gráficos incrustados de su web (23degrees), con los datos en un fichero
+# público: granel (6 t) desde 1999 en céntimos por kg y saco de 15 kg desde nov-2021, los dos «inkl. USt.». Mismo
+# permiso que el índice: uso citando la fuente, revocable; sin CSV. Como en España y Francia, a la comparativa va el
+# saco (lo que compra una casa con estufa) y el granel sale en «frente a Europa». Ver DECISIONES §32.
+SRC_PROPELLETS_PRECIO = Source(
+    name="proPellets Austria, Preiserhebung (Pelletpreise)", url="https://www.propellets.at/aktuelle-pelletpreise",
+    license=SRC_PROPELLETS.license, license_url="https://www.propellets.at/impressum",
+    attribution="Quelle: Preiserhebung proPellets Austria")
+register(Serie(
+    id="pellet_saco_at",
+    name=N("Pellet en saco de 15 kg (comprando 1 t, sin portes), con IVA",
+           "Granulés en sac de 15 kg (achat d’une tonne, à emporter), TTC",
+           "Pellet in sacco da 15 kg (acquisto di 1 t, ritiro in negozio), IVA inclusa",
+           "Pellets im 15-kg-Sack (Abnahme 1 t, Selbstabholung), inkl. MwSt.",
+           "Pellets em saco de 15 kg (compra de 1 t, levantado na loja), com IVA"),
+    country="AT", group="hogar", fuel="pellet", unit="EUR/kg", source=SRC_PROPELLETS_PRECIO, collector="pellets_eu",
+    native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.15, max_value=3.0, max_change_pct=40,
+    kwh_per_unit=4.76, decimals=4, taxes_included=True, redistributable=False,
+    notes="Precio medio de un saco de 15 kg de pellet ENplus A1 al comprar una tonelada, recogido en tienda, con IVA "
+          "(encuesta mensual de proPellets Austria). Se guarda por kg (precio del saco ÷ 15); la web vuelve a "
+          "enseñar el precio del saco. Desde noviembre de 2021."))
+register(Serie(
+    id="pellet_granel_at",
+    name=N("Pellet a granel (6 t), con IVA", "Granulés en vrac (6 t), TTC", "Pellet sfuso (6 t), IVA inclusa",
+           "Pellets lose (6 t), inkl. MwSt.", "Pellets a granel (6 t), com IVA"),
+    country="AT", group="hogar", fuel="pellet", unit="EUR/kg", source=SRC_PROPELLETS_PRECIO, collector="pellets_eu",
+    native_freq="M", expected_every_days=31, stale_after_days=75, min_value=0.10, max_value=2.0, max_change_pct=40,
+    kwh_per_unit=4.76, decimals=4, taxes_included=True, redistributable=False, en_comparativa=False,
+    notes="Precio medio de pellet ENplus A1 a granel en pedidos de 6 t, con IVA (encuesta mensual de proPellets "
+          "Austria a más de 50 distribuidores; es el precio del que sale su índice PPI06). Viene en céntimos por kg. "
+          "Se publica desde enero de 2006, cuando empieza su recogida sistemática; los meses sueltos de 1999-2005 no."))
+
 # Francia: precio oficial del pellet a los hogares (21 nov 2026). Lo publica el SDES (servicio de estadística del
 # ministerio de la Transición Ecológica) en su «Conjoncture mensuelle de l'énergie», con datos del CEEB (Centre
 # d'études de l'économie du bois), en euros por tonelada con impuestos, desde enero de 2007. Licencia Ouverte
