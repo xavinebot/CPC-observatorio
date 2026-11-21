@@ -121,11 +121,14 @@ class Sts(_Base):
     QUERIES = [
         ("C231", {"ES": "ipri_vidrio_es_eurostat", "FR": "ipri_vidrio_fr", "IT": "ipri_vidrio_it", "DE": "ipri_vidrio_de"}),
         ("C2752", {"DE": "ipri_aparatos_domesticos_de", "IT": "ipri_aparatos_domesticos_it"}),
-        ("C275", {"FR": "ipri_aparatos_domesticos_fr"}),
+        # Francia y Portugal no publican la subclase C27.52 (estufas y cocinas no eléctricas), solo la clase C27.5
+        # (aparatos domésticos). Portugal la da completa desde 2005: comprobado en Eurostat el 21 nov 2026.
+        ("C275", {"FR": "ipri_aparatos_domesticos_fr", "PT": "ipri_aparatos_domesticos_pt"}),
         ("C241", {"DE": "ipri_siderurgia_de", "IT": "ipri_siderurgia_it", "FR": "ipri_siderurgia_fr"}),
         # Lo que compra un fabricante de chimeneas y estufas ademas del acero y el vidrio.
-        # Lo que compra un fabricante de chimeneas, pais por pais. Portugal solo publica vidrio y electronica:
-        # comprobado en Eurostat el 15 sep 2026, las demas ramas no las da para PT.
+        # Lo que compra un fabricante de chimeneas, pais por pais. Portugal no publica estas subclases de cuatro
+        # cifras (C25.21, C23.99, C28.11, C25.94, C17.21, C20.12, ni C23.11/C23.19): solo la clase de tres cifras que
+        # las contiene, que es otro indice. La siderurgia (C24.1) la da como confidencial. Comprobado el 21 nov 2026.
         # Radiadores y aislantes NO se piden para España: esas dos ya vienen del INE y una serie solo puede
         # tener un recolector. Pedirlas aquí sería escribir el mismo id desde dos fuentes distintas.
         ("C2521", {"FR": None, "IT": None, "DE": None}),

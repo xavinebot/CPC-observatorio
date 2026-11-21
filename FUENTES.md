@@ -21,13 +21,14 @@ se puede recoger pero no republicar se queda recogido y sin publicar, esperando 
 | Tarifa regulada de la luz (PVPC) y mercado mayorista, media diaria | ES | Red Eléctrica (REData) | diaria | PVPC 2021, mayorista 2014 | uso informativo con cita | **no** |
 | Índice de precios de consumo de la energía | ES | INE | mensual | 2002 | libre con cita | sí |
 | Precios industriales: vidrio plano, vidrio técnico, vidrio, siderurgia, estufas y cocinas, radiadores y calderas, aislantes y refractarios | ES | INE (IPRI) | mensual | 1975 / 2002 | libre con cita | sí |
-| Precios industriales: vidrio, siderurgia, estufas, radiadores, aislantes, electrónica, motores, tornillería, cartón y pigmentos | FR IT DE (los diez) · PT (solo vidrio) | Eurostat (sts_inppd_m) | mensual | 1975-2005 según rama | CC BY 4.0 | sí |
+| Precios industriales: vidrio, siderurgia, estufas, radiadores, aislantes, electrónica, motores, tornillería, cartón y pigmentos | FR IT DE (los diez) · PT (vidrio y aparatos domésticos) | Eurostat (sts_inppd_m) | mensual | 1975-2005 según rama | CC BY 4.0 | sí |
 | Electricidad y gas natural para la industria, sin impuestos recuperables | ES FR IT DE PT | Eurostat (nrg_pc_205, nrg_pc_203) | semestral | 2007 | CC BY 4.0 | sí |
 | Materias primas: gas europeo (TTF), mineral de hierro, Brent, cobre | mundial | Banco Mundial (Pink Sheet) | mensual | 1960 | CC BY 4.0 | sí |
 | Índice del precio del pellet a granel | AT | proPellets Austria | mensual | enero 2006 | uso con cita, revocable | **no** |
 | Índice propio del precio de la leña (palet entregado y saco) | ES | elaboración propia | semanal | septiembre 2026 | CC BY 4.0 | sí |
 | Pellet, hueso de aceituna y astilla (saco, palet, granel; trimestral y media anual) | ES | AVEBIOM, Índice de Precios de Biocombustibles Sólidos | trimestral | 2012 (pellet), 2014 (hueso y astilla) | autorización escrita de AVEBIOM, 14 sep 2026 | **no** |
 | Precio del pellet para los hogares, en sacos y a granel (con impuestos) | FR | SDES, Conjoncture mensuelle de l'énergie (datos del CEEB) | trimestral | 2007 | Licence Ouverte / Etalab 2.0 | sí |
+| Precio de la leña en troncos de 33 cm, sin entrega (€/MWh PCI) | FR | ADEME, Prix des combustibles bois pour le chauffage domestique (encuesta anual) | anual | 2005 | Licence Ouverte | sí |
 | Precio del pellet a granel (5 t, con IVA), mensual desde 2005 | DE | C.A.R.M.E.N. e.V. | mensual | 2005 | uso autorizado por escrito citando la fuente (23 sep 2026); **sin redistribución** | **no** |
 
 ## 2. Lo que se recoge pero NO se publica todavía
@@ -69,7 +70,7 @@ trimestres que salen en las dos, los valores coinciden. Si la tabla trimestral d
 | Derechos de emisión de CO2 (EU ETS) | Ninguna fuente gratuita con licencia clara: ICAP solo permite uso no comercial y con seis meses de retraso, Ember toma el dato de un proveedor comercial y los informes de subasta de EEX exigen licencia para publicarlos en una web. Queda descartado; si algún día EEX autoriza por escrito, se añade. |
 | Propellet France, AIEL (Italia), DGEG (Portugal) para pellet | Publican cifras en artículos, gráficos o imágenes, sin serie numérica ni permiso de reutilización. |
 | DEPI (Alemania) para pellet | Solo muestra los dos últimos años y su permiso es "para uso editorial". C.A.R.M.E.N. cubre lo mismo con histórico desde 2005. |
-| Leña en Francia, Italia, Alemania y Portugal (índice propio) | En Francia y Alemania ya existen barómetros propios, y en Italia y Portugal el mercado online es local. Duplicarlo no aporta nada. |
+| Leña en Francia, Italia, Alemania y Portugal (índice propio) | En Francia y Alemania ya existen barómetros propios, y en Italia y Portugal el mercado online es local. Duplicarlo no aporta nada. En Francia se publica el de la ADEME (ver 4.11). |
 | Leroy Merlin, Obramat, Carrefour y Amazon para el índice de leña | Prohíben expresamente la extracción automatizada en sus condiciones, y además bloquean por medios técnicos. No se tocan. |
 | Precio de la luz por comunidad autónoma, o gasóleo por provincia | No existe fuente oficial y multiplicaría las páginas sin aportar valor. |
 
@@ -222,6 +223,51 @@ Según su nota metodológica, el precio de los granulados viene del **CEEB** (Ce
 - **A la comparativa va el saco**, como en España; el granel se publica con su gráfico pero no compite en la tabla.
   La web enseña también el precio de 15 kg (el saco habitual) multiplicando: el SDES no da el precio de un saco suelto.
 
+### 4.11 ADEME: precio de la leña para los hogares en Francia (21 nov 2026)
+La página francesa no tenía leña. La **ADEME** (agencia pública francesa de la transición ecológica) encarga cada año
+una encuesta de precios de los combustibles de madera para los particulares (CODA Stratégies hasta la de 2024; Hearth
+Connection la de 2025) y publica el resumen nacional como datos abiertos.
+
+- **Conjunto:** «Prix des combustibles bois pour le chauffage domestique», `https://data.ademe.fr/datasets/prix-bois-domestique`
+  (API: `https://data.ademe.fr/data-fair/api/v1/datasets/prix-bois-domestique`). Fichero de origen
+  `IMPORT_prix-bois-domestique-2025.xlsx`, datos actualizados el 22 de octubre de 2026. 170 filas: año (2005-2025) ×
+  combustible (troncos de 25, 33, 40, 50 cm y 1 m; pellet a granel, en saco suelto y en palet de sacos; troncos
+  prensados), con dos precios: `prix_non_livre` (sin entrega) y `prix_livre` (con entrega).
+- **Unidad: euros por MWh PCI**, no por estéreo. La propia ficha da la conversión: «bûches : 2000 kWh/stère ;
+  granulés et bûches reconstituées : 4600 kWh/t». Se guarda en €/MWh tal cual; el paso a €/kWh es dividir entre mil,
+  sin poner ningún poder calorífico nuestro (DECISIONES §30).
+- **Qué se publica:** `lena_buche_fr` = «Bûches de 33 cm», `prix_non_livre`, de 2005 a 2025 (21 años, sin huecos).
+  Último dato: **47 €/MWh en 2025** (≈ 94 € el estéreo con el factor de la ADEME); 46,5 en 2024; 28 en 2005.
+- **Metodología (de la ficha):** precios medios de venta por profesionales; encuesta a 324 revendedores más 275
+  precios tomados en internet y grandes superficies (cifras de la encuesta de 2023). No incluye la leña «à faire», el
+  *affouage* ni el mercado informal. La encuesta se hace en septiembre-octubre; la de 2024, en el primer trimestre.
+- **Licencia:** la ficha de data.ademe.fr dice «Licence Ouverte / Open Licence» con enlace a
+  `https://www.etalab.gouv.fr/licence-ouverte-open-licence`. La Licence Ouverte permite reproducir, redistribuir,
+  adaptar y hacer uso comercial «sous réserve de mentionner la paternité de l'Information : sa source (au moins le
+  nom du producteur) et la date de sa dernière mise à jour». Por eso lleva CSV. (La página de Etalab redirige hoy a
+  data.gouv.fr, que no se pudo abrir desde aquí; el texto citado es el de la versión 2.0.)
+- **Cómo citar:** «Source : ADEME, Prix des combustibles bois pour le chauffage domestique, Licence Ouverte», con
+  enlace a la ficha del conjunto. La fecha de actualización la da la web junto al último dato.
+- **El informe en PDF** (`librairie.ademe.fr`, «Enquête sur les prix des combustibles bois en 2025», 3 PDF) es
+  gratuito pero pide un correo para descargarlo; no se ha usado. La serie sale solo del conjunto de datos abiertos.
+
+**Por qué 33 cm y sin entrega:**
+- **33 cm** cabe en prácticamente cualquier estufa o inserto, que es el aparato de quien compra un cristal; los
+  troncos de 50 cm y de 1 m son para chimeneas grandes, calderas o para cortarlos en casa. No se ha podido comprobar
+  en el informe cuál es el formato que más se vende (está en el PDF que pide correo).
+- **Sin entrega**, porque es la columna limpia: la de entrega trae **0 en 2010** en todos los combustibles (un dato
+  que falta: el recolector lo salta, nunca lo rellena), en 2006 da troncos con entrega **más baratos** que sin ella,
+  y en **2025 repite exactamente el precio sin entrega** en todos los troncos (33 cm: 47 y 47; en 2024 eran 46,5 y
+  49,88). Lo más probable es que la encuesta de 2025, de otra empresa, diera un solo precio de los troncos, pero no
+  se ha podido comprobar en el PDF. Con entrega serían unos 3 €/MWh más (49,88 en 2024).
+
+**Lo que no se pudo verificar:**
+1. **Si el precio lleva impuestos.** La ficha no lo dice. Casi seguro que sí: el pellet en saco de la misma encuesta
+   (81 €/MWh en 2025 × 4,6 MWh/t = 373 €/t) cuadra con el del SDES, que es TTC (365 €/t en el 4.º trimestre de
+   2025); sin IVA saldría bastante más bajo. Mientras no se lea en el informe, la serie va con
+   `taxes_included=None` y el nombre no dice «con IVA». Si se confirma, se cambia a `True`.
+2. El motivo de que en 2025 coincidan los precios con y sin entrega (ver arriba).
+
 ## 5. Marco legal del índice de leña (resumen)
 
 - Una lista de precios de una tienda **no** suele ser una base de datos protegida: la inversión está en vender, no
@@ -294,6 +340,20 @@ Las demás de esa lista ya están publicadas: la electricidad y el gas industria
 ramas de precios industriales de España, Francia, Italia y Alemania.
 
 ### Qué publica cada país, comprobado el 15 de septiembre de 2026
+
+> **Revisado el 21 de noviembre de 2026 (Portugal).** Además del vidrio, Portugal sí publica los **aparatos domésticos
+> en la clase C27.5**, igual que Francia (la comprobación de septiembre miró solo la subclase C27.52, que Portugal no
+> da). Se añade `ipri_aparatos_domesticos_pt`, de enero de 2005 a octubre de 2026. De las demás ramas Portugal no da
+> la subclase de cuatro cifras que usan los otros países (C25.21, C23.99, C28.11, C25.94, C17.21, C20.12, ni C23.11 ni
+> C23.19), ni en mercado interior ni en total ni en exportación (`sts_inppd_m`, `sts_inpp_m`, `sts_inppnd_m`): solo la
+> clase de tres cifras que la contiene (C25.2, C23.9, C25.9, C17.2, C20.1), que mezcla otras cosas (depósitos
+> metálicos, abrasivos, alambre, papel doméstico, química básica) y sería otro índice con el mismo nombre. La
+> **siderurgia C24.1 sale como confidencial** (marca `C` en los 262 meses) y la división C24 entera mete el aluminio y
+> el cobre. La **electrónica C26** sigue plana en 100,6 (ahora con dato hasta octubre de 2026): sigue fuera.
+> **El INE de Portugal no tiene nada más.** Su índice de precios en la producción industrial (base 2021) por actividad
+> (indicador `0011996`, mercado interno, en tasa interanual) llega solo a los grupos de tres cifras de la CAE (231,
+> 239, 252, 275…), y la siderurgia 241 también la da como «dado confidencial». Su variación de los aparatos domésticos
+> en octubre de 2026 (+0,3 %) cuadra con la de Eurostat (112,7 frente a 112,3).
 
 España, Francia, Italia y Alemania publican las diez ramas. **Portugal solo publica el vidrio (C23.1)**; de las
 demás no da nada. Su índice de electrónica (C26) sí existe, pero lleva **congelado en 100,6 desde 2024 y sin dato
