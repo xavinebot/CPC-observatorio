@@ -46,6 +46,12 @@ Contestaron que sí a las tres condiciones que se les propusieron, con una preci
 
 El correo de respuesta **es la autorización escrita** que exige su aviso legal: hay que conservarlo.
 
+**Qué se lee de cada PDF (21 nov 2026).** Dos tablas: «Precio medio anual» (medias de cada año y trimestres del año en
+curso) y «Precio medio trimestral» (los cinco últimos trimestres, p. ej. 3T·2025 a 3T·2026), que da los trimestres del
+año anterior y con ellos la variación de doce meses. Las dos se leen por el mismo rótulo de fila (saco de 15 kg, palet
+de sacos, granel en **cisterna**; la fila de granel en volquete no se usa) y con la misma conversión a €/kg; en los
+trimestres que salen en las dos, los valores coinciden. Si la tabla trimestral desaparece, se sigue con la anual.
+
 ## 3. Lo que se descartó y por qué
 
 | Candidato | Motivo del descarte |

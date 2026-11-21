@@ -35,6 +35,7 @@ class ValidationResult:
     rejected: list[Rejected] = field(default_factory=list)
     duplicates: int = 0
     revisions: int = 0
+    revised: list[tuple[str, float, float]] = field(default_factory=list)   # (fecha, antes, después)
     backfilled: int = 0
 
     @property
@@ -104,6 +105,7 @@ def validate_points(serie: Serie, new_points: list[tuple], existing: list[Point]
                 continue
             if pct_change(old, v) <= serie.max_change_pct:
                 res.revisions += 1
+                res.revised.append((d, old, v))
                 res.accepted.append((d, v))
                 existing_map[d] = v
                 continue

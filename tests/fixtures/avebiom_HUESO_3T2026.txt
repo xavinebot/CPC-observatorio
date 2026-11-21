@@ -1,0 +1,19 @@
+# Extracto RECORTADO del texto que pdfplumber saca del PDF de AVEBIOM del 3T·2026 (octubre de 2026).
+# Fuente: AVEBIOM, Índice de Precios de Biocombustibles Sólidos
+# (https://avebiom.org/actividades/indice-de-precios-biocombustibles-solidos/). Precios con 21 % de IVA.
+# Por licencia (AVEBIOM autoriza mostrar sus datos citándolos, no redistribuirlos) aquí solo quedan las filas
+# que usa el observatorio y los cinco trimestres (3T·2025 a 3T·2026) que ya están en data/series. La tabla
+# anual se ha reducido a sus columnas de 2026 y se han quitado las demás filas, los c€/kWh, el IPB y el texto.
+# Las páginas van separadas por un salto de página; las que no hacen falta están vacías.
+Índice de precios de
+HUESO de ACEITUNA
+para uso doméstico en España
+Evolución 3T/2014 - 3T 2026
+Fecha de actualización: octubre 2026Precio medio anual para el HUESO DE ACEITUNA
+2026 (1T) 2026 (2T) 2026 (3T)
+GRANEL en CISTERNA
+€/tn 244,0 258,96 256,33Precio medio trimestral para el HUESO DE ACEITUNA
+3T · 2025 4T · 2025 1T · 2026 2T · 2026 3T · 2026
+GRANEL en cisterna
+€/tn 223,92 232,09 244,0 258,96 256,33
+www.avebiom.org octubre 2026 5
