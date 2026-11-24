@@ -1,0 +1,27 @@
+# Precios de AIEL (Associazione Italiana Energie Agroforestali), cargados A MANO desde las tablas de sus artículos
+# (las tablas son imágenes: no se pueden leer con un programa). Cada fila: la cifra tal cual la da AIEL, en su unidad,
+# su mes de medición («la data specifica della rilevazione», que AIEL da como mes) y el artículo y la tabla de donde
+# sale. Comprobada cada cifra contra el texto del artículo cuando el texto la da. Autorización escrita de AIEL del
+# 24-nov-2026: ver observatorio/collectors/aiel.py. NO se inventa ni se convierte nada: si una medición viene sin IVA,
+# no entra en estas series (todas son «IVA inclusa»).
+serie,medicion,valor,unidad,iva,publicado,articulo,tabla
+pellet_saco_it,2024-04,5.45,EUR/sacco15kg,inclusa,2024-05-23,https://energiadallegno.it/prezzo-del-pellet-ad-aprile-2024/,Tabella 1 · Totale complessivo
+pellet_saco_it,2024-09,5.24,EUR/sacco15kg,inclusa,2024-11-05,https://energiadallegno.it/prezzo-del-pellet-a-settembre-2024/,Tabella 1 · Totale complessivo
+pellet_saco_it,2025-01,5.44,EUR/sacco15kg,inclusa,2025-02-20,https://energiadallegno.it/prezzo-del-pellet-a-gennaio-2025/,Tabella 1 · Totale complessivo
+pellet_saco_it,2025-04,5.43,EUR/sacco15kg,inclusa,2025-06-10,https://energiadallegno.it/prezzo-del-pellet-ad-aprile-2025/,Tabella 1 · Totale complessivo
+pellet_saco_it,2025-09,5.68,EUR/sacco15kg,inclusa,2025-10-15,https://energiadallegno.it/prezzo-del-pellet-a-settembre-2025/,Tabella 1 · Totale complessivo
+pellet_saco_it,2026-01,6.91,EUR/sacco15kg,inclusa,2026-02-13,https://energiadallegno.it/prezzo-del-pellet-a-gennaio-2026/,Tabella 1 · Totale complessivo
+pellet_saco_it,2026-04,7.14,EUR/sacco15kg,inclusa,2026-05-18,https://energiadallegno.it/prezzo-del-pellet-ad-aprile-2026/,Tabella 1 · Totale complessivo
+pellet_saco_it,2026-09,7.61,EUR/sacco15kg,inclusa,2026-10-13,https://energiadallegno.it/prezzo-del-pellet-a-settembre-2026/,Tabella 1 · Totale complessivo
+pellet_granel_it,2025-01,378.1,EUR/t,inclusa,2025-02-20,https://energiadallegno.it/prezzo-del-pellet-a-gennaio-2025/,Tabella 2 · Totale complessivo
+pellet_granel_it,2025-04,401.0,EUR/t,inclusa,2025-06-10,https://energiadallegno.it/prezzo-del-pellet-ad-aprile-2025/,Tabella 2 · Italia
+pellet_granel_it,2025-09,393.4,EUR/t,inclusa,2025-10-15,https://energiadallegno.it/prezzo-del-pellet-a-settembre-2025/,Tabella 2 · Totale complessivo
+pellet_granel_it,2026-01,502.2,EUR/t,inclusa,2026-02-13,https://energiadallegno.it/prezzo-del-pellet-a-gennaio-2026/,Tabella 2 · Totale complessivo
+pellet_granel_it,2026-04,497.1,EUR/t,inclusa,2026-05-18,https://energiadallegno.it/prezzo-del-pellet-ad-aprile-2026/,Tabella 2 · Totale complessivo
+pellet_granel_it,2026-09,525.0,EUR/t,inclusa,2026-10-13,https://energiadallegno.it/prezzo-del-pellet-a-settembre-2026/,Tabella 2 · Totale complessivo
+lena_a1_it,2025-01,253.2,EUR/t,inclusa,2025-02-20,https://energiadallegno.it/prezzo-della-legna-da-ardere-a-gennaio-2025/,Tabella 1 · A1 (20%)
+lena_a1_it,2025-04,226.6,EUR/t,inclusa,2025-06-10,https://energiadallegno.it/prezzo-della-legna-da-ardere-ad-aprile-2025/,Tabella 1 · A1 (20%)
+lena_a1_it,2025-09,237.7,EUR/t,inclusa,2025-10-15,https://energiadallegno.it/prezzo-della-legna-da-ardere-a-settembre-2025/,Tabella 1 · A1 (20%)
+lena_a1_it,2026-01,267.5,EUR/t,inclusa,2026-02-13,https://energiadallegno.it/prezzo-della-legna-da-ardere-a-gennaio-2026/,Tabella 1 · A1 (20%)
+lena_a1_it,2026-04,217.1,EUR/t,inclusa,2026-05-18,https://energiadallegno.it/prezzo-della-legna-da-ardere-ad-aprile-2026/,Tabella 1 · A1 (20%)
+lena_a1_it,2026-09,258.6,EUR/t,inclusa,2026-10-13,https://energiadallegno.it/prezzo-della-legna-da-ardere-a-settembre-2026/,Tabella 1 · A1 (20%)

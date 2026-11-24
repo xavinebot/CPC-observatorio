@@ -75,6 +75,15 @@ class Serie:
     # el anterior, y no hay medias anuales. Va con redistributable=False, que es lo que quita el CSV.
     # Lo pidió C.A.R.M.E.N. e.V. para su precio del pellet aleman, y se les prometió por escrito.
     solo_vista: bool = False
+    # True = la fuente no deja que sus datos se descarguen de nuestra web (AIEL, 24-nov-2026). Además de
+    # redistributable=False (sin CSV, sin descarga en el marcado, sin gráfico incrustable ni PNG), la serie sale de la
+    # imagen de la comparativa que se descarga para prensa o se incrusta en otra web. Se sigue viendo en la página.
+    sin_descarga: bool = False
+    # Textos por idioma que la web enseña tal cual ({'es': …, 'it': …}): la frecuencia cuando no es una de las
+    # normales (AIEL mide en enero, abril y septiembre) y una nota para el lector en su idioma (`notes` es interna,
+    # en español). None = lo de siempre.
+    frecuencia_texto: dict | None = None
+    nota: dict | None = None
 
 
 _REGISTRY: dict[str, Serie] = {}
