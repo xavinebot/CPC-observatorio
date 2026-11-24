@@ -387,3 +387,14 @@ cercano es colorantes y pigmentos (C20.12), que es el ingrediente, o la química
 
 Y en el Pink Sheet del Banco Mundial, que ya se descarga entero, están sin usar: **aluminio, níquel, plomo,
 estaño, zinc y platino**.
+
+## AIEL — pellet y leña en Italia (24-nov-2026)
+- **Qué:** media nacional («Totale complessivo») del saco de 15 kg de pellet ENplus A1, del pellet a granel en camión
+  cisterna y de la leña de clase A1 (M20), con IVA. Mide en enero, abril y septiembre.
+- **Dónde:** artículos de `https://energiadallegno.it/tag/prezzibiocombustibili/` (tablas en imagen).
+- **Formato:** carga manual en `data/manual/aiel.csv` (ver DECISIONES §33). Series `pellet_saco_it` (desde abril de
+  2024), `pellet_granel_it` y `lena_a1_it` (desde enero de 2025).
+- **Licencia:** autorización escrita de AIEL del 24-11-2026 (correo en `observatorio-docs/`): citar con enlace a esa
+  página, IVA y fecha de cada medición, y sin que los datos se puedan descargar.
+- **Cómo citar:** «Fonte: AIEL, rilevazione dei prezzi dei biocombustibili» con enlace a esa página.
+

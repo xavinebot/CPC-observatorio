@@ -22,6 +22,7 @@ COLLECTORS: dict[str, str] = {
     "sdes_bois": "sdes_bois",
     "ademe_bois": "ademe_bois",
     "lena": "lena",
+    "aiel": "aiel",
 }
 
 

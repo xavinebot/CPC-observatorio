@@ -12,6 +12,24 @@ import datetime as _dt
 
 # (desde, hasta, texto). Las fechas son inclusivas, en formato AAAA-MM-DD.
 RECORDATORIOS: list[tuple[str, str, str]] = [
+    # AIEL (Italia): mide en enero, abril y septiembre y publica unas semanas después; sus tablas son imágenes y se
+    # cargan a mano en data/manual/aiel.csv (ver observatorio/collectors/aiel.py). Una ventana por medición.
+    (
+        "2027-02-10", "2027-03-20",
+        "🇮🇹 <b>AIEL: toca cargar la medición de enero.</b> Cuando salgan sus artículos de pellet y de leña en "
+        "<code>energiadallegno.it/tag/prezzibiocombustibili/</code>, copia de sus tablas el «Totale complessivo» del "
+        "saco y del granel y la clase A1 de la leña en <code>data/manual/aiel.csv</code> (solo si dicen «IVA inclusa»).",
+    ),
+    (
+        "2027-05-15", "2027-06-30",
+        "🇮🇹 <b>AIEL: toca cargar la medición de abril</b> en <code>data/manual/aiel.csv</code> (mismas tablas: saco, "
+        "granel y leña A1, solo «IVA inclusa»).",
+    ),
+    (
+        "2027-10-10", "2027-11-15",
+        "🇮🇹 <b>AIEL: toca cargar la medición de septiembre</b> en <code>data/manual/aiel.csv</code> (saco, granel y "
+        "leña A1, solo «IVA inclusa»). Es la que más se cita en prensa en Italia.",
+    ),
     (
         "2026-10-12", "2026-11-15",
         "📣 <b>Toca la ronda de prensa.</b> Es la ventana buena: la segunda quincena de octubre y la primera de "

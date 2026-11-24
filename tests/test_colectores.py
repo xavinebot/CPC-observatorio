@@ -621,3 +621,62 @@ def test_la_recogida_diaria_no_se_deja_ningun_recolector():
         assert n in collectors.names(), f"el workflow excluye '{n}', que no es un recolector"
     # la lena tiene su propio workflow los lunes; cualquier otra exclusion hay que justificarla aqui
     assert set(excluidos) == {"lena"}, f"exclusiones sin justificar en el workflow diario: {excluidos}"
+
+
+# ----------------------------------------------------------------- AIEL (Italia), autorizado el 24-11-2026
+def test_aiel_cumple_las_cuatro_condiciones():
+    """Las condiciones del correo de AIEL, fijadas: si alguien las toca, este test lo para."""
+    from observatorio.collectors import aiel
+    ids = [s for s in catalog.all_series() if s.collector == "aiel"]
+    assert {s.id for s in ids} == {"pellet_saco_it", "pellet_granel_it", "lena_a1_it"}
+    pts = aiel.leer(aiel.fichero().read_text(encoding="utf-8"))
+    for s in ids:
+        # 1. cita con enlace directo a su página de precios (no a la portada ni a un artículo)
+        assert s.source.url == "https://energiadallegno.it/tag/prezzibiocombustibili/", s.id
+        assert "AIEL" in s.source.attribution, s.id
+        # 2. todo con IVA (las mediciones sin IVA no entran)
+        assert s.taxes_included is True, s.id
+        # 3. cada dato con su mes de medición: enero, abril o septiembre, como mide AIEL
+        assert pts[s.id] and all(d[5:7] in ("01", "04", "09") and d.endswith("-01") for d, _ in pts[s.id]), s.id
+        # 4. que no se pueda descargar: sin CSV / marcado / incrustar / PNG, y fuera de la imagen de la comparativa
+        assert s.redistributable is False and s.sin_descarga is True and s.publishable is True, s.id
+        assert s.country == "IT", s.id   # solo en la página italiana
+
+
+def test_aiel_no_cruza_el_cambio_de_metodo_del_granel():
+    from observatorio.collectors import aiel
+    pts = aiel.leer(aiel.fichero().read_text(encoding="utf-8"))
+    assert min(d for d, _ in pts["pellet_granel_it"]) >= "2025-01-01"
+
+
+def test_aiel_rechaza_una_medicion_sin_iva():
+    from observatorio.collectors import aiel
+    texto = ("serie,medicion,valor,unidad,iva,publicado,articulo,tabla\n"
+             "pellet_saco_it,2023-09,6.5,EUR/sacco15kg,esclusa,2023-10-26,https://energiadallegno.it/x/,Tabella 1\n")
+    with pytest.raises(RuntimeError, match="IVA"):
+        aiel.leer(texto)
+
+
+def test_aiel_pasa_el_saco_a_kilo_y_la_tonelada_a_kilo():
+    from observatorio.collectors import aiel
+    texto = ("serie,medicion,valor,unidad,iva,publicado,articulo,tabla\n"
+             "pellet_saco_it,2026-09,7.61,EUR/sacco15kg,inclusa,2026-10-13,https://energiadallegno.it/a/,Tabella 1\n"
+             "lena_a1_it,2026-09,258.6,EUR/t,inclusa,2026-10-13,https://energiadallegno.it/b/,Tabella 1\n")
+    p = aiel.leer(texto)
+    assert round(p["pellet_saco_it"][0][1] * 15, 2) == 7.61 and p["pellet_saco_it"][0][0] == "2026-09-01"
+    assert p["lena_a1_it"][0][1] == pytest.approx(0.2586)
+
+
+def test_aiel_detecta_una_medicion_nueva_sin_cargar():
+    from observatorio.collectors import aiel
+    html = ('<a href="https://energiadallegno.it/prezzo-del-pellet-a-gennaio-2027/">x</a>'
+            '<a href="https://energiadallegno.it/prezzo-della-legna-da-ardere-ad-aprile-2026/">y</a>'
+            '<a href="https://energiadallegno.it/prezzo-del-pellet-in-autobotte-a-settembre-2022/">z</a>')
+    assert aiel.ultima_publicada(html) == "2027-01"
+
+
+def test_aiel_sin_csv_al_publicar():
+    from observatorio import publish
+    s = catalog.get("pellet_saco_it")
+    p = publish.serie_payload(s, [("2026-09-01", 0.5073)])
+    assert p["redistributable"] is False and p["sin_descarga"] is True

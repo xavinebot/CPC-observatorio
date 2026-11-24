@@ -596,3 +596,19 @@ desde 1999 y saco de 15 kg desde nov-2021), con IVA, y con sus datos en un fiche
 - **Salvaguarda**: si el gráfico deja de decir «inkl. USt.», el recolector no lo lee.
 - Hizo falta permitir `app.23degrees.eu` en la red del entorno de Claude (GitHub Actions no tiene esa limitación).
 
+
+## 33. Italia: el pellet y la leña de AIEL, a mano y solo con IVA (24 nov 2026)
+AIEL autorizó por escrito (correo a Xavier del 24-nov-2026) usar sus precios con cuatro condiciones: cita con enlace
+a `energiadallegno.it/tag/prezzibiocombustibili/`, IVA respetado dato a dato, fecha de cada medición y **que no se
+puedan descargar** (`redistributable=False` + `sin_descarga=True`: sin CSV, sin descarga en el marcado, sin gráfico
+incrustable ni PNG y fuera de la imagen de la comparativa; tests en `tests/test_colectores.py`).
+- **A mano.** Las tablas de sus artículos son imágenes y el texto da las cifras con frases distintas (y no siempre):
+  no se leen de forma fiable con un programa. Van en `data/manual/aiel.csv`, una fila por medición con su artículo y
+  su tabla, comprobada contra el texto cuando lo da. El recolector `aiel` solo las lee y avisa (resumen semanal) si
+  AIEL ha publicado una medición más nueva; además hay recordatorios en las fechas en que publica.
+- **Solo «IVA inclusa».** AIEL dice que sus precios llevan IVA, pero hasta enero de 2024 las tablas del saco y de la
+  leña dicen «IVA esclusa» (y el IVA del pellet bajó del 22 al 10 % en 2023). Convertirlas sería inventar el dato:
+  el saco empieza en abril de 2024. El histórico 2019-enero 2024 (sin IVA, revista Agriforenergy) queda fuera.
+- **Granel desde enero de 2025**, cuando AIEL cambió su método (6 t a 50 km): nada antes, así que ninguna variación
+  cruza el cambio. **Leña A1 desde enero de 2025** (la tabla de abril de 2024 es un panel de Looker Studio).
+- **La fecha**: AIEL da el mes de la medición («settembre 2026»); cada punto lleva ese mes (`native_freq="M"`).
