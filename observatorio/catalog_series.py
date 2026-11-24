@@ -393,13 +393,21 @@ SRC_AIEL = Source(
     attribution="Fonte: AIEL, rilevazione dei prezzi dei biocombustibili")
 _AIEL_COMUN = dict(country="IT", group="hogar", unit="EUR/kg", source=SRC_AIEL, collector="aiel", native_freq="M",
                    expected_every_days=150, stale_after_days=240, decimals=4, taxes_included=True,
-                   publishable=True, redistributable=False, sin_descarga=True)
+                   publishable=True, redistributable=False, sin_descarga=True,
+                   frecuencia_texto=N("tres mediciones al año (enero, abril y septiembre)", "trois relevés par an (janvier, avril et septembre)",
+                                      "tre rilevazioni l’anno (gennaio, aprile e settembre)", "drei Erhebungen im Jahr (Januar, April und September)",
+                                      "três medições por ano (janeiro, abril e setembro)"))
 register(Serie(
     id="pellet_saco_it",
     name=N("Pellet en saco de 15 kg (ENplus A1), con IVA", "Granulés en sac de 15 kg (ENplus A1), TTC",
            "Pellet in sacco da 15 kg (ENplus A1), IVA inclusa", "Pellets im 15-kg-Sack (ENplus A1), inkl. MwSt.",
            "Pellets em saco de 15 kg (ENplus A1), com IVA"),
     fuel="pellet", min_value=0.15, max_value=2.0, max_change_pct=40, kwh_per_unit=4.76, **_AIEL_COMUN,
+    nota=N("Media nacional de AIEL del saco de 15 kg, con IVA y sin transporte. Cada dato lleva el mes de la medición. Desde abril de 2024: antes AIEL daba este precio sin IVA.",
+           "Moyenne nationale de l’AIEL pour le sac de 15 kg, TVA comprise, hors transport. Chaque donnée porte le mois du relevé. Depuis avril 2024 : avant, l’AIEL publiait ce prix hors TVA.",
+           "Media nazionale AIEL del sacco da 15 kg, IVA inclusa, trasporto escluso. Ogni dato porta il mese della rilevazione. Dall’aprile 2024: prima AIEL pubblicava questo prezzo IVA esclusa.",
+           "Landesdurchschnitt von AIEL für den 15-kg-Sack, inkl. MwSt., ohne Transport. Jeder Wert trägt den Monat der Erhebung. Seit April 2024: davor veröffentlichte AIEL diesen Preis ohne MwSt.",
+           "Média nacional da AIEL do saco de 15 kg, com IVA e sem transporte. Cada dado tem o mês da medição. Desde abril de 2024: antes, a AIEL dava este preço sem IVA."),
     notes="Media nacional (Totale complessivo) de AIEL del saco de 15 kg de pellet ENplus A1, al consumidor, con IVA, "
           "sin transporte; mediciones de enero, abril y septiembre. Se guarda por kg (precio del saco ÷ 15); la web "
           "vuelve a enseñar el saco. Desde abril de 2024: antes las tablas de AIEL van sin IVA."))
@@ -409,6 +417,11 @@ register(Serie(
            "Pellet sfuso in autobotte (ENplus A1), IVA inclusa", "Pellets lose per Tankwagen (ENplus A1), inkl. MwSt.",
            "Pellets a granel em camião-cisterna (ENplus A1), com IVA"),
     fuel="pellet", min_value=0.10, max_value=1.5, max_change_pct=40, kwh_per_unit=4.76, en_comparativa=False, **_AIEL_COMUN,
+    nota=N("Media nacional de AIEL para una entrega de 6 t a 50 km, con IVA. En enero de 2025 AIEL cambió el método de este dato: los anteriores no son comparables y no se publican.",
+           "Moyenne nationale de l’AIEL pour une livraison de 6 t à 50 km, TVA comprise. En janvier 2025, l’AIEL a changé de méthode pour cette donnée : les précédentes ne sont pas comparables et ne sont pas publiées.",
+           "Media nazionale AIEL per una consegna di 6 t a 50 km, IVA inclusa. A gennaio 2025 AIEL ha cambiato il metodo di rilevazione di questo prezzo: i dati precedenti non sono confrontabili e non si pubblicano.",
+           "Landesdurchschnitt von AIEL für eine Lieferung von 6 t über 50 km, inkl. MwSt. Im Januar 2025 hat AIEL die Methode geändert: frühere Werte sind nicht vergleichbar und werden nicht veröffentlicht.",
+           "Média nacional da AIEL para uma entrega de 6 t a 50 km, com IVA. Em janeiro de 2025 a AIEL mudou o método deste dado: os anteriores não são comparáveis e não se publicam."),
     notes="Media nacional de AIEL del pellet ENplus A1 entregado en camión cisterna (6 t a 50 km), con IVA, en €/t "
           "(se guarda por kg). Desde enero de 2025, cuando AIEL cambió el método de este dato: lo de antes no se "
           "publica y ninguna variación cruza el cambio."))
@@ -418,6 +431,11 @@ register(Serie(
            "Legna da ardere classe A1 (umidità 20%), IVA inclusa", "Brennholz Klasse A1 (20 % Feuchte), inkl. MwSt.",
            "Lenha de classe A1 (humidade 20 %), com IVA"),
     fuel="lena", min_value=0.08, max_value=0.8, max_change_pct=40, kwh_per_unit=4.1, **_AIEL_COMUN,
+    nota=N("Media nacional de AIEL de la leña de clase A1 (humedad 20 %), recogida en origen, con IVA. Desde enero de 2025.",
+           "Moyenne nationale de l’AIEL pour le bois classe A1 (humidité 20 %), pris au départ, TVA comprise. Depuis janvier 2025.",
+           "Media nazionale AIEL della legna in classe A1 (umidità 20%), franco partenza, IVA inclusa. Dal gennaio 2025.",
+           "Landesdurchschnitt von AIEL für Brennholz der Klasse A1 (20 % Feuchte), ab Lager, inkl. MwSt. Seit Januar 2025.",
+           "Média nacional da AIEL da lenha de classe A1 (humidade 20 %), à saída do produtor, com IVA. Desde janeiro de 2025."),
     notes="Media nacional de AIEL de la leña de clase A1 (humedad M20), al consumidor, recogida en origen (franco "
           "partenza), con IVA, en €/t (se guarda por kg). Desde enero de 2025."))
 
