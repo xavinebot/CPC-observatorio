@@ -1,0 +1,13 @@
+{
+ "desde": "2026-11-21",
+ "correcciones": [
+  {
+   "fecha": "2026-11-24",
+   "serie": "ipri_siderurgia_es",
+   "dato": "2026-09-01",
+   "antes": 109.706,
+   "despues": 109.574,
+   "motivo": "revision_fuente"
+  }
+ ]
+}
